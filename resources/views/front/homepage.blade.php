@@ -1,0 +1,800 @@
+@include('front.layouts.pages_slider')
+@extends('front.layouts.app')
+
+@section('content')
+
+<!-- ================== CATEGORY SECTION ================== -->
+<div class="container mt-5">
+
+    <!-- Category Section Styles -->
+    <style>
+       .category-row {
+    display: flex;
+    flex-wrap: nowrap; /* keep items in one row on desktop */
+    overflow-x: auto;
+    gap: 20px;
+    padding-bottom: 10px;
+    min-height: 300px;
+    background-color: transparent;
+    background-image: none;
+
+    scroll-behavior: smooth; /* smooth scrolling */
+    -webkit-overflow-scrolling: touch; /* better momentum scroll on iOS */
+}
+
+/* Scrollbar styling */
+.category-row::-webkit-scrollbar {
+    height: 8px;
+}
+
+.category-row::-webkit-scrollbar-thumb {
+    background-color: #00704A;
+    border-radius: 4px;
+}
+
+/* Category item styles */
+.category-item {
+    flex: 0 0 auto; /* fix width */
+    text-align: center;
+    background-color: #e6f4ea;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 112, 74, 0.2);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    max-width: 220px; /* limit max width for consistency */
+}
+
+/* Hover effects */
+.category-item:hover {
+    background-color: #c9e7d2;
+    transform: translateY(-5px);
+}
+
+.category-item:hover img {
+    transform: scale(1.1);
+}
+
+/* Responsive adjustments */
+
+/* Large tablets and smaller desktops */
+@media (max-width: 1200px) {
+    .category-row {
+        gap: 15px;
+    }
+    .category-item {
+        max-width: 200px;
+        min-height: 260px;
+    }
+    .category-item img {
+        max-width: 130px;
+    }
+}
+
+/* Tablets and small laptops */
+@media (max-width: 992px) {
+    .category-row {
+        flex-wrap: wrap; /* wrap items on smaller screens */
+        justify-content: center;
+        gap: 15px;
+        min-height: auto; /* remove min height for flexibility */
+    }
+    .category-item {
+        min-width: 180px;
+        max-width: 220px;
+        min-height: auto;
+    }
+    .category-item img {
+        max-width: 120px;
+    }
+}
+
+/* Large phones and small tablets */
+@media (max-width: 768px) {
+    .category-title {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+    .category-item p {
+        font-size: 16px;
+    }
+    .category-row {
+        flex-direction: column; /* stack vertically on phones */
+        gap: 10px;
+        min-height: auto;
+    }
+    .category-item {
+        max-width: 100%;
+        min-height: auto;
+        padding: 20px;
+    }
+    .category-item img {
+        max-width: 100px;
+    }
+}
+
+/* Small phones */
+@media (max-width: 576px) {
+    .category-title {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+    .category-item p {
+        font-size: 14px;
+    }
+    .category-item img {
+        max-width: 80px;
+    }
+}
+.d-flex.overflow-auto::-webkit-scrollbar {
+    height: 8px;
+}
+.d-flex.overflow-auto::-webkit-scrollbar-thumb {
+    background-color: #00704A;
+    border-radius: 4px;
+}
+
+    </style>
+
+<!-- ================== CATEGORY SECTION ================== -->
+<div class="container mt-5">
+
+    <div class="d-flex flex-nowrap overflow-auto gap-3 pb-3" style="min-height: 220px;">
+        <div class="card text-center" style="width: 10rem; min-width: 10rem;">
+            <div class="card-body">
+                <p class="card-text fw-semibold mb-2">Green Houses</p>
+            </div>
+            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="card-img-bottom" alt="Green Houses" loading="lazy">
+        </div>
+
+        <div class="card text-center" style="width: 10rem; min-width: 10rem;">
+            <div class="card-body">
+                <p class="card-text fw-semibold mb-2">Poultry Houses</p>
+            </div>
+            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="card-img-bottom" alt="Poultry Houses" loading="lazy">
+        </div>
+
+        <div class="card text-center" style="width: 10rem; min-width: 10rem;">
+            <div class="card-body">
+                <p class="card-text fw-semibold mb-2">Fish Farms</p>
+            </div>
+            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="card-img-bottom" alt="Fish Farms" loading="lazy">
+        </div>
+
+        <div class="card text-center" style="width: 10rem; min-width: 10rem;">
+            <div class="card-body">
+                <p class="card-text fw-semibold mb-2">Irrigation</p>
+            </div>
+            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="card-img-bottom" alt="Irrigation" loading="lazy">
+        </div>
+
+        <div class="card text-center" style="width: 10rem; min-width: 10rem;">
+            <div class="card-body">
+                <p class="card-text fw-semibold mb-2">Landscaping</p>
+            </div>
+            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="card-img-bottom" alt="Landscaping" loading="lazy">
+        </div>
+    </div>
+
+</div>
+
+<!-- ================== FEATURES SECTION ================== -->
+   <div class="features-section">
+    <div class="container">
+      <div class="row text-center text-md-start">
+        <div class="col-md-4">
+          <div class="feature-icon">
+            <img src="icon-path/tailor.svg" alt="">
+            <span>Tailor made for your needs</span>
+          </div>
+          <div class="feature-icon">
+            <img src="icon-path/world.svg" alt="">
+            <span>World wide Projects</span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-icon">
+            <img src="icon-path/turnkey.svg" alt="">
+            <span>Turn-Key Projects</span>
+          </div>
+          <div class="feature-icon">
+            <img src="icon-path/house.svg" alt="">
+            <span>In house manufacturing</span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-icon">
+            <img src="icon-path/cost.svg" alt="">
+            <span>Cost Effective Solutions</span>
+          </div>
+          <div class="feature-icon">
+            <img src="icon-path/40years.svg" alt="">
+            <span>Over 40 years of experience</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Features Section Styles -->
+<style>
+     .features-section {
+      background-color: #fff;
+      padding: 50px 0;
+    }
+
+    .feature-icon {
+      display: flex;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .feature-icon img {
+      width: 30px;
+      margin-right: 15px;
+    }
+
+    .feature-icon span {
+      color: #222;
+      font-size: 16px;
+    }
+</style>
+
+<!-- ================== WELCOME SECTION ================== -->
+<div class="section-spacing" style="background-color: #f4f4f4; padding: 50px 20px; width: 100%; box-sizing: border-box;">
+    <div class="container" style="max-width: 1200px; margin: 0 auto; text-align: left;">
+        <h2 style="font-size: 36px; margin: 8.5px 0; color: #00704A;">Welcome to Our Site</h2>
+        <p class="mt-4" style="font-size: 20px; color: #333;">
+            We're excited to have you here! Whether you're looking for top-notch products, services, or just exploring, you've come to the right place. Our team is dedicated to providing you with the best experience and delivering high-quality results. We're committed to making your journey with us smooth, enjoyable, and fulfilling. Thank you for visiting, and we look forward to serving you!
+        </p>
+
+        <!-- View All Button -->
+        <div style="display: flex; justify-content: center; margin-top: 30px;">
+            <a href="/all" style="
+                padding: 12px 25px;
+                background-color: #00704A;
+                color: white;
+                font-weight: 600;
+                text-decoration: none;
+                border-radius: 5px;
+                width: 100%;
+                max-width: 100%;
+                text-align: center;
+            ">
+                View All
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<style>
+     .welcome-section {
+      background-color: #e5e5e5;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .welcome-section h2 {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+
+    .welcome-section p {
+      max-width: 800px;
+      margin: auto;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .view-all-btn {
+      margin-top: 30px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+</style>
+<!-- ================== CAROUSEL & STATS ================== -->
+<div class="striped-background">
+    <div class="container">
+
+        <!-- Carousel -->
+        <div id="projectCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row g-3">
+                        <!-- Image 1 -->
+                        <div class="col-md-4">
+                            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="d-block w-100" alt="Image 1">
+                        </div>
+                        <!-- Image 2 -->
+                        <div class="col-md-4">
+                            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="d-block w-100" alt="Image 2">
+                        </div>
+                        <!-- Image 3 -->
+                        <div class="col-md-4">
+                            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="d-block w-100" alt="Image 3">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="row g-3">
+                        <!-- Image 4 -->
+                        <div class="col-md-4">
+                            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="d-block w-100" alt="Image 4">
+                        </div>
+                        <!-- Image 5 -->
+                        <div class="col-md-4">
+                            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="d-block w-100" alt="Image 5">
+                        </div>
+                        <!-- Image 6 -->
+                        <div class="col-md-4">
+                            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="d-block w-100" alt="Image 6">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="row g-3">
+                        <!-- Image 7 -->
+                        <div class="col-md-4">
+                            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="d-block w-100" alt="Image 7">
+                        </div>
+                        <!-- Image 8 -->
+                        <div class="col-md-4">
+                            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="d-block w-100" alt="Image 8">
+                        </div>
+                        <!-- Image 9 -->
+                        <div class="col-md-4">
+                            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="d-block w-100" alt="Image 9">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#projectCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#projectCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </button>
+        </div>
+
+    </div>
+</div>
+
+        <!-- Stats -->
+        <div class="row stats mt-5">
+            <div class="col-6 col-md-3 stat-item">
+                <h3>100+</h3>
+                <p>Countries</p>
+            </div>
+            <div class="col-6 col-md-3 stat-item">
+                <h3>10,000+</h3>
+                <p>Projects</p>
+            </div>
+            <div class="col-6 col-md-3 stat-item">
+                <h3>4,450+</h3>
+                <p>Hectares</p>
+            </div>
+            <div class="col-6 col-md-3 stat-item">
+                <h3>40+</h3>
+                <p>Years</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Carousel & Stats Styles -->
+<style>
+    .carousel-item img {
+        width: 100%;
+        height: 350px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 50%;
+    }
+
+    .stats {
+        margin-top: 30px;
+    }
+
+    .stat-item {
+        text-align: center;
+    }
+
+    .stat-item h3 {
+        font-weight: 700;
+        color: #00704A;
+    }
+
+    .stat-item p {
+        margin: 0;
+        font-size: 18px;
+        color: #00704A;
+    }
+</style>
+
+
+<!-- ================== PRODUCT SECTION ================== -->
+<div class="container mt-5">
+
+    <h2 class="mb-4 text-center fw-bold" style="color: #00704A;">Our Products</h2>
+
+    <div class="d-flex flex-nowrap overflow-auto gap-3 pb-3" style="min-height: 250px;">
+        <div class="card text-center border-0" style="width: 10rem; min-width: 10rem;">
+            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="card-img-top" alt="Organic Fertilizer" loading="lazy">
+            <div class="card-body">
+                <p class="card-text fw-semibold mb-0">Organic Fertilizer</p>
+            </div>
+        </div>
+
+        <div class="card text-center border-0" style="width: 10rem; min-width: 10rem;">
+            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="card-img-top" alt="Drip Kit" loading="lazy">
+            <div class="card-body">
+                <p class="card-text fw-semibold mb-0">Drip Kit</p>
+            </div>
+        </div>
+
+        <div class="card text-center border-0" style="width: 10rem; min-width: 10rem;">
+            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="card-img-top" alt="Shade Nets" loading="lazy">
+            <div class="card-body">
+                <p class="card-text fw-semibold mb-0">Shade Nets</p>
+            </div>
+        </div>
+
+        <div class="card text-center border-0" style="width: 10rem; min-width: 10rem;">
+            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="card-img-top" alt="Water Pumps" loading="lazy">
+            <div class="card-body">
+                <p class="card-text fw-semibold mb-0">Water Pumps</p>
+            </div>
+        </div>
+
+        <div class="card text-center border-0" style="width: 10rem; min-width: 10rem;">
+            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="card-img-top" alt="Plant Seeds" loading="lazy">
+            <div class="card-body">
+                <p class="card-text fw-semibold mb-0">Plant Seeds</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ================== SERVICES SECTION ================== -->
+<div class="services-section">
+    <div class="container">
+      <h2 class="text-center mb-5 fw-bold" style="color: #00704A;">Our Services</h2>
+      <div class="row text-center text-md-start">
+        <div class="col-md-4">
+          <div class="service-icon">
+            <img src="icon-path/consultation.svg" alt="">
+            <span>Consultation & Planning</span>
+          </div>
+          <div class="service-icon">
+            <img src="icon-path/installation.svg" alt="">
+            <span>System Installation</span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="service-icon">
+            <img src="icon-path/maintenance.svg" alt="">
+            <span>Ongoing Maintenance</span>
+          </div>
+          <div class="service-icon">
+            <img src="icon-path/custom.svg" alt="">
+            <span>Custom Engineering Solutions</span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="service-icon">
+            <img src="icon-path/training.svg" alt="">
+            <span>Training & Support</span>
+          </div>
+          <div class="service-icon">
+            <img src="icon-path/monitoring.svg" alt="">
+            <span>Remote Monitoring</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Services Section Styles -->
+  <style>
+    .services-section {
+      background-color: #fff;
+      padding: 50px 0;
+    }
+
+    .service-icon {
+      display: flex;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .service-icon img {
+      width: 30px;
+      margin-right: 15px;
+    }
+
+    .service-icon span {
+      color: #222;
+      font-size: 16px;
+    }
+  </style>
+
+<!-- ================== PROJECTS SECTION ================== -->
+<div class="container mt-5">
+    <h2 class="mb-4 text-center fw-bold" style="color: #00704A;">Our Projects</h2>
+
+    <div class="d-flex flex-nowrap overflow-auto gap-3 pb-3" style="min-height: 250px;">
+      <div class="card text-center border-0" style="width: 10rem; min-width: 10rem;">
+        <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
+             class="card-img-top" alt="Desert Greenhouse" loading="lazy">
+        <div class="card-body">
+          <p class="card-text fw-semibold mb-0">Desert Greenhouse</p>
+        </div>
+      </div>
+
+      <div class="card text-center border-0" style="width: 10rem; min-width: 10rem;">
+        <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
+             class="card-img-top" alt="Poultry Facility" loading="lazy">
+        <div class="card-body">
+          <p class="card-text fw-semibold mb-0">Poultry Facility</p>
+        </div>
+      </div>
+
+      <div class="card text-center border-0" style="width: 10rem; min-width: 10rem;">
+        <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
+             class="card-img-top" alt="Aquaculture Farm" loading="lazy">
+        <div class="card-body">
+          <p class="card-text fw-semibold mb-0">Aquaculture Farm</p>
+        </div>
+      </div>
+
+      <div class="card text-center border-0" style="width: 10rem; min-width: 10rem;">
+        <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
+             class="card-img-top" alt="Irrigation System" loading="lazy">
+        <div class="card-body">
+          <p class="card-text fw-semibold mb-0">Irrigation System</p>
+        </div>
+      </div>
+
+      <div class="card text-center border-0" style="width: 10rem; min-width: 10rem;">
+        <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
+             class="card-img-top" alt="Landscape Park" loading="lazy">
+        <div class="card-body">
+          <p class="card-text fw-semibold mb-0">Landscape Park</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- View All Button -->
+    <div style="display: flex; justify-content: center; margin-top: 30px;">
+      <a href="/projects" style="
+          padding: 12px 25px;
+          background-color: #00704A;
+          color: white;
+          font-weight: 600;
+          text-decoration: none;
+          border-radius: 5px;
+          width: 100%;
+          max-width: 400px;
+          text-align: center;
+        ">
+        View All Projects
+      </a>
+    </div>
+  </div>
+
+<!-- ================== NEWS SECTION ================== -->
+<div class="container py-5 news-section">
+    <h2 class="text-center mb-5 news-title">News</h2>
+    <div class="row g-4">
+
+        <!-- News Items -->
+        @php $news = [
+            ['title' => 'Saudi Agriculture 2018', 'text' => 'Jordan Greenhouses will participating in Saudi Agriculture 2018...', 'img' => 'saudi-2018.png', 'dark' => true],
+            ['title' => 'Agro Food Oman', 'text' => 'Jordan Greenhouses will be participating in Agro Food Oman...', 'img' => 'agro-food-oman.png'],
+            ['title' => 'GrowTech Antalya (2019)', 'img' => 'growtech.png'],
+            ['title' => 'Saudi Agriculture 2019', 'img' => 'saudi-2019.png', 'dark' => true],
+            ['title' => 'Saudi Agriculture 2019', 'img' => 'saudi-2019-repeat.png', 'dark' => true],
+            ['title' => 'Sahara Expo (2022)', 'img' => 'sahara.png'],
+            ['title' => 'AGEX EXHIBITION JEDDAH 2022', 'img' => 'agex.png'],
+        ]; @endphp
+
+        @foreach ($news as $item)
+            <div class="col-md-6 {{ $loop->last ? 'col-12' : '' }}">
+                <div class="news-card {{ $item['dark'] ?? false ? 'dark-card' : '' }} p-4 h-100 text-center">
+                    <h5 class="news-heading {{ empty($item['dark']) ? 'text-success' : '' }}">{{ $item['title'] }}</h5>
+                    @if (!empty($item['text']))
+                        <p class="news-text">{{ $item['text'] }}</p>
+                    @endif
+                    <img src="your-image-path/{{ $item['img'] }}" alt="{{ $item['title'] }}" class="img-fluid mt-3" style="max-height: 90px;">
+                </div>
+            </div>
+        @endforeach
+
+    </div>
+</div>
+
+<!-- News Section Styles -->
+<style>
+    .news-section {
+        background: repeating-linear-gradient(to bottom, #fff, #fff 20px, #ddd 20px, #ddd 22px);
+    }
+
+    .news-title {
+        color: #00704A;
+        font-weight: bold;
+        font-size: 36px;
+    }
+
+    .news-card {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 112, 74, 0.1);
+    }
+
+    .dark-card {
+        background-color: #2f4a3d;
+        color: #fff;
+    }
+
+    .news-heading {
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .news-text {
+        font-size: 15px;
+        line-height: 1.5;
+        color: inherit;
+    }
+
+    @media (max-width: 576px) {
+        .news-title {
+            font-size: 26px;
+        }
+
+        .news-heading {
+            font-size: 16px;
+        }
+
+        .news-text {
+            font-size: 14px;
+        }
+    }
+</style>
+
+<!-- Main container for the page content -->
+<div class="container mt-5 ">
+    <style>
+        body {
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+
+        .contact-title {
+            font-size: 36px;
+            font-weight: bold;
+            color: #00704A;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-control::placeholder {
+            color: #aaa;
+        }
+
+        .form-section {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .contact-box {
+            background-color: #115d18;
+            color: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            height: 100%;
+        }
+
+        .contact-box h4 {
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .contact-box p {
+            margin-bottom: 10px;
+        }
+
+        .company-logos img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+            border-radius: 6px;
+        }
+
+        @media (max-width: 768px) {
+            .contact-title {
+                font-size: 28px;
+            }
+
+            .form-section, .contact-box {
+                padding: 20px;
+            }
+        }
+    </style>
+
+    <h2 class="contact-title">Contact Us</h2>
+
+    <div class="row g-4">
+        <!-- Left Contact Form -->
+        <div class="col-lg-8">
+            <div class="form-section">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" placeholder="Your full name">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" placeholder="Your email address">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Message</label>
+                        <textarea class="form-control" rows="5" placeholder="Your message..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-success mt-2">Send Message</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Right Contact Information -->
+        <div class="col-lg-4">
+            <div class="contact-box">
+                <h4>Get In Touch</h4>
+                <p><strong>Factory Address</strong><br>
+                    Amman – Jordan – Abu Alanda Industrial Area<br>
+                    Al-Hazam Street<br><br>
+                    Saudi Arabia – Al-Malaz
+                </p>
+
+                <p><strong>Contact</strong><br>
+                    Tel: 0096264161787 / 009625643888<br>
+                    Fax: 0096264165081 / 009625543882<br>
+                    Email: admin@rayyan.com.jo
+                </p>
+
+                <p class="mt-3">Member of Munir Sukhtian International</p>
+
+                <div class="company-logos">
+                    <img src="Career.png" alt="Company Logo">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
