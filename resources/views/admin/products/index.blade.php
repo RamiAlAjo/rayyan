@@ -167,3 +167,11 @@
     </div>
 </div>
 @endsection
+
+@section('scripts')
+<script src="{{ asset('dist/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script>
+    // Enable tab functionality in case needed
+    var myTabs = new bootstrap.Tab(document.querySelector('#ar-tab'));
+</script>
+@endsection
