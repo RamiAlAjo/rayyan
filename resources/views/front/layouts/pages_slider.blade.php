@@ -85,44 +85,33 @@
 
 <body class="custom-body">
 
-<!-- Bootstrap Carousel with home-slider class -->
-<div id="carouselExample" class="carousel slide home-slider" data-bs-ride="carousel">
-    <div class="home-carousel-inner">
+    <!-- Bootstrap Carousel with home-slider class -->
+    <div id="carouselExample" class="carousel slide home-slider" data-bs-ride="carousel">
+        <div class="carousel-inner home-carousel-inner">
 
-        <!-- Static Carousel Items -->
-        <div class="carousel-item active"
-            style="background-image: url('https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png');">
-            <div class="unique-overlay"></div>
-            <div class="unique-content">
-                <!-- Content removed as requested -->
-            </div>
+            @foreach($sliders as $index => $slider)
+                <div class="carousel-item {{ $index === 0 ? 'active' : '' }}"
+                     style="background-image: url('{{ asset('storage/' . $slider->image) }}');">
+                    <div class="unique-overlay"></div>
+                    <div class="unique-content">
+                        <!-- Example: Displaying content (optional) -->
+                        <h2>{{ $slider->title_en }}</h2>
+                        <p>{{ $slider->description_en }}</p>
+                        <a href="{{ $slider->url }}" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+            @endforeach
+
         </div>
 
-        <div class="carousel-item"
-            style="background-image: url('https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png');">
-            <div class="unique-overlay"></div>
-            <div class="unique-content">
-                <!-- Content removed as requested -->
-            </div>
-        </div>
-
-        <div class="carousel-item"
-            style="background-image: url('https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png');">
-            <div class="unique-overlay"></div>
-            <div class="unique-content">
-                <!-- Content removed as requested -->
-            </div>
-        </div>
-
+        <!-- Carousel controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev"
+                aria-label="Previous">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next"
+                aria-label="Next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
     </div>
 
-    <!-- Carousel controls -->
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev"
-        aria-label="Previous">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next"
-        aria-label="Next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    </button>
-</div>

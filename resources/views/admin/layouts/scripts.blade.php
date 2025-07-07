@@ -42,3 +42,9 @@
         });
     });
 </script>
+
+<!-- jQuery -->
+<script src="{{ asset('dist/plugins/jquery/jquery.min.js') }}"></script>
+
+<!-- Bootstrap 5 Bundle (contains both Bootstrap JS and Popper.js) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>

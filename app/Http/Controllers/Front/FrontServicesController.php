@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Service;
 
 class FrontServicesController extends Controller
 {
     public function index()
     {
-        return view('front.services');
+        // Get only active services
+        $services = Service::where('status', 'active')->get();
+
+        return view('front.services', compact('services'));
     }
 }

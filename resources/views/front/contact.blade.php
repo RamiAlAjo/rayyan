@@ -1,4 +1,6 @@
-@include('front.layouts.pages_slider')
+{{-- @include('front.layouts.pages_slider') --}}
+<x-front-slider />
+
 @extends('front.layouts.app')
 
 @section('content')
@@ -6,10 +8,6 @@
 <!-- Main container for the page content -->
 <div class="container mt-5">
     <style>
-        body {
-            padding: 20px;
-            background-color: #f8f9fa;
-        }
 
         .contact-title {
             font-size: 36px;

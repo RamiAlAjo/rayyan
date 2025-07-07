@@ -1,4 +1,4 @@
-@include('front.layouts.pages_slider')
+<x-front-slider />
 @extends('front.layouts.app')
 
 @section('content')
@@ -7,11 +7,6 @@
 <div class="container mt-5">
 
     <style>
-        body {
-            background-color: #e5e5e5; /* Light gray background */
-            padding: 20px;
-        }
-
         .projects-title {
             font-size: 36px;
             font-weight: bold;

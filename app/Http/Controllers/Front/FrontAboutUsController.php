@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\AboutUs; // Don't forget to import the model
 
 class FrontAboutUsController extends Controller
 {
     public function index()
     {
-        return view('front.about');
+        $aboutUs = AboutUs::first(); // Assumes only one record
+        return view('front.about', compact('aboutUs'));
     }
 }

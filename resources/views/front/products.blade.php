@@ -1,4 +1,4 @@
-@include('front.layouts.pages_slider')
+<x-front-slider />
 @extends('front.layouts.app')
 
 @section('content')

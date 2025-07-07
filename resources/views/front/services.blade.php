@@ -1,17 +1,11 @@
-@include('front.layouts.pages_slider')
+<x-front-slider />
 @extends('front.layouts.app')
 
 @section('content')
 
-<!-- Main container for the page content -->
 <div class="container mt-5">
 
     <style>
-        body {
-            background-color: #e5e5e5; /* Light gray background */
-            padding: 20px;
-        }
-
         .services-title {
             font-size: 36px;
             font-weight: bold;
@@ -46,34 +40,21 @@
         }
     </style>
 
-    <h2 class="services-title">Our Services</h2>
+    <h2 class="services-title">{{ __('Our Services') }}</h2>
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 justify-content-center">
-        <!-- Service 1 -->
-        <div class="col text-center service-item">
-            <img src="Product.png" alt="Consulting">
-            <p>Consulting</p>
-        </div>
-        <!-- Service 2 -->
-        <div class="col text-center service-item">
-            <img src="Product.png" alt="Design & Planning">
-            <p>Design & Planning</p>
-        </div>
-        <!-- Service 3 -->
-        <div class="col text-center service-item">
-            <img src="Product.png" alt="Installation">
-            <p>Installation</p>
-        </div>
-        <!-- Service 4 -->
-        <div class="col text-center service-item">
-            <img src="Product.png" alt="Maintenance">
-            <p>Maintenance</p>
-        </div>
-        <!-- Service 5 -->
-        <div class="col text-center service-item">
-            <img src="Product.png" alt="Technical Support">
-            <p>Technical Support</p>
-        </div>
+        @foreach($services as $service)
+            @php
+                $locale = app()->getLocale();
+                $name = $locale === 'ar' ? $service->name_ar : $service->name_en;
+                $imagePath = $service->image ? asset('storage/' . $service->image) : asset('default-service.png');
+            @endphp
+
+            <div class="col text-center service-item">
+                <img src="{{ $imagePath }}" alt="{{ $name }}">
+                <p>{{ $name }}</p>
+            </div>
+        @endforeach
     </div>
 </div>
 

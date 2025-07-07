@@ -72,10 +72,10 @@
                         <select class="form-control" name="category_id" required>
                             <option value="">-- Select Category --</option>
                             @foreach($categories as $category)
-                                <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
-                                    {{ $category->name_en }}
-                                </option>
-                            @endforeach
+                            <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                {{ $category->name_en }}
+                            </option>
+                        @endforeach
                         </select>
                     </div>
 

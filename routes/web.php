@@ -21,6 +21,12 @@ use App\Http\Controllers\Admin\AdminPortfolioController;
 use App\Http\Controllers\Admin\AdminServicesController;
 use App\Http\Controllers\Admin\AdminNewsController;
 use App\Http\Controllers\Admin\AdminProductController;
+use App\Http\Controllers\Admin\AdminProductCategoriesController;
+use App\Http\Controllers\Admin\AdminProductSubcategoriesController;
+
+use App\Http\Controllers\Admin\AdminProjectsController;
+use App\Http\Controllers\Admin\AdminProjectsCategoriesController;
+use App\Http\Controllers\Admin\AdminProjectsSubcategoriesController;
 
 
 Route::get('/', function () {
@@ -51,7 +57,19 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     // Route::resource('about-section', AdminAboutSectionController::class);
     Route::resource('services', AdminServicesController::class);
     Route::resource('news', AdminNewsController::class);
-});
+    Route::resource('product_categories', AdminProductCategoriesController::class);
+    Route::resource('product_subcategories', AdminProductSubcategoriesController::class);
+
+    Route::resource('/projects', AdminProjectsController::class);
+    Route::resource('/projects_categories', AdminProjectsCategoriesController::class);
+    Route::resource('/projects_subcategories', AdminProjectsSubcategoriesController::class);
+
+ });
+
+
+
+
+// Front Routes
 
 Route::resource('about', FrontAboutUsController::class);
 Route::resource('product', FrontProductController::class);

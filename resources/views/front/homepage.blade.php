@@ -1,4 +1,5 @@
-@include('front.layouts.pages_slider')
+<x-front-slider />
+
 @extends('front.layouts.app')
 
 @section('content')
@@ -45,7 +46,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-
     max-width: 220px; /* limit max width for consistency */
 }
 
