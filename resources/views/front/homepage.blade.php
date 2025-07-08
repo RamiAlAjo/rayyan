@@ -142,83 +142,42 @@
 
 <!-- ================== CATEGORY SECTION ================== -->
 <div class="container mt-5">
-
     <div class="d-flex flex-nowrap overflow-auto gap-3 pb-3" style="min-height: 220px;">
-        <div class="card text-center" style="width: 10rem; min-width: 10rem;">
-            <div class="card-body">
-                <p class="card-text fw-semibold mb-2">Green Houses</p>
+        @foreach($categories as $category)
+            <div class="card text-center" style="width: 10rem; min-width: 10rem;">
+                <div class="card-body">
+                    <p class="card-text fw-semibold mb-2">{{ $category->name_en }}</p>
+                </div>
+                @if($category->image)
+                    <img src="{{ asset('storage/' . $category->image) }}" class="card-img-bottom" alt="{{ $category->name_en }}" loading="lazy">
+                @else
+                    <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="card-img-bottom" alt="{{ $category->name_en }}" loading="lazy">
+                @endif
             </div>
-            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="card-img-bottom" alt="Green Houses" loading="lazy">
-        </div>
-
-        <div class="card text-center" style="width: 10rem; min-width: 10rem;">
-            <div class="card-body">
-                <p class="card-text fw-semibold mb-2">Poultry Houses</p>
-            </div>
-            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="card-img-bottom" alt="Poultry Houses" loading="lazy">
-        </div>
-
-        <div class="card text-center" style="width: 10rem; min-width: 10rem;">
-            <div class="card-body">
-                <p class="card-text fw-semibold mb-2">Fish Farms</p>
-            </div>
-            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="card-img-bottom" alt="Fish Farms" loading="lazy">
-        </div>
-
-        <div class="card text-center" style="width: 10rem; min-width: 10rem;">
-            <div class="card-body">
-                <p class="card-text fw-semibold mb-2">Irrigation</p>
-            </div>
-            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="card-img-bottom" alt="Irrigation" loading="lazy">
-        </div>
-
-        <div class="card text-center" style="width: 10rem; min-width: 10rem;">
-            <div class="card-body">
-                <p class="card-text fw-semibold mb-2">Landscaping</p>
-            </div>
-            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="card-img-bottom" alt="Landscaping" loading="lazy">
-        </div>
+        @endforeach
     </div>
-
 </div>
 
 <!-- ================== FEATURES SECTION ================== -->
-   <div class="features-section">
+<div class="features-section">
     <div class="container">
-      <div class="row text-center text-md-start">
-        <div class="col-md-4">
-          <div class="feature-icon">
-            <img src="icon-path/tailor.svg" alt="">
-            <span>Tailor made for your needs</span>
-          </div>
-          <div class="feature-icon">
-            <img src="icon-path/world.svg" alt="">
-            <span>World wide Projects</span>
-          </div>
+        <div class="row text-center text-md-start">
+
+            @foreach ($features->chunk(2) as $chunk)
+                <div class="col-md-4">
+                    @foreach ($chunk as $feature)
+                        <div class="feature-icon">
+                            <img src="{{ asset('storage/' . $feature->image) }}" alt="{{ $feature->title_en }}">
+                            <span>{{ $feature->title_en }}</span>
+                        </div>
+                    @endforeach
+                </div>
+            @endforeach
+
         </div>
-        <div class="col-md-4">
-          <div class="feature-icon">
-            <img src="icon-path/turnkey.svg" alt="">
-            <span>Turn-Key Projects</span>
-          </div>
-          <div class="feature-icon">
-            <img src="icon-path/house.svg" alt="">
-            <span>In house manufacturing</span>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="feature-icon">
-            <img src="icon-path/cost.svg" alt="">
-            <span>Cost Effective Solutions</span>
-          </div>
-          <div class="feature-icon">
-            <img src="icon-path/40years.svg" alt="">
-            <span>Over 40 years of experience</span>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
+
 
 <!-- Features Section Styles -->
 <style>
@@ -247,14 +206,16 @@
 <!-- ================== WELCOME SECTION ================== -->
 <div class="section-spacing" style="background-color: #f4f4f4; padding: 50px 20px; width: 100%; box-sizing: border-box;">
     <div class="container" style="max-width: 1200px; margin: 0 auto; text-align: left;">
-        <h2 style="font-size: 36px; margin: 8.5px 0; color: #00704A;">Welcome to Our Site</h2>
+        <h2 style="font-size: 36px; margin: 8.5px 0; color: #00704A;">
+            {{ $aboutUs->about_us_title_en ?? 'Welcome to Our Site' }}
+        </h2>
         <p class="mt-4" style="font-size: 20px; color: #333;">
-            We're excited to have you here! Whether you're looking for top-notch products, services, or just exploring, you've come to the right place. Our team is dedicated to providing you with the best experience and delivering high-quality results. We're committed to making your journey with us smooth, enjoyable, and fulfilling. Thank you for visiting, and we look forward to serving you!
+            {!! nl2br(e($aboutUs->about_us_description_en ?? "We're excited to have you here! Whether you're looking for top-notch products, services, or just exploring, you've come to the right place. Our team is dedicated to providing you with the best experience and delivering high-quality results. We're committed to making your journey with us smooth, enjoyable, and fulfilling. Thank you for visiting, and we look forward to serving you!")) !!}
         </p>
 
         <!-- View All Button -->
         <div style="display: flex; justify-content: center; margin-top: 30px;">
-            <a href="/all" style="
+            <a href="{{ route('about.index') }}" style="
                 padding: 12px 25px;
                 background-color: #00704A;
                 color: white;
@@ -268,7 +229,6 @@
                 View All
             </a>
         </div>
-
     </div>
 </div>
 
@@ -301,95 +261,52 @@
       font-weight: 500;
     }
 </style>
+
 <!-- ================== CAROUSEL & STATS ================== -->
 <div class="striped-background">
     <div class="container">
 
-        <!-- Carousel -->
-        <div id="projectCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="row g-3">
-                        <!-- Image 1 -->
+       <!-- Carousel -->
+<div id="projectCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        @foreach ($products->chunk(3) as $chunkIndex => $productChunk)
+            <div class="carousel-item {{ $chunkIndex === 0 ? 'active' : '' }}">
+                <div class="row g-3">
+                    @foreach ($productChunk as $product)
                         <div class="col-md-4">
-                            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="d-block w-100" alt="Image 1">
+                            @if($product->image)
+                                <img src="{{ asset('storage/' . $product->image) }}" class="d-block w-100" alt="{{ $product->name_en }}">
+                            @else
+                                <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="d-block w-100" alt="{{ $product->name_en }}">
+                            @endif
                         </div>
-                        <!-- Image 2 -->
-                        <div class="col-md-4">
-                            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="d-block w-100" alt="Image 2">
-                        </div>
-                        <!-- Image 3 -->
-                        <div class="col-md-4">
-                            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="d-block w-100" alt="Image 3">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="carousel-item">
-                    <div class="row g-3">
-                        <!-- Image 4 -->
-                        <div class="col-md-4">
-                            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="d-block w-100" alt="Image 4">
-                        </div>
-                        <!-- Image 5 -->
-                        <div class="col-md-4">
-                            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="d-block w-100" alt="Image 5">
-                        </div>
-                        <!-- Image 6 -->
-                        <div class="col-md-4">
-                            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="d-block w-100" alt="Image 6">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="carousel-item">
-                    <div class="row g-3">
-                        <!-- Image 7 -->
-                        <div class="col-md-4">
-                            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="d-block w-100" alt="Image 7">
-                        </div>
-                        <!-- Image 8 -->
-                        <div class="col-md-4">
-                            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="d-block w-100" alt="Image 8">
-                        </div>
-                        <!-- Image 9 -->
-                        <div class="col-md-4">
-                            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="d-block w-100" alt="Image 9">
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
-
-            <button class="carousel-control-prev" type="button" data-bs-target="#projectCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#projectCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            </button>
-        </div>
-
+        @endforeach
     </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#projectCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#projectCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </button>
 </div>
 
-        <!-- Stats -->
-        <div class="row stats mt-5">
-            <div class="col-6 col-md-3 stat-item">
-                <h3>100+</h3>
-                <p>Countries</p>
-            </div>
-            <div class="col-6 col-md-3 stat-item">
-                <h3>10,000+</h3>
-                <p>Projects</p>
-            </div>
-            <div class="col-6 col-md-3 stat-item">
-                <h3>4,450+</h3>
-                <p>Hectares</p>
-            </div>
-            <div class="col-6 col-md-3 stat-item">
-                <h3>40+</h3>
-                <p>Years</p>
-            </div>
+</div>
+
+    <!-- Stats -->
+<div class="row stats mt-5">
+    @foreach($stats as $stat)
+        <div class="col-6 col-md-3 stat-item">
+            <h3>{{ $stat->value }}+</h3>
+            <p>{{ app()->getLocale() === 'ar' ? $stat->title_ar : $stat->title_en }}</p>
         </div>
+    @endforeach
+</div>
+
+
     </div>
 </div>
 

@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Product;
 
 class FrontProductController extends Controller
 {
     public function index()
     {
-        return view('front.products');
+        // Fetch only active products, you can customize the order
+        $products = Product::where('status', 'active')->latest()->get();
+
+        // Pass them to the Blade view
+        return view('front.products', compact('products'));
     }
 }

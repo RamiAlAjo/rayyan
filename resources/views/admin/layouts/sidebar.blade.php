@@ -24,28 +24,28 @@
                 </a>
             </li>
 
-            <!-- Homepage -->
-            <li class="has-sub">
-                <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#Homepage" aria-expanded="false" aria-controls="Homepage">
-                    <span class="material-icons">home</span>
-                    <span class="nav-text">Homepage</span>
-                    <b class="caret"></b>
-                </a>
-                <ul class="collapse sub-menu" id="Homepage">
-                    <li><a class="sidenav-item-link" href="{{ route('admin.slider.index') }}"><span class="nav-text">Slider</span></a></li>
-                    <li><a class="sidenav-item-link" href="{{ route('admin.admin_home') }}"><span class="nav-text">About Us Section</span></a></li>
-                </ul>
-            </li>
+    <!-- Homepage -->
+<li class="has-sub">
+    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#Homepage" aria-expanded="false" aria-controls="Homepage">
+        <span class="material-icons">home</span>
+        <span class="nav-text">Homepage</span>
+        <b class="caret"></b>
+    </a>
+    <ul class="collapse sub-menu" id="Homepage">
+        <li><a class="sidenav-item-link" href="{{ route('admin.features.index') }}"><span class="nav-text">Features</span></a></li>
+        <li><a class="sidenav-item-link" href="{{ route('admin.stats.index') }}"><span class="nav-text">Stats</span></a></li>
+    </ul>
+</li>
 
             <!-- Pages Banner -->
             <li class="has-sub">
                 <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#banner" aria-expanded="false" aria-controls="banner">
                     <span class="material-icons">image</span>
-                    <span class="nav-text">Pages Banner</span>
+                    <span class="nav-text">Pages Slider</span>
                     <b class="caret"></b>
                 </a>
                 <ul class="collapse sub-menu" id="banner">
-                    <li><a class="sidenav-item-link" href="{{ route('admin.admin_home') }}"><span class="nav-text">Banner</span></a></li>
+                    <li><a class="sidenav-item-link" href="{{ route('admin.slider.index') }}"><span class="nav-text">Slider</span></a></li>
                 </ul>
             </li>
 
@@ -64,18 +64,55 @@
                 </ul>
             </li>
 
-            <!-- Products -->
-            <li class="has-sub">
-                <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#Products" aria-expanded="false" aria-controls="Products">
-                    <span class="material-icons">shopping_cart</span>
-                    <span class="nav-text">Products</span>
-                    <b class="caret"></b>
-                </a>
-                <ul class="collapse sub-menu" id="Products">
-                    <li><a class="sidenav-item-link" href="{{ route('admin.admin_home') }}"><span class="nav-text">Products List</span></a></li>
-                    <li><a class="sidenav-item-link" href="{{ route('admin.admin_home') }}"><span class="nav-text">Create Product</span></a></li>
-                </ul>
-            </li>
+      <!-- Products -->
+<li class="has-sub">
+    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#Products" aria-expanded="false" aria-controls="Products">
+        <span class="material-icons">shopping_cart</span>
+        <span class="nav-text">Products</span>
+        <b class="caret"></b>
+    </a>
+    <ul class="collapse sub-menu" id="Products">
+        <!-- Products -->
+        <li><a class="sidenav-item-link" href="{{ route('admin.products.index') }}"><span class="nav-text">Products List</span></a></li>
+        <li><a class="sidenav-item-link" href="{{ route('admin.products.create') }}"><span class="nav-text">Create Product</span></a></li>
+
+        <!-- Divider -->
+        <li class="mt-2 border-top pt-2"><strong class="text-muted px-3">Product Categories</strong></li>
+
+        <!-- Categories -->
+        <li><a class="sidenav-item-link" href="{{ route('admin.product_categories.index') }}"><span class="nav-text">All Categories</span></a></li>
+        <li><a class="sidenav-item-link" href="{{ route('admin.product_categories.create') }}"><span class="nav-text">Create Category</span></a></li>
+
+        <!-- Subcategories -->
+        <li><a class="sidenav-item-link" href="{{ route('admin.product_subcategories.index') }}"><span class="nav-text">All Subcategories</span></a></li>
+        <li><a class="sidenav-item-link" href="{{ route('admin.product_subcategories.create') }}"><span class="nav-text">Create Subcategory</span></a></li>
+    </ul>
+</li>
+
+<!-- Projects -->
+<li class="has-sub">
+    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#Projects" aria-expanded="false" aria-controls="Projects">
+        <span class="material-icons">work</span>
+        <span class="nav-text">Projects</span>
+        <b class="caret"></b>
+    </a>
+    <ul class="collapse sub-menu" id="Projects">
+        <!-- Projects -->
+        <li><a class="sidenav-item-link" href="{{ route('admin.projects.index') }}"><span class="nav-text">Projects List</span></a></li>
+        <li><a class="sidenav-item-link" href="{{ route('admin.projects.create') }}"><span class="nav-text">Create Project</span></a></li>
+
+        <!-- Divider -->
+        <li class="mt-2 border-top pt-2"><strong class="text-muted px-3">Project Categories</strong></li>
+
+        <!-- Categories -->
+        <li><a class="sidenav-item-link" href="{{ route('admin.projects_categories.index') }}"><span class="nav-text">All Categories</span></a></li>
+        <li><a class="sidenav-item-link" href="{{ route('admin.projects_categories.create') }}"><span class="nav-text">Create Category</span></a></li>
+
+        <!-- Subcategories -->
+        <li><a class="sidenav-item-link" href="{{ route('admin.projects_subcategories.index') }}"><span class="nav-text">All Subcategories</span></a></li>
+        <li><a class="sidenav-item-link" href="{{ route('admin.projects_subcategories.create') }}"><span class="nav-text">Create Subcategory</span></a></li>
+    </ul>
+</li>
 
             <!-- Portfolio -->
             <li class="has-sub">

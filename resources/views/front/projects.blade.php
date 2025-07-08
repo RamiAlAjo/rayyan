@@ -41,35 +41,21 @@
         }
     </style>
 
-    <h2 class="projects-title">Our Projects</h2>
+<h2 class="projects-title text-center mb-4">Our Projects</h2>
 
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 justify-content-center">
-        <!-- Project 1 -->
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 justify-content-center">
+    @forelse($projects as $project)
         <div class="col text-center project-item">
-            <img src="Product.png" alt="Jordan Agriculture">
-            <p>Jordan Agriculture Project</p>
+            <img src="{{ $project->image ? asset('storage/' . $project->image) : asset('images/placeholder.png') }}"
+                 alt="{{ $project->name_en }}" class="img-fluid mb-2" style="max-height: 180px;">
+            <p>{{ $project->name_en }}</p>
         </div>
-        <!-- Project 2 -->
-        <div class="col text-center project-item">
-            <img src="Product.png" alt="Saudi Poultry">
-            <p>Saudi Poultry Expansion</p>
+    @empty
+        <div class="col-12 text-center">
+            <p>No projects available at the moment.</p>
         </div>
-        <!-- Project 3 -->
-        <div class="col text-center project-item">
-            <img src="Product.png" alt="Irrigation Network">
-            <p>Irrigation Network Setup</p>
-        </div>
-        <!-- Project 4 -->
-        <div class="col text-center project-item">
-            <img src="Product.png" alt="Greenhouse Modernization">
-            <p>Greenhouse Modernization</p>
-        </div>
-        <!-- Project 5 -->
-        <div class="col text-center project-item">
-            <img src="Product.png" alt="Landscaping Design">
-            <p>Landscaping Design</p>
-        </div>
-    </div>
+    @endforelse
+</div>
 </div>
 
 @endsection

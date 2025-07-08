@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Front\FrontHomepageController;
 use App\Http\Controllers\Front\FrontAboutUsController;
 use App\Http\Controllers\Front\FrontProductController;
 use App\Http\Controllers\Front\FrontServicesController;
@@ -23,15 +24,16 @@ use App\Http\Controllers\Admin\AdminNewsController;
 use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\AdminProductCategoriesController;
 use App\Http\Controllers\Admin\AdminProductSubcategoriesController;
+use App\Http\Controllers\Admin\AdminCategoriesController;
+use App\Http\Controllers\Admin\AdminFeaturesController;
 
 use App\Http\Controllers\Admin\AdminProjectsController;
 use App\Http\Controllers\Admin\AdminProjectsCategoriesController;
 use App\Http\Controllers\Admin\AdminProjectsSubcategoriesController;
+use App\Http\Controllers\Admin\AdminStatsController;
 
 
-Route::get('/', function () {
-    return view('front.homepage');
-})->name('home');
+Route::get('/', [FrontHomepageController::class, 'index'])->name('home');
 
 
 Route::get('/dashboard', function () {
@@ -64,10 +66,13 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::resource('/projects_categories', AdminProjectsCategoriesController::class);
     Route::resource('/projects_subcategories', AdminProjectsSubcategoriesController::class);
 
+    Route::resource('/categories', AdminCategoriesController::class);
+    Route::resource('features', AdminFeaturesController::class);
+
+    Route::resource('stats', AdminStatsController::class);
+
+
  });
-
-
-
 
 // Front Routes
 

@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Project;
 
 class FrontProjectsController extends Controller
 {
     public function index()
     {
-        return view('front.projects');
+        // Fetch only active projects
+        $projects = Project::where('status', 1)->latest()->get();
+
+        return view('front.projects', compact('projects'));
     }
 }

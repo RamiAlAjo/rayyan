@@ -42,35 +42,21 @@
         }
     </style>
 
-    <h2 class="product-title">Products</h2>
+<h2 class="product-title text-center mb-4">Products</h2>
 
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 justify-content-center">
-        <!-- Product 1 -->
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 justify-content-center">
+    @forelse ($products as $product)
         <div class="col text-center product-item">
-            <img src="Product.png" alt="Green Houses">
-            <p>Green Houses</p>
+            <img src="{{ $product->image ? asset('storage/' . $product->image) : asset('images/placeholder.png') }}"
+                 alt="{{ $product->name_en }}" class="img-fluid mb-2" style="max-height: 180px;">
+            <p>{{ $product->name_en }}</p>
         </div>
-        <!-- Product 2 -->
-        <div class="col text-center product-item">
-            <img src="Product.png" alt="Poultry Houses">
-            <p>Poultry Houses</p>
+    @empty
+        <div class="col-12 text-center">
+            <p>No products available at the moment.</p>
         </div>
-        <!-- Product 3 -->
-        <div class="col text-center product-item">
-            <img src="Product.png" alt="Fish Farms">
-            <p>Fish Farms</p>
-        </div>
-        <!-- Product 4 -->
-        <div class="col text-center product-item">
-            <img src="Product.png" alt="Irrigation">
-            <p>Irrigation</p>
-        </div>
-        <!-- Product 5 -->
-        <div class="col text-center product-item">
-            <img src="Product.png" alt="Landscaping">
-            <p>Landscaping</p>
-        </div>
-    </div>
+    @endforelse
+</div>
 </div>
 
 @endsection
