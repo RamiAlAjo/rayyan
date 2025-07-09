@@ -86,5 +86,4 @@ Route::resource('portfolio', FrontPortfolioController::class);
 Route::resource('projects', FrontProjectsController::class);
 
 
-
 require __DIR__ . '/auth.php';

@@ -1,7 +1,5 @@
 <x-front-slider />
-
 @extends('front.layouts.app')
-
 @section('content')
 
 <!-- ================== CATEGORY SECTION ================== -->
@@ -9,136 +7,163 @@
 
     <!-- Category Section Styles -->
     <style>
-       .category-row {
-    display: flex;
-    flex-wrap: nowrap; /* keep items in one row on desktop */
-    overflow-x: auto;
-    gap: 20px;
-    padding-bottom: 10px;
-    min-height: 300px;
-    background-color: transparent;
-    background-image: none;
+        .category-row {
+            display: flex;
+            flex-wrap: nowrap; /* Keep items in one row on desktop */
+            overflow-x: auto;
+            gap: 20px;
+            padding-bottom: 10px;
+            min-height: 300px;
+            background-color: transparent;
+            background-image: none;
+            scroll-behavior: smooth; /* Smooth scrolling */
+            -webkit-overflow-scrolling: touch; /* Better momentum scroll on iOS */
+        }
 
-    scroll-behavior: smooth; /* smooth scrolling */
-    -webkit-overflow-scrolling: touch; /* better momentum scroll on iOS */
-}
+        /* Scrollbar styling */
+        .category-row::-webkit-scrollbar {
+            height: 8px;
+        }
 
-/* Scrollbar styling */
-.category-row::-webkit-scrollbar {
-    height: 8px;
-}
+        .category-row::-webkit-scrollbar-thumb {
+            background-color: #00704A;
+            border-radius: 4px;
+        }
 
-.category-row::-webkit-scrollbar-thumb {
-    background-color: #00704A;
-    border-radius: 4px;
-}
+        /* Category item styles */
+        .category-item {
+            flex: 0 0 auto; /* Fix width */
+            text-align: center;
+            background-color: #e6f4ea;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 112, 74, 0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 220px; /* Limit max width for consistency */
+        }
 
-/* Category item styles */
-.category-item {
-    flex: 0 0 auto; /* fix width */
-    text-align: center;
-    background-color: #e6f4ea;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0, 112, 74, 0.2);
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    min-height: 280px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    max-width: 220px; /* limit max width for consistency */
-}
+        /* Hover effects */
+        .category-item:hover {
+            background-color: #c9e7d2;
+            transform: translateY(-5px);
+        }
 
-/* Hover effects */
-.category-item:hover {
-    background-color: #c9e7d2;
-    transform: translateY(-5px);
-}
+        .category-item:hover img {
+            transform: scale(1.1);
+        }
 
-.category-item:hover img {
-    transform: scale(1.1);
-}
+        /* Responsive adjustments */
+        /* Large tablets and smaller desktops */
+        @media (max-width: 1200px) {
+            .category-row {
+                gap: 15px;
+            }
+            .category-item {
+                max-width: 200px;
+                min-height: 260px;
+            }
+            .category-item img {
+                max-width: 130px;
+            }
+        }
 
-/* Responsive adjustments */
+        /* Tablets and small laptops */
+        @media (max-width: 992px) {
+            .category-row {
+                flex-wrap: wrap; /* Wrap items on smaller screens */
+                justify-content: center;
+                gap: 15px;
+                min-height: auto; /* Remove min height for flexibility */
+            }
+            .category-item {
+                min-width: 180px;
+                max-width: 220px;
+                min-height: auto;
+            }
+            .category-item img {
+                max-width: 120px;
+            }
+        }
 
-/* Large tablets and smaller desktops */
-@media (max-width: 1200px) {
-    .category-row {
-        gap: 15px;
-    }
-    .category-item {
-        max-width: 200px;
-        min-height: 260px;
-    }
-    .category-item img {
-        max-width: 130px;
-    }
-}
+        /* Large phones and small tablets */
+        @media (max-width: 768px) {
+            .category-title {
+                font-size: 28px;
+                margin-bottom: 20px;
+            }
+            .category-item p {
+                font-size: 16px;
+            }
+            .category-row {
+                flex-direction: column; /* Stack vertically on phones */
+                gap: 10px;
+                min-height: auto;
+            }
+            .category-item {
+                max-width: 100%;
+                min-height: auto;
+                padding: 20px;
+            }
+            .category-item img {
+                max-width: 100px;
+            }
+        }
 
-/* Tablets and small laptops */
-@media (max-width: 992px) {
-    .category-row {
-        flex-wrap: wrap; /* wrap items on smaller screens */
-        justify-content: center;
-        gap: 15px;
-        min-height: auto; /* remove min height for flexibility */
-    }
-    .category-item {
-        min-width: 180px;
-        max-width: 220px;
-        min-height: auto;
-    }
-    .category-item img {
-        max-width: 120px;
-    }
-}
+        /* Small phones */
+        @media (max-width: 576px) {
+            .category-title {
+                font-size: 24px;
+                margin-bottom: 15px;
+            }
+            .category-item p {
+                font-size: 14px;
+            }
+            .category-item img {
+                max-width: 80px;
+            }
+        }
 
-/* Large phones and small tablets */
-@media (max-width: 768px) {
-    .category-title {
-        font-size: 28px;
-        margin-bottom: 20px;
-    }
-    .category-item p {
-        font-size: 16px;
-    }
-    .category-row {
-        flex-direction: column; /* stack vertically on phones */
-        gap: 10px;
-        min-height: auto;
-    }
-    .category-item {
-        max-width: 100%;
-        min-height: auto;
-        padding: 20px;
-    }
-    .category-item img {
-        max-width: 100px;
-    }
-}
+        /* Ensure smooth scroll behavior for horizontal scrollable row */
+        .d-flex.overflow-auto::-webkit-scrollbar {
+            height: 8px;
+        }
 
-/* Small phones */
-@media (max-width: 576px) {
-    .category-title {
-        font-size: 24px;
-        margin-bottom: 15px;
-    }
-    .category-item p {
-        font-size: 14px;
-    }
-    .category-item img {
-        max-width: 80px;
-    }
-}
-.d-flex.overflow-auto::-webkit-scrollbar {
-    height: 8px;
-}
-.d-flex.overflow-auto::-webkit-scrollbar-thumb {
-    background-color: #00704A;
-    border-radius: 4px;
-}
+        .d-flex.overflow-auto::-webkit-scrollbar-thumb {
+            background-color: #00704A;
+            border-radius: 4px;
+        }
 
+        /* Add fade-in effect for images */
+        .category-item img {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Ensure vertical alignment and scaling on smaller screens */
+        .category-item img {
+            object-fit: cover;
+            transition: transform 0.3s ease-in-out, scale 0.3s ease-in-out;
+        }
+
+        /* Adjust title and layout for extra-small screens */
+        @media (max-width: 400px) {
+            .category-title {
+                font-size: 22px;
+            }
+
+            .category-item {
+                padding: 15px;
+            }
+
+            .category-item img {
+                max-width: 70px;
+            }
+        }
     </style>
+</div>
 
 <!-- ================== CATEGORY SECTION ================== -->
 <div class="container mt-5">
@@ -177,7 +202,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- Features Section Styles -->
 <style>
@@ -295,7 +319,6 @@
 </div>
 
 </div>
-
     <!-- Stats -->
 <div class="row stats mt-5">
     @foreach($stats as $stat)
@@ -305,8 +328,6 @@
         </div>
     @endforeach
 </div>
-
-
     </div>
 </div>
 
@@ -345,89 +366,41 @@
     }
 </style>
 
-
 <!-- ================== PRODUCT SECTION ================== -->
 <div class="container mt-5">
 
     <h2 class="mb-4 text-center fw-bold" style="color: #00704A;">Our Products</h2>
 
     <div class="d-flex flex-nowrap overflow-auto gap-3 pb-3" style="min-height: 250px;">
-        <div class="card text-center border-0" style="width: 10rem; min-width: 10rem;">
-            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="card-img-top" alt="Organic Fertilizer" loading="lazy">
-            <div class="card-body">
-                <p class="card-text fw-semibold mb-0">Organic Fertilizer</p>
+        @foreach($products as $product)
+            <div class="card text-center border-0" style="width: 10rem; min-width: 10rem;">
+                <img src="{{ $product->image ?: 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png' }}" class="card-img-top" alt="{{ $product->name_en }}" loading="lazy">
+                <div class="card-body">
+                    <p class="card-text fw-semibold mb-0">{{ $product->name_en }}</p>
+                </div>
             </div>
-        </div>
-
-        <div class="card text-center border-0" style="width: 10rem; min-width: 10rem;">
-            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="card-img-top" alt="Drip Kit" loading="lazy">
-            <div class="card-body">
-                <p class="card-text fw-semibold mb-0">Drip Kit</p>
-            </div>
-        </div>
-
-        <div class="card text-center border-0" style="width: 10rem; min-width: 10rem;">
-            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="card-img-top" alt="Shade Nets" loading="lazy">
-            <div class="card-body">
-                <p class="card-text fw-semibold mb-0">Shade Nets</p>
-            </div>
-        </div>
-
-        <div class="card text-center border-0" style="width: 10rem; min-width: 10rem;">
-            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="card-img-top" alt="Water Pumps" loading="lazy">
-            <div class="card-body">
-                <p class="card-text fw-semibold mb-0">Water Pumps</p>
-            </div>
-        </div>
-
-        <div class="card text-center border-0" style="width: 10rem; min-width: 10rem;">
-            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="card-img-top" alt="Plant Seeds" loading="lazy">
-            <div class="card-body">
-                <p class="card-text fw-semibold mb-0">Plant Seeds</p>
-            </div>
-        </div>
+        @endforeach
     </div>
-
 </div>
 
 <!-- ================== SERVICES SECTION ================== -->
 <div class="services-section">
     <div class="container">
-      <h2 class="text-center mb-5 fw-bold" style="color: #00704A;">Our Services</h2>
-      <div class="row text-center text-md-start">
-        <div class="col-md-4">
-          <div class="service-icon">
-            <img src="icon-path/consultation.svg" alt="">
-            <span>Consultation & Planning</span>
-          </div>
-          <div class="service-icon">
-            <img src="icon-path/installation.svg" alt="">
-            <span>System Installation</span>
-          </div>
+        <h2 class="text-center mb-5 fw-bold" style="color: #00704A;">Our Services</h2>
+        <div class="row text-center text-md-start">
+            @foreach($services->chunk(2) as $chunk)
+                <div class="col-md-4">
+                    @foreach($chunk as $service)
+                        <div class="service-icon">
+                            <img src="{{ asset($service->image ?: 'https://via.placeholder.com/150') }}" alt="{{ $service->name_en }}">
+                            <span>{{ $service->name_en }}</span>
+                        </div>
+                    @endforeach
+                </div>
+            @endforeach
         </div>
-        <div class="col-md-4">
-          <div class="service-icon">
-            <img src="icon-path/maintenance.svg" alt="">
-            <span>Ongoing Maintenance</span>
-          </div>
-          <div class="service-icon">
-            <img src="icon-path/custom.svg" alt="">
-            <span>Custom Engineering Solutions</span>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="service-icon">
-            <img src="icon-path/training.svg" alt="">
-            <span>Training & Support</span>
-          </div>
-          <div class="service-icon">
-            <img src="icon-path/monitoring.svg" alt="">
-            <span>Remote Monitoring</span>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
 
   <!-- Services Section Styles -->
   <style>
@@ -458,64 +431,36 @@
     <h2 class="mb-4 text-center fw-bold" style="color: #00704A;">Our Projects</h2>
 
     <div class="d-flex flex-nowrap overflow-auto gap-3 pb-3" style="min-height: 250px;">
-      <div class="card text-center border-0" style="width: 10rem; min-width: 10rem;">
-        <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
-             class="card-img-top" alt="Desert Greenhouse" loading="lazy">
-        <div class="card-body">
-          <p class="card-text fw-semibold mb-0">Desert Greenhouse</p>
-        </div>
-      </div>
-
-      <div class="card text-center border-0" style="width: 10rem; min-width: 10rem;">
-        <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
-             class="card-img-top" alt="Poultry Facility" loading="lazy">
-        <div class="card-body">
-          <p class="card-text fw-semibold mb-0">Poultry Facility</p>
-        </div>
-      </div>
-
-      <div class="card text-center border-0" style="width: 10rem; min-width: 10rem;">
-        <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
-             class="card-img-top" alt="Aquaculture Farm" loading="lazy">
-        <div class="card-body">
-          <p class="card-text fw-semibold mb-0">Aquaculture Farm</p>
-        </div>
-      </div>
-
-      <div class="card text-center border-0" style="width: 10rem; min-width: 10rem;">
-        <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
-             class="card-img-top" alt="Irrigation System" loading="lazy">
-        <div class="card-body">
-          <p class="card-text fw-semibold mb-0">Irrigation System</p>
-        </div>
-      </div>
-
-      <div class="card text-center border-0" style="width: 10rem; min-width: 10rem;">
-        <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
-             class="card-img-top" alt="Landscape Park" loading="lazy">
-        <div class="card-body">
-          <p class="card-text fw-semibold mb-0">Landscape Park</p>
-        </div>
-      </div>
+        @foreach ($projects as $project)
+            <div class="card text-center border-0" style="width: 10rem; min-width: 10rem;">
+                <img src="{{ asset('storage/' . $project->image) }}"
+                     class="card-img-top"
+                     alt="{{ $project->name_en }}"
+                     loading="lazy">
+                <div class="card-body">
+                    <p class="card-text fw-semibold mb-0">{{ $project->name_en }}</p>
+                </div>
+            </div>
+        @endforeach
     </div>
 
     <!-- View All Button -->
     <div style="display: flex; justify-content: center; margin-top: 30px;">
-      <a href="/projects" style="
-          padding: 12px 25px;
-          background-color: #00704A;
-          color: white;
-          font-weight: 600;
-          text-decoration: none;
-          border-radius: 5px;
-          width: 100%;
-          max-width: 400px;
-          text-align: center;
+        <a href="/projects" style="
+            padding: 12px 25px;
+            background-color: #00704A;
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
         ">
-        View All Projects
-      </a>
+            View All Projects
+        </a>
     </div>
-  </div>
+</div>
 
 <!-- ================== NEWS SECTION ================== -->
 <div class="container py-5 news-section">
@@ -523,37 +468,26 @@
     <div class="row g-4">
 
         <!-- News Items -->
-        @php $news = [
-            ['title' => 'Saudi Agriculture 2018', 'text' => 'Jordan Greenhouses will participating in Saudi Agriculture 2018...', 'img' => 'saudi-2018.png', 'dark' => true],
-            ['title' => 'Agro Food Oman', 'text' => 'Jordan Greenhouses will be participating in Agro Food Oman...', 'img' => 'agro-food-oman.png'],
-            ['title' => 'GrowTech Antalya (2019)', 'img' => 'growtech.png'],
-            ['title' => 'Saudi Agriculture 2019', 'img' => 'saudi-2019.png', 'dark' => true],
-            ['title' => 'Saudi Agriculture 2019', 'img' => 'saudi-2019-repeat.png', 'dark' => true],
-            ['title' => 'Sahara Expo (2022)', 'img' => 'sahara.png'],
-            ['title' => 'AGEX EXHIBITION JEDDAH 2022', 'img' => 'agex.png'],
-        ]; @endphp
-
         @foreach ($news as $item)
             <div class="col-md-6 {{ $loop->last ? 'col-12' : '' }}">
-                <div class="news-card {{ $item['dark'] ?? false ? 'dark-card' : '' }} p-4 h-100 text-center">
-                    <h5 class="news-heading {{ empty($item['dark']) ? 'text-success' : '' }}">{{ $item['title'] }}</h5>
-                    @if (!empty($item['text']))
-                        <p class="news-text">{{ $item['text'] }}</p>
+                <div class="news-card {{ $item->status == 'active' ? 'active-card' : '' }} p-4 h-100 text-center">
+                    <h5 class="news-heading {{ $item->status == 'active' ? 'text-success' : '' }}">{{ $item->title_en }}</h5>
+                    @if (!empty($item->description_en))
+                        <p class="news-text">{{ $item->description_en }}</p>
                     @endif
-                    <img src="your-image-path/{{ $item['img'] }}" alt="{{ $item['title'] }}" class="img-fluid mt-3" style="max-height: 90px;">
+                    @if (!empty($item->image))
+                        <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title_en }}" class="img-fluid mt-3" style="max-height: 90px;">
+                    @else
+                        <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" alt="Placeholder Image" class="img-fluid mt-3" style="max-height: 90px;">
+                    @endif
                 </div>
             </div>
         @endforeach
-
     </div>
 </div>
 
 <!-- News Section Styles -->
 <style>
-    .news-section {
-        background: repeating-linear-gradient(to bottom, #fff, #fff 20px, #ddd 20px, #ddd 22px);
-    }
-
     .news-title {
         color: #00704A;
         font-weight: bold;
@@ -600,11 +534,6 @@
 <!-- Main container for the page content -->
 <div class="container mt-5 ">
     <style>
-        body {
-            padding: 20px;
-            background-color: #f8f9fa;
-        }
-
         .contact-title {
             font-size: 36px;
             font-weight: bold;

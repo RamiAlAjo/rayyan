@@ -1,48 +1,43 @@
-<div id="carouselExample" class="carousel slide home-slider" data-bs-ride="carousel">
+<div id="carouselExample" class="carousel slide home-slider TS" data-bs-ride="carousel" aria-label="Top Slider">
     <style>
-        .home-slider {
+        /* Custom Styles for TS (Top Slider) */
+        .TS {
+            /* If you want to give it a specific container size or background */
             width: 100%;
-            height: 75vh;
-            overflow: hidden;
+            background-color: #f0f0f0; /* Light background */
         }
 
-        .home-carousel-inner {
+        .TS .carousel-inner {
             height: 100%;
         }
 
-        .carousel-item {
+        .TS .carousel-item {
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
             transition: transform 0.7s cubic-bezier(0.42, 0, 0.58, 1), opacity 0.7s ease-in-out;
             will-change: transform, opacity;
             width: 100%;
-            height: 75vh;
+            height: 75vh; /* Default height for the Top Slider */
             position: relative;
         }
 
-        .carousel-item img {
+        .TS .carousel-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .custom-body,
-        .custom-html {
-            margin: 0;
-            padding: 0;
-        }
-
-        .carousel-item .unique-overlay {
+        .TS .carousel-item .unique-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: rgba(0, 0, 0, 0.4); /* Dark overlay */
         }
 
-        .carousel-item .unique-content {
+        .TS .carousel-item .unique-content {
             position: relative;
             z-index: 1;
             color: white;
@@ -55,42 +50,40 @@
             padding: 0 1rem;
         }
 
-        .slider-description {
+        .TS .slider-description {
             font-size: 1.25rem;
             margin-bottom: 0.5rem;
+            opacity: 0.8;
         }
 
-        .slider-line {
-            width: 60px;
-            height: 2px;
-            background-color: white;
-            border: none;
-            margin: 0.5rem auto;
-        }
-
-        .slider-title {
+        .TS .slider-title {
             font-size: 2rem;
             font-weight: bold;
             margin-top: 0.5rem;
         }
 
-        .carousel-control-prev-icon,
-        .carousel-control-next-icon {
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .carousel-control-prev-icon:hover,
-        .carousel-control-next-icon:hover {
-            transform: scale(1.1);
-        }
-
+        /* Responsive Adjustments for Top Slider */
         @media (max-width: 768px) {
-            .slider-title {
+            .TS .slider-title {
                 font-size: 1.5rem;
             }
 
-            .slider-description {
+            .TS .slider-description {
                 font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .TS .slider-title {
+                font-size: 1.25rem;
+            }
+
+            .TS .slider-description {
+                font-size: 0.875rem;
+            }
+
+            .TS .carousel-item {
+                height: 50vh;
             }
         }
     </style>
