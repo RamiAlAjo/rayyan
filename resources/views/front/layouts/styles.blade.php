@@ -10,12 +10,5 @@
 <!-- This link loads the Bootstrap Icons CSS, which includes a collection of vector-based icons for use in your project. -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
-
 <!-- Leaflet CSS -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-
-
-
-
-
-

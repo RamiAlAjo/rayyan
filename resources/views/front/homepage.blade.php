@@ -3,185 +3,112 @@
 @section('content')
 
 <!-- ================== CATEGORY SECTION ================== -->
-<div class="container mt-5">
+<div class="container mt-5" style="background-color: #ffffff; opacity: 1; background-image: linear-gradient(to right, #a0a0a0, #a0a0a0 3px, #ffffff 3px, #ffffff); background-size: 6px 100%;">
 
-    <!-- Category Section Styles -->
-    <style>
-        .category-row {
-            display: flex;
-            flex-wrap: nowrap; /* Keep items in one row on desktop */
-            overflow-x: auto;
-            gap: 20px;
-            padding-bottom: 10px;
-            min-height: 300px;
-            background-color: transparent;
-            background-image: none;
-            scroll-behavior: smooth; /* Smooth scrolling */
-            -webkit-overflow-scrolling: touch; /* Better momentum scroll on iOS */
-        }
+    <div class="row d-flex flex-nowrap overflow-auto gap-3 pb-3" style="min-height: 220px;">
 
-        /* Scrollbar styling */
-        .category-row::-webkit-scrollbar {
-            height: 8px;
-        }
-
-        .category-row::-webkit-scrollbar-thumb {
-            background-color: #00704A;
-            border-radius: 4px;
-        }
-
-        /* Category item styles */
-        .category-item {
-            flex: 0 0 auto; /* Fix width */
-            text-align: center;
-            background-color: #e6f4ea;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 6px rgba(0, 112, 74, 0.2);
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            min-height: 280px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            max-width: 220px; /* Limit max width for consistency */
-        }
-
-        /* Hover effects */
-        .category-item:hover {
-            background-color: #c9e7d2;
-            transform: translateY(-5px);
-        }
-
-        .category-item:hover img {
-            transform: scale(1.1);
-        }
-
-        /* Responsive adjustments */
-        /* Large tablets and smaller desktops */
-        @media (max-width: 1200px) {
-            .category-row {
-                gap: 15px;
-            }
-            .category-item {
-                max-width: 200px;
-                min-height: 260px;
-            }
-            .category-item img {
-                max-width: 130px;
-            }
-        }
-
-        /* Tablets and small laptops */
-        @media (max-width: 992px) {
-            .category-row {
-                flex-wrap: wrap; /* Wrap items on smaller screens */
-                justify-content: center;
-                gap: 15px;
-                min-height: auto; /* Remove min height for flexibility */
-            }
-            .category-item {
-                min-width: 180px;
-                max-width: 220px;
-                min-height: auto;
-            }
-            .category-item img {
-                max-width: 120px;
-            }
-        }
-
-        /* Large phones and small tablets */
-        @media (max-width: 768px) {
-            .category-title {
-                font-size: 28px;
-                margin-bottom: 20px;
-            }
-            .category-item p {
-                font-size: 16px;
-            }
-            .category-row {
-                flex-direction: column; /* Stack vertically on phones */
-                gap: 10px;
-                min-height: auto;
-            }
-            .category-item {
-                max-width: 100%;
-                min-height: auto;
-                padding: 20px;
-            }
-            .category-item img {
-                max-width: 100px;
-            }
-        }
-
-        /* Small phones */
-        @media (max-width: 576px) {
-            .category-title {
-                font-size: 24px;
-                margin-bottom: 15px;
-            }
-            .category-item p {
-                font-size: 14px;
-            }
-            .category-item img {
-                max-width: 80px;
-            }
-        }
-
-        /* Ensure smooth scroll behavior for horizontal scrollable row */
-        .d-flex.overflow-auto::-webkit-scrollbar {
-            height: 8px;
-        }
-
-        .d-flex.overflow-auto::-webkit-scrollbar-thumb {
-            background-color: #00704A;
-            border-radius: 4px;
-        }
-
-        /* Add fade-in effect for images */
-        .category-item img {
-            transition: transform 0.3s ease-in-out;
-        }
-
-        /* Ensure vertical alignment and scaling on smaller screens */
-        .category-item img {
-            object-fit: cover;
-            transition: transform 0.3s ease-in-out, scale 0.3s ease-in-out;
-        }
-
-        /* Adjust title and layout for extra-small screens */
-        @media (max-width: 400px) {
-            .category-title {
-                font-size: 22px;
-            }
-
-            .category-item {
-                padding: 15px;
-            }
-
-            .category-item img {
-                max-width: 70px;
-            }
-        }
-    </style>
-</div>
-
-<!-- ================== CATEGORY SECTION ================== -->
-<div class="container mt-5">
-    <div class="d-flex flex-nowrap overflow-auto gap-3 pb-3" style="min-height: 220px;">
         @foreach($categories as $category)
-            <div class="card text-center" style="width: 10rem; min-width: 10rem;">
-                <div class="card-body">
-                    <p class="card-text fw-semibold mb-2">{{ $category->name_en }}</p>
+            <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                <div class="card category-card text-center" style="width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0, 112, 74, 0.2); transition: transform 0.3s ease;">
+                    <div class="card-body">
+                        <p class="card-text fw-semibold mb-2 text-dark">{{ $category->name_en }}</p>
+                    </div>
+                    @if($category->image)
+                        <img src="{{ asset('storage/' . $category->image) }}" class="card-img-bottom category-img" alt="{{ $category->name_en }}" loading="lazy">
+                    @else
+                        <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="card-img-bottom category-img" alt="{{ $category->name_en }}" loading="lazy">
+                    @endif
                 </div>
-                @if($category->image)
-                    <img src="{{ asset('storage/' . $category->image) }}" class="card-img-bottom" alt="{{ $category->name_en }}" loading="lazy">
-                @else
-                    <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="card-img-bottom" alt="{{ $category->name_en }}" loading="lazy">
-                @endif
             </div>
         @endforeach
+
     </div>
+
 </div>
+
+<!-- ================== CATEGORY SECTION STYLES ================== -->
+<style>
+    /* Category Card Styling */
+    .category-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+        background-color: #e6f4ea;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    /* Hover Effect on Card */
+    .category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 12px rgba(0, 112, 74, 0.2);
+    }
+
+    /* Category Image Styling */
+    .category-img {
+        object-fit: cover;
+        transition: transform 0.3s ease-in-out;
+        height: 150px; /* Ensuring consistent height for images */
+    }
+
+    .category-card:hover .category-img {
+        transform: scale(1.1);
+    }
+
+    /* Scrollable Row */
+    .d-flex.overflow-auto {
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Scrollbar Styling */
+    .d-flex.overflow-auto::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .d-flex.overflow-auto::-webkit-scrollbar-thumb {
+        background-color: #00704A;
+        border-radius: 4px;
+    }
+
+    /* Responsive Design Adjustments */
+    @media (max-width: 1200px) {
+        .category-card {
+            max-width: 200px;
+        }
+    }
+
+    @media (max-width: 992px) {
+        .d-flex.overflow-auto {
+            flex-wrap: wrap; /* Wrap items for smaller screens */
+        }
+        .category-card {
+            width: 100%;
+            max-width: 220px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .category-card {
+            padding: 15px;
+        }
+        .category-card .card-body {
+            padding: 10px;
+        }
+        .category-img {
+            max-width: 100px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .category-card {
+            padding: 10px;
+        }
+        .category-img {
+            max-width: 80px;
+        }
+    }
+</style>
+
 
 <!-- ================== FEATURES SECTION ================== -->
 <div class="features-section">
@@ -392,8 +319,8 @@
                 <div class="col-md-4">
                     @foreach($chunk as $service)
                         <div class="service-icon">
-                            <img src="{{ asset($service->image ?: 'https://via.placeholder.com/150') }}" alt="{{ $service->name_en }}">
-                            <span>{{ $service->name_en }}</span>
+                            <img src="{{ asset($service->icon_path ?: 'https://via.placeholder.com/150') }}" alt="{{ $service->title_en }}">
+                            <span>{{ $service->title_en }}</span>
                         </div>
                     @endforeach
                 </div>

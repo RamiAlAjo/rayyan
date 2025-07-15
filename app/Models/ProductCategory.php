@@ -4,15 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\ProductSubcategory;
 
 class ProductCategory extends Model
 {
     use HasFactory;
 
-    // Define the table name (optional if it's the plural of the model name)
     protected $table = 'products_categories';
 
-    // Define the fillable attributes
     protected $fillable = [
         'name_en',
         'name_ar',
@@ -23,20 +22,24 @@ class ProductCategory extends Model
         'slug',
     ];
 
-    // Optionally, you can define the cast types for certain attributes
     protected $casts = [
         'status' => 'string',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
 
-    // Define relationships if needed
+    // Existing relationship with products
     public function products()
     {
         return $this->hasMany(Product::class, 'category_id');
     }
 
-    // Optional: add logic to generate slug, if needed
+    // New relationship with subcategories
+    public function subcategories()
+    {
+        return $this->hasMany(ProductSubcategory::class, 'category_id');
+    }
+
     public static function boot()
     {
         parent::boot();

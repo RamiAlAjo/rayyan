@@ -15,4 +15,19 @@ class FrontProductController extends Controller
         // Pass them to the Blade view
         return view('front.products', compact('products'));
     }
+
+  public function show(Product $product)
+{
+    // Fetch 3 other products from the same subcategory (excluding the current product)
+    $otherProducts = Product::where('subcategory_id', $product->subcategory_id)
+                            ->where('id', '!=', $product->id)  // Exclude the current product
+                            ->where('status', 'active')
+                            ->latest()  // Order by the latest products
+                            ->take(3)   // Limit to 3 products
+                            ->get();
+
+    // Pass the product and other products to the view
+    return view('front.products_show', compact('product', 'otherProducts'));
+}
+
 }

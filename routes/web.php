@@ -12,6 +12,8 @@ use App\Http\Controllers\Front\FrontCareerController;
 use App\Http\Controllers\Front\FrontContactController;
 use App\Http\Controllers\Front\FrontPortfolioController;
 use App\Http\Controllers\Front\FrontProjectsController;
+use App\Http\Controllers\Front\FrontProductCategoryController;
+use App\Http\Controllers\Front\FrontProductSubcategoryController;
 
 
 use App\Http\Controllers\Admin\AdminHomepageController;
@@ -61,23 +63,23 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::resource('news', AdminNewsController::class);
     Route::resource('product_categories', AdminProductCategoriesController::class);
     Route::resource('product_subcategories', AdminProductSubcategoriesController::class);
-
     Route::resource('/projects', AdminProjectsController::class);
     Route::resource('/projects_categories', AdminProjectsCategoriesController::class);
     Route::resource('/projects_subcategories', AdminProjectsSubcategoriesController::class);
-
     Route::resource('/categories', AdminCategoriesController::class);
     Route::resource('features', AdminFeaturesController::class);
-
     Route::resource('stats', AdminStatsController::class);
-
 
  });
 
 // Front Routes
 
 Route::resource('about', FrontAboutUsController::class);
+// Define the resource routes for product
 Route::resource('product', FrontProductController::class);
+
+Route::resource('product-category', FrontProductCategoryController::class);
+Route::resource('product-subcategory', FrontProductSubcategoryController::class);
 Route::resource('services', FrontServicesController::class);
 Route::resource('faq', FrontFaqController::class);
 Route::resource('career', FrontCareerController::class);

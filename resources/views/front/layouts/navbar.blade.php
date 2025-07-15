@@ -144,7 +144,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('product.index') }}">Product</a>
+                    <a class="nav-link" href="{{ route('product-category.index') }}">Product</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('projects.index') }}">Projects</a>
