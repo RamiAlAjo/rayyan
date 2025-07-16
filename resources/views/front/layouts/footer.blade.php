@@ -1,9 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Footer</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     .footer-top {
       background-color: #355043;
@@ -16,6 +10,13 @@
       color: white;
       padding: 8px;
       border-radius: 6px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .footer-icons i:hover,
+    .footer-icons i:focus {
+      transform: scale(1.2);
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+      outline: none;
     }
 
     .footer-icons .facebook  { background-color: #3b5998; }
@@ -30,30 +31,41 @@
       background-color: #157347;
       padding: 15px 0;
       color: white;
-      font-family: 'Segoe UI', sans-serif;
-      font-size: 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 1.25rem; /* Responsive font size */
       text-align: center;
     }
+
+    /* Responsive tweaks */
+    @media (max-width: 576px) {
+      .footer-icons i {
+        font-size: 24px;
+        margin: 0 5px;
+        padding: 6px;
+      }
+
+      .footer-bottom {
+        font-size: 1rem;
+        padding: 10px 0;
+      }
+    }
   </style>
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
   <!-- Footer -->
-  <footer class="footer mt-5">
+  <footer class="footer mt-5" role="contentinfo" aria-label="Footer">
     <div class="footer-top text-center">
-      <div class="footer-icons d-inline-block">
-        <a href="#"><i class="fab fa-facebook facebook"></i></a>
-        <a href="#"><i class="fab fa-twitter twitter"></i></a>
-        <a href="#"><i class="fab fa-youtube youtube"></i></a>
-        <a href="#"><i class="fab fa-linkedin linkedin"></i></a>
-        <a href="#"><i class="fab fa-instagram instagram"></i></a>
+      <div class="footer-icons d-inline-block" role="list">
+        <a href="#" aria-label="Facebook" role="listitem" tabindex="0"><i class="fab fa-facebook facebook"></i></a>
+        <a href="#" aria-label="Twitter" role="listitem" tabindex="0"><i class="fab fa-twitter twitter"></i></a>
+        <a href="#" aria-label="YouTube" role="listitem" tabindex="0"><i class="fab fa-youtube youtube"></i></a>
+        <a href="#" aria-label="LinkedIn" role="listitem" tabindex="0"><i class="fab fa-linkedin linkedin"></i></a>
+        <a href="#" aria-label="Instagram" role="listitem" tabindex="0"><i class="fab fa-instagram instagram"></i></a>
       </div>
     </div>
     <div class="footer-bottom">
-      Web Design & Development by Jordancode@2025
+      Web Design & Development by Jordancode © 2025
     </div>
   </footer>
 
-</body>
-</html>
