@@ -3,15 +3,13 @@
 
 @section('content')
 
-<!-- Main container for the page content -->
 <div class="container mt-5">
 
     <style>
-
         .product-title {
             font-size: 36px;
             font-weight: bold;
-            color: #00704A; /* Dark green */
+            color: #00704A;
             text-align: center;
             margin-bottom: 40px;
         }
@@ -29,7 +27,6 @@
             color: #00704A;
         }
 
-        /* Responsive spacing for small devices */
         @media (max-width: 576px) {
             .product-title {
                 font-size: 28px;
@@ -40,23 +37,52 @@
                 font-size: 16px;
             }
         }
+
+         /* Dark green pagination styling */
+    .pagination .page-link {
+        color: #00704A;
+    }
+
+    .pagination .page-link:hover {
+        background-color: #00704A;
+        color: white;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #00704A;
+        border-color: #00704A;
+        color: white;
+    }
+
+    .pagination .page-link:focus {
+        box-shadow: 0 0 0 0.2rem rgba(0, 112, 74, 0.25);
+    }
     </style>
 
-<h2 class="product-title text-center mb-4">Products</h2>
+    <!-- Category Title -->
+    <h2 class="product-title text-center mb-4">{{ $categoryName }} Products</h2>
 
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 justify-content-center">
-    @forelse ($products as $product)
-        <div class="col text-center product-item">
-            <img src="{{ $product->image ? asset('storage/' . $product->image) : asset('images/placeholder.png') }}"
-                 alt="{{ $product->name_en }}" class="img-fluid mb-2" style="max-height: 180px;">
-            <p>{{ $product->name_en }}</p>
-        </div>
-    @empty
-        <div class="col-12 text-center">
-            <p>No products available at the moment.</p>
-        </div>
-    @endforelse
-</div>
-</div>
+    <!-- Products Grid -->
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 justify-content-center">
+        @forelse ($products as $product)
+            <div class="col text-center product-item">
+                <a href="{{ route('product.show', $product->id) }}">
+                    <img src="{{ $product->image ? asset('storage/' . $product->image) : asset('images/placeholder.png') }}"
+                         alt="{{ $product->name_en }}" class="img-fluid mb-2" style="max-height: 180px;">
+                    <p>{{ $product->name_en }}</p>
+                </a>
+            </div>
+        @empty
+            <div class="col-12 text-center">
+                <p>No products available at the moment.</p>
+            </div>
+        @endforelse
+    </div>
 
+    <!-- Pagination -->
+    <div class="d-flex justify-content-center mt-4">
+        {{ $products->links('pagination::bootstrap-5') }}
+    </div>
+
+</div>
 @endsection

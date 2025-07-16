@@ -6,7 +6,7 @@
 <div class="container mt-5">
 
     <style>
-        .project-title {
+        .category-title {
             font-size: 36px;
             font-weight: bold;
             color: #00704A;
@@ -14,31 +14,40 @@
             margin-bottom: 40px;
         }
 
-        .project-item img {
+        .category-item img {
             width: 100%;
             max-width: 150px;
             height: auto;
         }
 
-        .project-item p {
-            margin-top: 15px;
+        .category-item p {
+            margin-top: 10px;
             font-size: 18px;
             font-weight: 500;
             color: #00704A;
         }
 
+        .category-description {
+            font-size: 14px;
+            color: #555;
+            margin-top: 5px;
+        }
+
         @media (max-width: 576px) {
-            .project-title {
+            .category-title {
                 font-size: 28px;
                 margin-bottom: 30px;
             }
 
-            .project-item p {
+            .category-item p {
                 font-size: 16px;
+            }
+
+            .category-description {
+                font-size: 13px;
             }
         }
 
-        /* Dark green pagination styling */
         .pagination .page-link {
             color: #00704A;
         }
@@ -59,30 +68,33 @@
         }
     </style>
 
-    <!-- Category/Subcategory Title -->
-    <h2 class="project-title text-center mb-4">{{ $categoryName }} Projects</h2>
+    <h2 class="category-title">Project Categories</h2>
 
-    <!-- Projects Grid -->
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 justify-content-center">
-        @forelse($projects as $project)
-            <div class="col text-center project-item">
-                <a href="{{ route('projects.show', $project->id) }}">
-                    <img src="{{ $project->image ? asset('storage/' . $project->image) : asset('images/placeholder.png') }}"
-                         alt="{{ $project->name_en }}" class="img-fluid mb-2" style="max-height: 180px;">
-                    <p>{{ $project->name_en }}</p>
+        @forelse ($categories as $category)
+            <div class="col text-center category-item">
+                <a href="{{ route('projects-category.show', $category->id) }}">
+
+                    <img src="{{ $category->image ? asset('storage/' . $category->image) : asset('images/placeholder.png') }}"
+                         alt="{{ $category->name_en }}" class="img-fluid mb-2" style="max-height: 180px;">
+                    <p>{{ $category->name_en }}</p>
                 </a>
+                {{-- @if ($category->description_en)
+                    <div class="category-description">{{ Str::limit($category->description_en, 100) }}</div>
+                @endif --}}
             </div>
         @empty
             <div class="col-12 text-center">
-                <p>No projects available at the moment.</p>
+                <p>No project categories available at the moment.</p>
             </div>
         @endforelse
     </div>
 
     <!-- Pagination -->
     <div class="d-flex justify-content-center mt-4">
-        {{ $projects->links('pagination::bootstrap-5') }}
+        {{ $categories->links('pagination::bootstrap-5') }}
     </div>
 
 </div>
+
 @endsection

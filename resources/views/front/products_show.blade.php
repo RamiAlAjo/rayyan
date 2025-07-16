@@ -57,7 +57,7 @@
         @forelse ($otherProducts as $otherProduct)
             <div class="col text-center product-item">
                 <!-- Make the product clickable -->
-                <a href="{{ route('product.show', $otherProduct->slug) }}">
+                <a href="{{ route('product.show', $product->id) }}">
                     <img src="{{ $otherProduct->image ? asset('storage/' . $otherProduct->image) : asset('images/placeholder.png') }}"
                          alt="{{ $otherProduct->name_en }}" class="img-fluid mb-2" style="max-height: 180px;">
                     <p>{{ $otherProduct->name_en }}</p>

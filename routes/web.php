@@ -14,6 +14,8 @@ use App\Http\Controllers\Front\FrontPortfolioController;
 use App\Http\Controllers\Front\FrontProjectsController;
 use App\Http\Controllers\Front\FrontProductCategoryController;
 use App\Http\Controllers\Front\FrontProductSubcategoryController;
+use App\Http\Controllers\Front\FrontProjectCategoryController;
+use App\Http\Controllers\Front\FrontProjectSubcategoryController;
 
 
 use App\Http\Controllers\Admin\AdminHomepageController;
@@ -76,16 +78,20 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 
 Route::resource('about', FrontAboutUsController::class);
 // Define the resource routes for product
-Route::resource('product', FrontProductController::class);
 
+Route::resource('product', FrontProductController::class);
 Route::resource('product-category', FrontProductCategoryController::class);
 Route::resource('product-subcategory', FrontProductSubcategoryController::class);
+
 Route::resource('services', FrontServicesController::class);
 Route::resource('faq', FrontFaqController::class);
 Route::resource('career', FrontCareerController::class);
 Route::resource('contact', FrontContactController::class);
 Route::resource('portfolio', FrontPortfolioController::class);
+
 Route::resource('projects', FrontProjectsController::class);
+Route::resource('projects-category', FrontProjectCategoryController::class);
+Route::resource('projects-subcategory', FrontProjectSubcategoryController::class);
 
 
 require __DIR__ . '/auth.php';
