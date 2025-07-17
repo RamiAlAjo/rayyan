@@ -27,7 +27,7 @@
     {{-- Extra head content --}}
     @yield('head')
 </head>
-<body class="d-flex flex-column min-vh-100 bg-light text-dark">
+<body class="min-vh-100 bg-light text-dark">
 
     {{-- Responsive Navbar example --}}
     @include('front.layouts.navbar')

@@ -93,29 +93,28 @@
             </div>
         </div>
 
-        <!-- Right Contact Information -->
-        <div class="col-lg-4">
-            <div class="contact-box">
-                <h4>Get In Touch</h4>
-                <p><strong>Factory Address</strong><br>
-                    Amman – Jordan – Abu Alanda Industrial Area<br>
-                    Al-Hazam Street<br><br>
-                    Saudi Arabia – Al-Malaz
-                </p>
+       <!-- Right Contact Information -->
+<div class="col-lg-4">
+    <div class="contact-box">
+        <h4>Get In Touch</h4>
+        <p><strong>Factory Address</strong><br>
+            {!! nl2br(e($settings->address)) !!}
+        </p>
 
-                <p><strong>Contact</strong><br>
-                    Tel: 0096264161787 / 009625643888<br>
-                    Fax: 0096264165081 / 009625543882<br>
-                    Email: admin@rayyan.com.jo
-                </p>
+        <p><strong>Contact</strong><br>
+            Tel: {{ $settings->phone }}<br>
+            Fax: {{ $settings->fax }}<br>
+            Email: {{ $settings->contact_email }}
+        </p>
 
-                <p class="mt-3">Member of Munir Sukhtian International</p>
+        <p class="mt-3">Member of Munir Sukhtian International</p>
 
-                <div class="company-logos">
-                    <img src="Career.png" alt="Company Logo">
-                </div>
-            </div>
+        <div class="company-logos">
+            <img src="{{ asset('path/to/logo/' . $settings->logo) }}" alt="Company Logo">
         </div>
+    </div>
+</div>
+
     </div>
 </div>
 

@@ -115,6 +115,18 @@
             font-size: 18px;
         }
     }
+
+    .navbar-logo {
+    max-height: 80px;
+    width: auto;
+    object-fit: contain;
+}
+@media (max-width: 992px) {
+    .navbar-logo {
+        max-height: 60px;
+    }
+}
+
 </style>
 </head>
 <body>
@@ -122,9 +134,10 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg fixed-top mt-4">
     <div class="container">
-        <a class="navbar-brand" href="/home">
-            <img src="assets/Logo 2025 rami.svg" alt="Rayyan">
-        </a>
+  <a class="navbar-brand" href="/home">
+    <img src="{{ asset('Rayyan_Logo.svg') }}" alt="Rayyan Logo" class="navbar-logo">
+</a>
+
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

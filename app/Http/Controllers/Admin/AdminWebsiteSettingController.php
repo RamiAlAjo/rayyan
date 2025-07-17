@@ -33,60 +33,61 @@ class AdminWebsiteSettingController extends Controller
     }
 
 
-
-
     public function store(Request $request)
-{
-    // Validate the phone field to ensure it's an array and contains no more than 3 items
-    $request->validate([
-        'facebook' => 'nullable|url',
-        'instagram' => 'nullable|url',
-        'twitter' => 'nullable|url',
-        'youtube' => 'nullable|url',
-        'title' => 'nullable|string',
-        'description' => 'nullable|string',
-        'key_words' => 'nullable|string',
-        'phone' => 'nullable|array|max:3',  // Max 3 phone numbers
-        'phone.*' => 'nullable|string', // Each phone must be a string
-        'fax' => 'nullable|string',
-        'logo' => 'nullable|image',
-        'address' => 'nullable|string',
-        'url' => 'nullable|url',
-        'contact_email' => 'nullable|email',
-        'carrers_email' => 'nullable|email',
-        'location' => 'nullable', // Validate Google Maps link as a URL
-    ]);
+    {
+        $request->validate([
+            'facebook' => 'nullable|url',
+            'instagram' => 'nullable|url',
+            'twitter' => 'nullable|url',
+            'youtube' => 'nullable|url',
+            'title' => 'nullable|string',
+            'description' => 'nullable|string',
+            'key_words' => 'nullable|string',
+            'phone' => 'nullable|array|max:3',
+            'phone.*' => 'nullable|string',
+            'fax' => 'nullable', // change to array for consistency
+            'fax.*' => 'nullable|string',
+            'email' => 'nullable|email', // ✅ add missing email
+            'logo' => 'nullable|image',
+            'address' => 'nullable|string',
+            'url' => 'nullable|url',
+            'contact_email' => 'nullable|email',
+            'carrers_email' => 'nullable|email',
+            'location' => 'nullable',
+        ]);
 
-    // Fetch the existing settings or create a new one
-    $setting = WebsiteSetting::firstOrNew([]);
+        $setting = WebsiteSetting::firstOrNew([]);
 
-    // Save the phone numbers as a JSON encoded string or comma-separated string
-    // Ensure phone numbers are stored as an array
-    if ($request->has('phone')) {
-        $setting->phone = json_encode($request->phone); // Store phone numbers as a JSON array
-    } else {
-        $setting->phone = json_encode([]); // Store as an empty array if no phones are provided
+        $setting->facebook = $request->facebook;
+        $setting->instagram = $request->instagram;
+        $setting->twitter = $request->twitter;
+        $setting->youtube = $request->youtube;
+        $setting->title = $request->title;
+        $setting->description = $request->description;
+        $setting->key_words = $request->key_words;
+        $setting->address = $request->address;
+        $setting->url = $request->url;
+        $setting->email = $request->email; // ✅ Save the email
+        $setting->contact_email = $request->contact_email;
+        $setting->carrers_email = $request->carrers_email;
+        $setting->location = $request->location;
+
+        // ✅ Save phone as JSON
+        $setting->phone = json_encode($request->phone ?? []);
+
+        // ✅ Save fax as JSON too
+        $setting->fax = json_encode($request->fax ?? []);
+
+        // ✅ Handle logo upload
+        if ($request->hasFile('logo')) {
+            $file = $request->file('logo');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('logos', $filename, 'public');
+            $setting->logo = 'storage/' . $path;
+        }
+
+        $setting->save();
+
+        return redirect()->route('admin.setting.index')->with('status-success', 'Settings have been updated successfully!');
     }
-
-    // Save other fields as usual
-    $setting->facebook = $request->facebook;
-    $setting->instagram = $request->instagram;
-    $setting->twitter = $request->twitter;
-    $setting->youtube = $request->youtube;
-    $setting->title = $request->title;
-    $setting->description = $request->description;
-    $setting->key_words = $request->key_words;
-    $setting->fax = $request->fax;
-    $setting->address = $request->address;
-    $setting->url = $request->url;
-    $setting->contact_email = $request->contact_email;
-    $setting->carrers_email = $request->carrers_email;
-    $setting->location = $request->location;
-
-    $setting->save();
-
-    return redirect()->route('admin.setting.index')->with('status-success', 'Settings have been updated successfully!');
-}
-
-
 }

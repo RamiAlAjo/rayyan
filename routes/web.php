@@ -55,14 +55,11 @@ Route::middleware('auth')->group(function () {
 // Admin Routes
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/home', [AdminHomepageController::class, 'index'])->name('admin_home');
-
     Route::resource('/products', AdminProductController::class);
     Route::resource('/about', AdminAboutController::class);
     Route::resource('/faq', AdminFaqController::class);
     Route::resource('/slider', AdminSliderController::class);
-    // Route::resource('setting', AdminWebsiteSettingController::class);
     Route::resource('portfolio', AdminPortfolioController::class);
-    // Route::resource('about-section', AdminAboutSectionController::class);
     Route::resource('services', AdminServicesController::class);
     Route::resource('news', AdminNewsController::class);
     Route::resource('product_categories', AdminProductCategoriesController::class);

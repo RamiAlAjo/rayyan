@@ -17,13 +17,16 @@ class WebsiteSetting extends Model
         'twitter',
         'youtube',
         'phone',
-        'phone2',    // Add phone2
-        'phone3',    // Add phone3
         'email',
         'fax',
         'logo',
         'address',
         'url',
         'location',
+        'contact_email',
+        'carrers_email',
+        'title',
+        'description',
+        'key_words',
     ];
 }
