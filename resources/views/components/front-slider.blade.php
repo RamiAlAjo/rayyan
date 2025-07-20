@@ -48,7 +48,7 @@
 }
 
 .TS .carousel-inner {
-    height: 100%;
+    /* height: 100%; */
 }
 
 .TS .carousel-item {

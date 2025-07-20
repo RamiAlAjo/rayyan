@@ -31,6 +31,7 @@ use App\Http\Controllers\Admin\AdminProductSubcategoriesController;
 use App\Http\Controllers\Admin\AdminCategoriesController;
 use App\Http\Controllers\Admin\AdminFeaturesController;
 use App\Http\Controllers\Admin\AdminWebsiteSettingController;
+use App\Http\Controllers\Admin\AdminGalleryController;
 
 
 use App\Http\Controllers\Admin\AdminProjectsController;
@@ -71,6 +72,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::resource('features', AdminFeaturesController::class);
     Route::resource('stats', AdminStatsController::class);
     Route::resource('setting', AdminWebsiteSettingController::class);
+    Route::resource('gallery', AdminGalleryController::class);
 });
 
 // Front Routes

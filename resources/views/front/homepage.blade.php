@@ -4,27 +4,29 @@
 
 <!-- ================== CATEGORY SECTION ================== -->
 <div class="container mt-5" style="background-color: #ffffff; opacity: 1; background-image: linear-gradient(to right, #a0a0a0, #a0a0a0 3px, #ffffff 3px, #ffffff); background-size: 6px 100%;">
-
     <div class="row d-flex flex-nowrap overflow-auto gap-3 pb-3" style="min-height: 220px;">
-
         @foreach($categories as $category)
             <div class="col-6 col-md-4 col-lg-3 col-xl-2">
-                <div class="card category-card text-center" style="width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0, 112, 74, 0.2); transition: transform 0.3s ease;">
+                <div class="card category-card text-center"
+                     style="width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0, 112, 74, 0.2); transition: transform 0.3s ease;">
                     <div class="card-body">
-                        <p class="card-text fw-semibold mb-2 text-dark">{{ $category->name_en }}</p>
+                        <p class="card-text fw-semibold mb-2 text-dark" title="{{ $category->name_en }}">
+                            {{ $category->name_en ?? $category->name_ar }}
+                        </p>
                     </div>
-                    @if($category->image)
-                        <img src="{{ asset('storage/' . $category->image) }}" class="card-img-bottom category-img" alt="{{ $category->name_en }}" loading="lazy">
-                    @else
-                        <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="card-img-bottom category-img" alt="{{ $category->name_en }}" loading="lazy">
-                    @endif
+                    <img
+                        src="{{ $category->image ? asset('storage/' . $category->image) : 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png' }}"
+                        class="card-img-bottom category-img"
+                        alt="{{ $category->name_en ?? $category->name_ar }}"
+                        title="{{ $category->name_en ?? $category->name_ar }}"
+                        loading="lazy"
+                    >
                 </div>
             </div>
         @endforeach
-
     </div>
-
 </div>
+
 
 <!-- ================== CATEGORY SECTION STYLES ================== -->
 <style>
@@ -119,7 +121,7 @@
                 <div class="col-md-4">
                     @foreach ($chunk as $feature)
                         <div class="feature-icon">
-                            <img src="{{ asset('storage/' . $feature->image) }}" alt="{{ $feature->title_en }}">
+                            <img src="{{ asset('storage/' . $feature->icon_path) }}" alt="{{ $feature->title_en }}">
                             <span>{{ $feature->title_en }}</span>
                         </div>
                     @endforeach
@@ -213,41 +215,41 @@
     }
 </style>
 
-<!-- ================== CAROUSEL & STATS ================== -->
+<!-- ================== GALLERY CAROUSEL ================== -->
 <div class="striped-background">
     <div class="container">
-
-       <!-- Carousel -->
-<div id="projectCarousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-        @foreach ($products->chunk(3) as $chunkIndex => $productChunk)
-            <div class="carousel-item {{ $chunkIndex === 0 ? 'active' : '' }}">
-                <div class="row g-3">
-                    @foreach ($productChunk as $product)
-                        <div class="col-md-4">
-                            @if($product->image)
-                                <img src="{{ asset('storage/' . $product->image) }}" class="d-block w-100" alt="{{ $product->name_en }}">
-                            @else
-                                <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="d-block w-100" alt="{{ $product->name_en }}">
-                            @endif
+        <!-- Carousel -->
+        <div id="galleryCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                @foreach ($photos->chunk(3) as $chunkIndex => $photoChunk)
+                    <div class="carousel-item {{ $chunkIndex === 0 ? 'active' : '' }}">
+                        <div class="row g-3">
+                            @foreach ($photoChunk as $photo)
+                                <div class="col-md-4">
+                                    @if($photo->images)
+                                        <img src="{{ asset('storage/' . $photo->images) }}" class="d-block w-100" alt="{{ $photo->image_title_en }}">
+                                    @else
+                                        <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="d-block w-100" alt="Placeholder Image">
+                                    @endif
+                                </div>
+                            @endforeach
                         </div>
-                    @endforeach
-                </div>
+                    </div>
+                @endforeach
             </div>
-        @endforeach
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </button>
+        </div>
     </div>
-
-    <button class="carousel-control-prev" type="button" data-bs-target="#projectCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#projectCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    </button>
 </div>
 
-</div>
     <!-- Stats -->
-<div class="row stats mt-5">
+<div class="row stats mt-3">
     @foreach($stats as $stat)
         <div class="col-6 col-md-3 stat-item">
             <h3>{{ $stat->value }}+</h3>
@@ -291,6 +293,14 @@
         font-size: 18px;
         color: #00704A;
     }
+
+    /* Set the max height for carousel images */
+.carousel-inner img {
+    max-height: 400px; /* Set your desired max height here */
+    object-fit: cover; /* This ensures the image will cover the space without stretching */
+    width: 100%; /* Ensure the width stays 100% */
+}
+
 </style>
 
 <!-- ================== PRODUCT SECTION ================== -->
@@ -315,19 +325,22 @@
     <div class="container">
         <h2 class="text-center mb-5 fw-bold" style="color: #00704A;">Our Services</h2>
         <div class="row text-center text-md-start">
-            @foreach($services->chunk(2) as $chunk)
-                <div class="col-md-4">
-                    @foreach($chunk as $service)
-                        <div class="service-icon">
-                            <img src="{{ asset($service->icon_path ?: 'https://via.placeholder.com/150') }}" alt="{{ $service->title_en }}">
-                            <span>{{ $service->title_en }}</span>
-                        </div>
-                    @endforeach
+            @foreach($services as $service)
+                <div class="col-md-4 mb-4">
+                    <div class="service-icon">
+                        <img
+                            src="{{ $service->image ? asset($service->image) : 'https://via.placeholder.com/150' }}"
+                            alt="{{ $service->name_en }}"
+                            class="img-fluid mb-2"
+                        >
+                        <span class="d-block fw-semibold">{{ $service->name_en }}</span>
+                    </div>
                 </div>
             @endforeach
         </div>
     </div>
 </div>
+
 
   <!-- Services Section Styles -->
   <style>

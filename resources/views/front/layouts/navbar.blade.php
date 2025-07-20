@@ -135,7 +135,7 @@
 <nav class="navbar navbar-expand-lg fixed-top mt-4">
     <div class="container">
   <a class="navbar-brand" href="/home">
-    <img src="{{ asset('Rayyan_Logo.svg') }}" alt="Rayyan Logo" class="navbar-logo">
+<img src="{{ asset('Rayyan_Logo.svg') }}" alt="Rayyan Logo" class="navbar-logo">
 </a>
 
 

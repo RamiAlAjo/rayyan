@@ -11,6 +11,7 @@ use App\Models\Stat;
 use App\Models\Project;
 use App\Models\News;
 use App\Models\Service;
+use App\Models\PhotosGallery;  // Add the PhotosGallery model
 
 class FrontHomepageController extends Controller
 {
@@ -28,7 +29,10 @@ class FrontHomepageController extends Controller
         // Fetch active services (assuming the Service model exists)
         $services = Service::where('status', 'active')->get();
 
-        // Return the view with all the necessary data, including services
-        return view('front.homepage', compact('categories', 'features', 'aboutUs', 'products', 'stats', 'projects', 'news', 'services'));
+        // Fetch active photos from the gallery
+        $photos = PhotosGallery::where('status', 'active')->get();
+
+        // Return the view with all the necessary data, including photos
+        return view('front.homepage', compact('categories', 'features', 'aboutUs', 'products', 'stats', 'projects', 'news', 'services', 'photos'));
     }
 }
