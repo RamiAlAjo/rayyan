@@ -3,7 +3,8 @@
 @section('content')
 
 <!-- ================== CATEGORY SECTION ================== -->
-<div class="container mt-5" style="background-color: #ffffff; opacity: 1; background-image: linear-gradient(to right, #a0a0a0, #a0a0a0 3px, #ffffff 3px, #ffffff); background-size: 6px 100%;">
+{{-- <div class="container mt-5" style="background-color: #ffffff; opacity: 1; background-image: linear-gradient(to right, #a0a0a0, #a0a0a0 3px, #ffffff 3px, #ffffff); background-size: 6px 100%;"> --}}
+<div class="container mt-5">
     <div class="row d-flex flex-nowrap overflow-auto gap-3 pb-3" style="min-height: 220px;">
         @foreach($categories as $category)
             <div class="col-6 col-md-4 col-lg-3 col-xl-2">
@@ -225,13 +226,15 @@
                     <div class="carousel-item {{ $chunkIndex === 0 ? 'active' : '' }}">
                         <div class="row g-3">
                             @foreach ($photoChunk as $photo)
-                                <div class="col-md-4">
-                                    @if($photo->images)
-                                        <img src="{{ asset('storage/' . $photo->images) }}" class="d-block w-100" alt="{{ $photo->image_title_en }}">
-                                    @else
-                                        <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="d-block w-100" alt="Placeholder Image">
-                                    @endif
-                                </div>
+                                @if($photo->status === 'active') <!-- Check if the photo is active -->
+                                    <div class="col-md-4">
+                                        @if($photo->images)
+                                            <img src="{{ asset('storage/' . $photo->images) }}" class="d-block w-100" alt="{{ $photo->image_title_en }}" style="max-height: 400px; object-fit: cover;">
+                                        @else
+                                            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="d-block w-100" alt="Placeholder Image" style="max-height: 400px; object-fit: cover;">
+                                        @endif
+                                    </div>
+                                @endif
                             @endforeach
                         </div>
                     </div>
@@ -247,6 +250,7 @@
         </div>
     </div>
 </div>
+
 
     <!-- Stats -->
 <div class="row stats mt-3">
@@ -305,20 +309,30 @@
 
 <!-- ================== PRODUCT SECTION ================== -->
 <div class="container mt-5">
-
-    <h2 class="mb-4 text-center fw-bold" style="color: #00704A;">Our Products</h2>
+    <h2 class="mb-4 text-center fw-bold" style="color: #00704A;">{{ __('Our Products') }}</h2>
 
     <div class="d-flex flex-nowrap overflow-auto gap-3 pb-3" style="min-height: 250px;">
         @foreach($products as $product)
-            <div class="card text-center border-0" style="width: 10rem; min-width: 10rem;">
-                <img src="{{ $product->image ?: 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png' }}" class="card-img-top" alt="{{ $product->name_en }}" loading="lazy">
-                <div class="card-body">
-                    <p class="card-text fw-semibold mb-0">{{ $product->name_en }}</p>
+            @if($product->status === 'active') <!-- Filter only active products -->
+                <div class="card text-center border-0" style="width: 10rem; min-width: 10rem;">
+                    <img
+                        src="{{ asset('storage/' . $product->image) }}"
+                        class="card-img-top"
+                        alt="{{ app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en }}"
+                        loading="lazy"
+                        style="object-fit: cover; height: 150px; width: 100%;"
+                    >
+                    <div class="card-body">
+                        <p class="card-text fw-semibold mb-0">
+                            {{ app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en }}
+                        </p>
+                    </div>
                 </div>
-            </div>
+            @endif
         @endforeach
     </div>
 </div>
+
 
 <!-- ================== SERVICES SECTION ================== -->
 <div class="services-section">
@@ -329,10 +343,12 @@
                 <div class="col-md-4 mb-4">
                     <div class="service-icon">
                         <img
-                            src="{{ $service->image ? asset($service->image) : 'https://via.placeholder.com/150' }}"
-                            alt="{{ $service->name_en }}"
-                            class="img-fluid mb-2"
-                        >
+    src="{{ $service->image ? asset('storage/' . $service->image) : 'https://via.placeholder.com/150' }}"
+    alt="{{ $service->name_en }}"
+    class="img-fluid mb-2"
+    width="60"
+>
+
                         <span class="d-block fw-semibold">{{ $service->name_en }}</span>
                     </div>
                 </div>
