@@ -582,13 +582,31 @@
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     }
 
-    .contact-box {
-        background-color: #115d18;
-        color: #fff;
-        padding: 25px;
-        border-radius: 8px;
-        height: 100%;
-    }
+.contact-box {
+    background-color: #115d18;
+    background-image: url('{{ asset('contact background.svg') }}');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.contact-box::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.2); /* Less dark, more background visible */
+    z-index: -1;
+    border-radius: 8px;
+}
+
 
     .contact-box h4 {
         font-weight: bold;

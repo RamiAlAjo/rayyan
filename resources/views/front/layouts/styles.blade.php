@@ -12,3 +12,27 @@
 
 <!-- Leaflet CSS -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+
+<style>
+  body {
+    position: relative;
+    z-index: 1;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('{{ asset('GREENHOUSES SKETCH WITH BG.svg') }}');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.2; /* Adjust this for more or less visibility */
+    z-index: -1; /* Keep it behind all content */
+  }
+</style>
+
