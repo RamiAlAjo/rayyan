@@ -40,7 +40,7 @@
         }
     </style>
 
-    <h2 class="category-title text-center mb-4">Product Categories</h2>
+   <h2 class="category-title text-center mb-4">{{ __('Product Categories') }}</h2>
 
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 justify-content-center">
     @forelse ($categories as $category)
@@ -48,14 +48,15 @@
             <div class="col text-center category-item">
                 <a href="{{ route('product-category.show', $category->id) }}">
                     <img src="{{ $category->image ? asset('storage/' . $category->image) : asset('images/placeholder.png') }}"
-                         alt="{{ $category->name_en }}" class="img-fluid mb-2" style="max-height: 180px;">
-                    <p>{{ $category->name_en }}</p>
+                         alt="{{ app()->getLocale() === 'ar' ? $category->name_ar : $category->name_en }}"
+                         class="img-fluid mb-2" style="max-height: 180px;">
+                    <p>{{ app()->getLocale() === 'ar' ? $category->name_ar : $category->name_en }}</p>
                 </a>
             </div>
         @endif
     @empty
         <div class="col-12 text-center">
-            <p>No categories available at the moment.</p>
+            <p>{{ __('No categories available at the moment.') }}</p>
         </div>
     @endforelse
 </div>
@@ -64,5 +65,6 @@
 <div class="d-flex justify-content-center mt-4">
     {{ $categories->links('pagination::bootstrap-5') }}
 </div>
+
 
 @endsection

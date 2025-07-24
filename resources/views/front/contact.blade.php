@@ -93,54 +93,54 @@
 }
     </style>
 
-    <h2 class="contact-title">Contact Us</h2>
+   <h2 class="contact-title">{{ __('Contact Us') }}</h2>
 
-    <div class="row g-4">
-        <!-- Left Contact Form -->
-        <div class="col-lg-8">
-            <div class="form-section">
-                <form>
-                    <div class="mb-3">
-                        <label class="form-label">Full Name</label>
-                        <input type="text" class="form-control" placeholder="Your full name">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-control" placeholder="Your email address">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Message</label>
-                        <textarea class="form-control" rows="5" placeholder="Your message..."></textarea>
-                    </div>
+<div class="row g-4">
+    <!-- Left Contact Form -->
+    <div class="col-lg-8">
+        <div class="form-section">
+            <form>
+                <div class="mb-3">
+                    <label class="form-label">{{ __('Full Name') }}</label>
+                    <input type="text" class="form-control" placeholder="{{ __('Your full name') }}">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">{{ __('Email') }}</label>
+                    <input type="email" class="form-control" placeholder="{{ __('Your email address') }}">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">{{ __('Message') }}</label>
+                    <textarea class="form-control" rows="5" placeholder="{{ __('Your message...') }}"></textarea>
+                </div>
 
-                    <button type="submit" class="btn btn-success mt-2">Send Message</button>
-                </form>
+                <button type="submit" class="btn btn-success mt-2">{{ __('Send Message') }}</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Right Contact Information -->
+    <div class="col-lg-4">
+        <div class="contact-box">
+            <h4>{{ __('Get In Touch') }}</h4>
+
+            <p><strong>{{ __('Factory Address') }}</strong><br>
+                {!! nl2br(e($settings->address)) !!}
+            </p>
+
+            <p><strong>{{ __('Contact') }}</strong><br>
+                {{ __('Tel') }}: {{ $settings->phone }}<br>
+                {{ __('Fax') }}: {{ $settings->fax }}<br>
+                {{ __('Email') }}: {{ $settings->contact_email }}
+            </p>
+
+            <p class="mt-3">{{ __('Member of Munir Sukhtian International') }}</p>
+
+            <div class="company-logos">
+                <img src="{{ asset('path/to/logo/' . $settings->logo) }}" alt="Company Logo">
             </div>
         </div>
-
-       <!-- Right Contact Information -->
-<div class="col-lg-4">
-    <div class="contact-box">
-        <h4>Get In Touch</h4>
-        <p><strong>Factory Address</strong><br>
-            {!! nl2br(e($settings->address)) !!}
-        </p>
-
-        <p><strong>Contact</strong><br>
-            Tel: {{ $settings->phone }}<br>
-            Fax: {{ $settings->fax }}<br>
-            Email: {{ $settings->contact_email }}
-        </p>
-
-        <p class="mt-3">Member of Munir Sukhtian International</p>
-
-        <div class="company-logos">
-            <img src="{{ asset('path/to/logo/' . $settings->logo) }}" alt="Company Logo">
-        </div>
     </div>
 </div>
 
-    </div>
-</div>
 
 @endsection

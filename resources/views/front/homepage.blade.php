@@ -3,7 +3,6 @@
 @section('content')
 
 <!-- ================== CATEGORY SECTION ================== -->
-{{-- <div class="container mt-5" style="background-color: #ffffff; opacity: 1; background-image: linear-gradient(to right, #a0a0a0, #a0a0a0 3px, #ffffff 3px, #ffffff); background-size: 6px 100%;"> --}}
 <div class="container mt-5">
     <div class="row d-flex flex-nowrap overflow-auto gap-3 pb-3" style="min-height: 220px;">
         @foreach($categories as $category)
@@ -12,14 +11,14 @@
                      style="width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0, 112, 74, 0.2); transition: transform 0.3s ease;">
                     <div class="card-body">
                         <p class="card-text fw-semibold mb-2 text-dark" title="{{ $category->name_en }}">
-                            {{ $category->name_en ?? $category->name_ar }}
+                            {{ app()->getLocale() == 'ar' ? $category->name_ar : $category->name_en }}
                         </p>
                     </div>
                     <img
                         src="{{ $category->image ? asset('storage/' . $category->image) : 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png' }}"
                         class="card-img-bottom category-img"
-                        alt="{{ $category->name_en ?? $category->name_ar }}"
-                        title="{{ $category->name_en ?? $category->name_ar }}"
+                        alt="{{ app()->getLocale() == 'ar' ? $category->name_ar : $category->name_en }}"
+                        title="{{ app()->getLocale() == 'ar' ? $category->name_ar : $category->name_en }}"
                         loading="lazy"
                     >
                 </div>
@@ -27,7 +26,6 @@
         @endforeach
     </div>
 </div>
-
 
 <!-- ================== CATEGORY SECTION STYLES ================== -->
 <style>
@@ -123,7 +121,7 @@
                     @foreach ($chunk as $feature)
                         <div class="feature-icon">
                             <img src="{{ asset('storage/' . $feature->icon_path) }}" alt="{{ $feature->title_en }}">
-                            <span>{{ $feature->title_en }}</span>
+                            <span>{{ app()->getLocale() == 'ar' ? $feature->title_ar : $feature->title_en }}</span>
                         </div>
                     @endforeach
                 </div>
@@ -132,7 +130,6 @@
         </div>
     </div>
 </div>
-
 <!-- Features Section Styles -->
 <style>
      .features-section {
@@ -161,10 +158,10 @@
 <div class="section-spacing" style="background-color: #f4f4f4; padding: 50px 20px; width: 100%; box-sizing: border-box;">
     <div class="container" style="max-width: 1200px; margin: 0 auto; text-align: left;">
         <h2 style="font-size: 36px; margin: 8.5px 0; color: #00704A;">
-            {{ $aboutUs->about_us_title_en ?? 'Welcome to Our Site' }}
+            {{ app()->getLocale() == 'ar' ? ($aboutUs->about_us_title_ar ?? __('welcome_to_our_site')) : ($aboutUs->about_us_title_en ?? __('welcome_to_our_site')) }}
         </h2>
         <p class="mt-4" style="font-size: 20px; color: #333;">
-            {!! nl2br(e($aboutUs->about_us_description_en ?? "We're excited to have you here! Whether you're looking for top-notch products, services, or just exploring, you've come to the right place. Our team is dedicated to providing you with the best experience and delivering high-quality results. We're committed to making your journey with us smooth, enjoyable, and fulfilling. Thank you for visiting, and we look forward to serving you!")) !!}
+            {!! nl2br(e(app()->getLocale() == 'ar' ? ($aboutUs->about_us_description_ar ?? __('welcome_description')) : ($aboutUs->about_us_description_en ?? __('welcome_description')))) !!}
         </p>
 
         <!-- View All Button -->
@@ -180,7 +177,7 @@
                 max-width: 100%;
                 text-align: center;
             ">
-                View All
+                {{ __('view_all') }}
             </a>
         </div>
     </div>
@@ -229,9 +226,9 @@
                                 @if($photo->status === 'active') <!-- Check if the photo is active -->
                                     <div class="col-md-4">
                                         @if($photo->images)
-                                            <img src="{{ asset('storage/' . $photo->images) }}" class="d-block w-100" alt="{{ $photo->image_title_en }}" style="max-height: 400px; object-fit: cover;">
+                                            <img src="{{ asset('storage/' . $photo->images) }}" class="d-block w-100" alt="{{ app()->getLocale() == 'ar' ? $photo->image_title_ar : $photo->image_title_en }}" style="max-height: 400px; object-fit: cover;">
                                         @else
-                                            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="d-block w-100" alt="Placeholder Image" style="max-height: 400px; object-fit: cover;">
+                                            <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="d-block w-100" alt="{{ __('placeholder_image') }}" style="max-height: 400px; object-fit: cover;">
                                         @endif
                                     </div>
                                 @endif
@@ -252,16 +249,14 @@
 </div>
 
 
-    <!-- Stats -->
+   <!-- ================== STATS SECTION ================== -->
 <div class="row stats mt-3">
     @foreach($stats as $stat)
         <div class="col-6 col-md-3 stat-item">
             <h3>{{ $stat->value }}+</h3>
-            <p>{{ app()->getLocale() === 'ar' ? $stat->title_ar : $stat->title_en }}</p>
+            <p>{{ app()->getLocale() == 'ar' ? $stat->title_ar : $stat->title_en }}</p>
         </div>
     @endforeach
-</div>
-    </div>
 </div>
 
 <!-- Carousel & Stats Styles -->
@@ -309,7 +304,7 @@
 
 <!-- ================== PRODUCT SECTION ================== -->
 <div class="container mt-5">
-    <h2 class="mb-4 text-center fw-bold" style="color: #00704A;">{{ __('Our Products') }}</h2>
+    <h2 class="mb-4 text-center fw-bold" style="color: #00704A;">{{ __('products') }}</h2>
 
     <div class="d-flex flex-nowrap overflow-auto gap-3 pb-3" style="min-height: 250px;">
         @foreach($products as $product)
@@ -337,26 +332,24 @@
 <!-- ================== SERVICES SECTION ================== -->
 <div class="services-section">
     <div class="container">
-        <h2 class="text-center mb-5 fw-bold" style="color: #00704A;">Our Services</h2>
+        <h2 class="text-center mb-5 fw-bold" style="color: #00704A;">{{ __('services') }}</h2>
         <div class="row text-center text-md-start">
             @foreach($services as $service)
                 <div class="col-md-4 mb-4">
                     <div class="service-icon">
                         <img
-    src="{{ $service->image ? asset('storage/' . $service->image) : 'https://via.placeholder.com/150' }}"
-    alt="{{ $service->name_en }}"
-    class="img-fluid mb-2"
-    width="60"
->
-
-                        <span class="d-block fw-semibold">{{ $service->name_en }}</span>
+                            src="{{ $service->image ? asset('storage/' . $service->image) : 'https://via.placeholder.com/150' }}"
+                            alt="{{ app()->getLocale() == 'ar' ? $service->name_ar : $service->name_en }}"
+                            class="img-fluid mb-2"
+                            width="60"
+                        >
+                        <span class="d-block fw-semibold">{{ app()->getLocale() == 'ar' ? $service->name_ar : $service->name_en }}</span>
                     </div>
                 </div>
             @endforeach
         </div>
     </div>
 </div>
-
 
   <!-- Services Section Styles -->
   <style>
@@ -384,17 +377,17 @@
 
 <!-- ================== PROJECTS SECTION ================== -->
 <div class="container mt-5">
-    <h2 class="mb-4 text-center fw-bold" style="color: #00704A;">Our Projects</h2>
+    <h2 class="mb-4 text-center fw-bold" style="color: #00704A;">{{ __('projects') }}</h2>
 
     <div class="d-flex flex-nowrap overflow-auto gap-3 pb-3" style="min-height: 250px;">
         @foreach ($projects as $project)
             <div class="card text-center border-0" style="width: 10rem; min-width: 10rem;">
                 <img src="{{ asset('storage/' . $project->image) }}"
                      class="card-img-top"
-                     alt="{{ $project->name_en }}"
+                     alt="{{ app()->getLocale() == 'ar' ? $project->name_ar : $project->name_en }}"
                      loading="lazy">
                 <div class="card-body">
-                    <p class="card-text fw-semibold mb-0">{{ $project->name_en }}</p>
+                    <p class="card-text fw-semibold mb-0">{{ app()->getLocale() == 'ar' ? $project->name_ar : $project->name_en }}</p>
                 </div>
             </div>
         @endforeach
@@ -402,7 +395,7 @@
 
     <!-- View All Button -->
     <div style="display: flex; justify-content: center; margin-top: 30px;">
-        <a href="/projects" style="
+        <a href="{{ route('projects.index') }}" style="
             padding: 12px 25px;
             background-color: #00704A;
             color: white;
@@ -410,37 +403,52 @@
             text-decoration: none;
             border-radius: 5px;
             width: 100%;
-            max-width: 400px;
+            max-width: 100%;
             text-align: center;
         ">
-            View All Projects
+            {{ __('view_all') }}
         </a>
     </div>
 </div>
 
 <!-- ================== NEWS SECTION ================== -->
 <div class="container py-5 news-section">
-    <h2 class="text-center mb-5 news-title">News</h2>
+    <h2 class="text-center mb-5 news-title">{{ __('news') }}</h2>
     <div class="row g-4">
 
         <!-- News Items -->
         @foreach ($news as $item)
             <div class="col-md-6 {{ $loop->last ? 'col-12' : '' }}">
                 <div class="news-card {{ $item->status == 'active' ? 'active-card' : '' }} p-4 h-100 text-center">
-                    <h5 class="news-heading {{ $item->status == 'active' ? 'text-success' : '' }}">{{ $item->title_en }}</h5>
-                    @if (!empty($item->description_en))
-                        <p class="news-text">{{ $item->description_en }}</p>
+                    <h5 class="news-heading {{ $item->status == 'active' ? 'text-success' : '' }}">
+                        {{ app()->getLocale() == 'ar' ? $item->title_ar ?? $item->title_en : $item->title_en }}
+                    </h5>
+
+                    @php
+                        $description = app()->getLocale() == 'ar' ? $item->description_ar : $item->description_en;
+                    @endphp
+
+                    @if (!empty($description))
+                        <p class="news-text">{{ $description }}</p>
                     @endif
+
                     @if (!empty($item->image))
-                        <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title_en }}" class="img-fluid mt-3" style="max-height: 90px;">
+                        <img src="{{ asset('storage/' . $item->image) }}"
+                             alt="{{ app()->getLocale() == 'ar' ? $item->title_ar ?? $item->title_en : $item->title_en }}"
+                             class="img-fluid mt-3"
+                             style="max-height: 90px;">
                     @else
-                        <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" alt="Placeholder Image" class="img-fluid mt-3" style="max-height: 90px;">
+                        <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
+                             alt="{{ __('placeholder_image') }}"
+                             class="img-fluid mt-3"
+                             style="max-height: 90px;">
                     @endif
                 </div>
             </div>
         @endforeach
     </div>
 </div>
+
 
 <!-- News Section Styles -->
 <style>
@@ -489,7 +497,7 @@
 
 <!-- ================== CONTACT US SECTION ================== -->
 <div class="container mt-5">
-    <h2 class="contact-title">Contact Us</h2>
+    <h2 class="contact-title">{{ __('contact_us') }}</h2>
 
     <div class="row g-4">
         <!-- Contact Form -->
@@ -497,18 +505,18 @@
             <div class="form-section">
                 <form>
                     <div class="mb-3">
-                        <label class="form-label">Full Name</label>
-                        <input type="text" class="form-control" placeholder="Your full name">
+                        <label class="form-label">{{ __('full_name') }}</label>
+                        <input type="text" class="form-control" placeholder="{{ __('your_full_name') }}">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-control" placeholder="Your email address">
+                        <label class="form-label">{{ __('email') }}</label>
+                        <input type="email" class="form-control" placeholder="{{ __('your_email_address') }}">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Message</label>
-                        <textarea class="form-control" rows="5" placeholder="Your message..."></textarea>
+                        <label class="form-label">{{ __('message') }}</label>
+                        <textarea class="form-control" rows="5" placeholder="{{ __('your_message') }}"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-success mt-2">Send Message</button>
+                    <button type="submit" class="btn btn-success mt-2">{{ __('send_message') }}</button>
                 </form>
             </div>
         </div>
@@ -516,45 +524,46 @@
         <!-- Contact Info Box -->
         <div class="col-lg-4">
             <div class="contact-box">
-                <h4>Get In Touch</h4>
+                <h4>{{ __('get_in_touch') }}</h4>
 
                 <p>
-                    <strong>Address</strong><br>
-                    {!! nl2br(e($settings->address ?? 'Amman – Jordan – Abu Alanda Industrial Area<br>Al-Hazam Street')) !!}
+                    <strong>{{ __('address') }}</strong><br>
+                    {!! nl2br(e(app()->getLocale() == 'ar' ? ($settings->address_ar ?? 'عمان – الأردن – منطقة أبو علندا الصناعية<br>شارع الحزام') : ($settings->address ?? 'Amman – Jordan – Abu Alanda Industrial Area<br>Al-Hazam Street'))) !!}
                 </p>
 
                 <p>
-                    <strong>Contact</strong><br>
+                    <strong>{{ __('contact') }}</strong><br>
                     @php
                         $phones = json_decode($settings->phone ?? '[]', true);
                     @endphp
 
                     @if (!empty($phones))
-                        Tel: {{ implode(' / ', $phones) }}<br>
+                        {{ __('tel') }}: {{ implode(' / ', $phones) }}<br>
                     @endif
 
                     @if (!empty($settings->fax))
-                        Fax: {{ $settings->fax }}<br>
+                        {{ __('fax') }}: {{ $settings->fax }}<br>
                     @endif
 
                     @if (!empty($settings->contact_email))
-                        Email: {{ $settings->contact_email }}
+                        {{ __('email') }}: {{ $settings->contact_email }}
                     @endif
                 </p>
 
                 @if (!empty($settings->carrers_email))
-                    <p><strong>Careers:</strong> {{ $settings->carrers_email }}</p>
+                    <p><strong>{{ __('careers') }}:</strong> {{ $settings->carrers_email }}</p>
                 @endif
 
-                <p class="mt-3">Member of Munir Sukhtian International</p>
+                <p class="mt-3">{{ __('member_of_munir_sukhtian') }}</p>
 
                 <div class="company-logos">
-                    <img src="{{ asset('Career.png') }}" alt="Company Logo">
+                    <img src="{{ asset('Career.png') }}" alt="{{ __('company_logo') }}">
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 <!-- ================== CONTACT STYLES ================== -->
 <style>

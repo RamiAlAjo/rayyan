@@ -255,6 +255,116 @@
         .see-all-link:hover {
             background-color: #05a922;
         }
+
+        /* hover menu */
+
+        /* Show dropdown menu on hover */
+        .dropdown-hover:hover .dropdown-menu-products {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* Dropdown hidden by default */
+        .dropdown-menu-products {
+            display: block;
+            opacity: 0;
+            visibility: hidden;
+            position: absolute;
+            top: 100%;
+            /* left: 0; */
+            z-index: 1000;
+            min-width: 200px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            transition: all 0.2s ease-in-out;
+            transform: translateY(10px);
+            padding: 10px 0;
+        }
+
+        /* Optional styling */
+        .dropdown-menu-products a {
+            padding: 8px 16px;
+            color: #212529;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-menu-products a:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* Submenu container */
+         .dropdown-submenu {
+        position: relative;
+    }
+
+    .subcategory-menu {
+        display: none;
+        position: absolute;
+        top: 10%;
+        left: 100%;
+        min-width: 200px;
+        background: white;
+        border: 1px solid #ddd;
+        z-index: 1001;
+    }
+
+    /* Show submenu on hover */
+    .dropdown-submenu:hover .subcategory-menu {
+        display: block;
+    }
+
+    /* Optional styling */
+    .subcategory-menu a {
+        padding: 8px 16px;
+        color: #212529;
+        white-space: nowrap;
+    }
+
+    .subcategory-menu a:hover {
+        background-color: #f8f9fa;
+    }
+
+    /* Subcategory submenu */
+    .dropdown-submenu {
+        position: relative;
+    }
+
+    .subcategory-menu,
+    .product-menu {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 100%;
+        min-width: 200px;
+        background: white;
+        border: 1px solid #ddd;
+        z-index: 1001;
+        transition: all 0.2s ease;
+    }
+
+    .dropdown-submenu:hover > .subcategory-menu,
+    .dropdown-submenu:hover > .product-menu {
+        display: block;
+    }
+
+    /* Optional product link styling */
+    .product-menu a,
+    .subcategory-menu a {
+        white-space: nowrap;
+        padding: 8px 16px;
+        text-decoration: none;
+        display: block;
+        color: #212529;
+    }
+
+    .product-menu a:hover,
+    .subcategory-menu a:hover {
+        background-color: #f8f9fa;
+    }
+
 </style>
 
 <!-- Navbar -->
@@ -280,9 +390,71 @@
         <li class="nav-item">
             <a class="nav-link nav-link-NA {{ Request::is('services') ? 'active' : '' }}" href="{{ route('services.index') }}">{{ __('services') }}</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link nav-link-NA {{ Request::is('product-category') ? 'active' : '' }}" href="{{ route('product-category.index') }}">{{ __('products') }}</a>
-        </li>
+
+
+ @php
+    use App\Models\ProductCategory;
+
+    $productCategories = ProductCategory::with([
+        'subcategories.products' => function ($query) {
+            $query->where('status', 'active');
+        }
+    ])
+    ->where('status', 'active')
+    ->get();
+@endphp
+
+<li class="nav-item dropdown position-static dropdown-hover">
+    <a class="nav-link nav-link-NA {{ Request::is('product-category') ? 'active' : '' }}"
+       href="{{ route('product-category.index') }}"
+       id="productsDropdown">
+        {{ __('products') }}
+    </a>
+
+    <!-- Level 1: Categories -->
+    <div class="dropdown-menu shadow mt-2 dropdown-menu-products" aria-labelledby="productsDropdown">
+        @foreach($productCategories as $category)
+            <div class="dropdown-submenu">
+                <a class="dropdown-item d-flex justify-content-between align-items-center" href="{{ route('product-category.show', $category->slug) }}">
+                    {{ app()->getLocale() === 'ar' ? $category->name_ar : $category->name_en }}
+                    @if($category->subcategories->count())
+                        <span class="ms-2">&#9656;</span>
+                    @endif
+                </a>
+
+                <!-- Level 2: Subcategories -->
+                @if($category->subcategories->count())
+                    <div class="dropdown-menu subcategory-menu">
+                        @foreach($category->subcategories as $subcategory)
+                            <div class="dropdown-submenu">
+                                <a class="dropdown-item d-flex justify-content-between align-items-center" href="{{ route('product-subcategory.show', $subcategory->slug) }}">
+                                    {{ app()->getLocale() === 'ar' ? $subcategory->name_ar : $subcategory->name_en }}
+                                    @if($subcategory->products->count())
+                                        <span class="ms-2">&#9656;</span>
+                                    @endif
+                                </a>
+
+                                <!-- Level 3: Products -->
+                                @if($subcategory->products->count())
+                                    <div class="dropdown-menu product-menu">
+                                        @foreach($subcategory->products as $product)
+                                            <a class="dropdown-item" href="{{ route('product.show', $product->slug) }}">
+                                                {{ app()->getLocale() === 'ar' ? $product->name_ar : $product->name_en }}
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+            </div>
+        @endforeach
+    </div>
+</li>
+
+
+
         <li class="nav-item">
             <a class="nav-link nav-link-NA {{ Request::is('projects-category') ? 'active' : '' }}" href="{{ route('projects-category.index') }}">{{ __('projects') }}</a>
         </li>

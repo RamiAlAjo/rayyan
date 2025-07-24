@@ -38,37 +38,41 @@
             }
         }
     </style>
+<!-- Current Project Title -->
+<h2 class="project-title text-center mb-4">
+    {{ app()->getLocale() === 'ar' ? $project->name_ar : $project->name_en }}
+</h2>
 
-    <!-- Current Project Title -->
-    <h2 class="project-title text-center mb-4">{{ $project->name_en }}</h2>
+<!-- Project Description -->
+<div class="project-details mb-5">
+    <div class="project-info">
+        <h3>{{ app()->getLocale() === 'ar' ? $project->name_ar : $project->name_en }}</h3>
+        <p>
+            {{ app()->getLocale() === 'ar' ? ($project->description_ar ?? __('No description available.')) : ($project->description_en ?? __('No description available.')) }}
+        </p>
+    </div>
+</div>
 
-    <!-- Project Description -->
-    <div class="project-details mb-5">
-        <div class="project-info">
-            <h3>{{ $project->name_en }}</h3>
-            <p>{{ $project->description_en ?? 'No description available.' }}</p>
+<!-- Other Projects in Same Subcategory -->
+<h2 class="project-title text-center mb-4">
+    {{ __('Other Projects in This Subcategory') }}
+</h2>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 justify-content-center">
+    @forelse ($otherProjects as $otherProject)
+        <div class="col text-center project-item">
+            <a href="{{ route('projects.show', $otherProject->id) }}">
+                <img src="{{ $otherProject->image ? asset('storage/' . $otherProject->image) : asset('images/placeholder.png') }}"
+                     alt="{{ app()->getLocale() === 'ar' ? $otherProject->name_ar : $otherProject->name_en }}"
+                     class="img-fluid mb-2" style="max-height: 180px;">
+                <p>{{ app()->getLocale() === 'ar' ? $otherProject->name_ar : $otherProject->name_en }}</p>
+            </a>
         </div>
-    </div>
-
-    <!-- Other Projects in Same Subcategory -->
-    <h2 class="project-title text-center mb-4">Other Projects in This Subcategory</h2>
-
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 justify-content-center">
-        @forelse ($otherProjects as $otherProject)
-            <div class="col text-center project-item">
-                <a href="{{ route('projects.show', $otherProject->id) }}">
-                    <img src="{{ $otherProject->image ? asset('storage/' . $otherProject->image) : asset('images/placeholder.png') }}"
-                         alt="{{ $otherProject->name_en }}" class="img-fluid mb-2" style="max-height: 180px;">
-                    <p>{{ $otherProject->name_en }}</p>
-                </a>
-            </div>
-        @empty
-            <div class="col-12 text-center">
-                <p>No other projects available in this subcategory at the moment.</p>
-            </div>
-        @endforelse
-    </div>
-
+    @empty
+        <div class="col-12 text-center">
+            <p>{{ __('No other projects available in this subcategory at the moment.') }}</p>
+        </div>
+    @endforelse
 </div>
 
 @endsection

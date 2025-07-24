@@ -35,35 +35,35 @@
 
     <h2 class="faq-title">{{ __('Frequently Asked Questions') }}</h2>
 
-    <div class="accordion" id="faqAccordion">
-        @foreach($faqs as $index => $faq)
-            @php
-                $locale = app()->getLocale();
-                $question = $locale === 'ar' ? $faq->question_ar : $faq->question_en;
-                $answer = $locale === 'ar' ? $faq->answer_ar : $faq->answer_en;
-            @endphp
+<div class="accordion" id="faqAccordion">
+    @foreach($faqs as $index => $faq)
+        @php
+            $locale = app()->getLocale();
+            $question = $locale === 'ar' ? $faq->question_ar : $faq->question_en;
+            $answer = $locale === 'ar' ? $faq->answer_ar : $faq->answer_en;
+        @endphp
 
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="faqHeading{{ $index }}">
-                    <button class="accordion-button {{ $index !== 0 ? 'collapsed' : '' }}" type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#faqCollapse{{ $index }}"
-                            aria-expanded="{{ $index === 0 ? 'true' : 'false' }}"
-                            aria-controls="faqCollapse{{ $index }}">
-                        {{ $question }}
-                    </button>
-                </h2>
-                <div id="faqCollapse{{ $index }}"
-                     class="accordion-collapse collapse {{ $index === 0 ? 'show' : '' }}"
-                     aria-labelledby="faqHeading{{ $index }}"
-                     data-bs-parent="#faqAccordion">
-                    <div class="accordion-body">
-                        {!! nl2br(e($answer)) !!}
-                    </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faqHeading{{ $index }}">
+                <button class="accordion-button {{ $index !== 0 ? 'collapsed' : '' }}" type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#faqCollapse{{ $index }}"
+                        aria-expanded="{{ $index === 0 ? 'true' : 'false' }}"
+                        aria-controls="faqCollapse{{ $index }}">
+                    {{ $question }}
+                </button>
+            </h2>
+            <div id="faqCollapse{{ $index }}"
+                 class="accordion-collapse collapse {{ $index === 0 ? 'show' : '' }}"
+                 aria-labelledby="faqHeading{{ $index }}"
+                 data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    {!! nl2br(e($answer)) !!}
                 </div>
             </div>
-        @endforeach
-    </div>
+        </div>
+    @endforeach
 </div>
+
 
 @endsection

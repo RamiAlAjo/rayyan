@@ -59,30 +59,32 @@
     }
     </style>
 
-    <!-- Category Title -->
-    <h2 class="product-title text-center mb-4">{{ $categoryName }} Products</h2>
+   <!-- Category Title -->
+<h2 class="product-title text-center mb-4">
+    {{ app()->getLocale() === 'ar' ? $categoryNameAr . ' ' . __('Products') : $categoryName . ' ' . __('Products') }}
+</h2>
 
-    <!-- Products Grid -->
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 justify-content-center">
-        @forelse ($products as $product)
-            <div class="col text-center product-item">
-                <a href="{{ route('product.show', $product->id) }}">
-                    <img src="{{ $product->image ? asset('storage/' . $product->image) : asset('images/placeholder.png') }}"
-                         alt="{{ $product->name_en }}" class="img-fluid mb-2" style="max-height: 180px;">
-                    <p>{{ $product->name_en }}</p>
-                </a>
-            </div>
-        @empty
-            <div class="col-12 text-center">
-                <p>No products available at the moment.</p>
-            </div>
-        @endforelse
-    </div>
-
-    <!-- Pagination -->
-    <div class="d-flex justify-content-center mt-4">
-        {{ $products->links('pagination::bootstrap-5') }}
-    </div>
-
+<!-- Products Grid -->
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 justify-content-center">
+    @forelse ($products as $product)
+        <div class="col text-center product-item">
+            <a href="{{ route('product.show', $product->id) }}">
+                <img src="{{ $product->image ? asset('storage/' . $product->image) : asset('images/placeholder.png') }}"
+                     alt="{{ app()->getLocale() === 'ar' ? $product->name_ar : $product->name_en }}"
+                     class="img-fluid mb-2" style="max-height: 180px;">
+                <p>{{ app()->getLocale() === 'ar' ? $product->name_ar : $product->name_en }}</p>
+            </a>
+        </div>
+    @empty
+        <div class="col-12 text-center">
+            <p>{{ __('No products available at the moment.') }}</p>
+        </div>
+    @endforelse
 </div>
+
+<!-- Pagination -->
+<div class="d-flex justify-content-center mt-4">
+    {{ $products->links('pagination::bootstrap-5') }}
+</div>
+
 @endsection

@@ -11,7 +11,7 @@
 
     <div class="container">
         <h2 class="search-title text-center mb-4 mt-2">
-            {{ __('search_results_for', ['query' => $query]) }}
+            {{ __('search_results_for') }}: <span class="text-primary">"{{ $query }}"</span>
         </h2>
 
         @if($products->isEmpty() && $productCategories->isEmpty() && $productSubcategories->isEmpty() && $projects->isEmpty() && $projectsCategories->isEmpty() && $categories->isEmpty())
@@ -20,6 +20,7 @@
             </div>
         @else
             <div class="results-list">
+                @php $locale = app()->getLocale(); @endphp
 
                 {{-- Product Section --}}
                 @if($products->isNotEmpty())
@@ -32,12 +33,14 @@
                                         <a class="text-dark" href="{{ route('product.show', $product->id) }}">
                                             <div class="product-image">
                                                 <img src="{{ $product->image ? asset('storage/' . $product->image) : asset('images/placeholder.png') }}"
-                                                     alt="{{ $product->name_en }}" class="img-fluid lazyload">
+                                                     alt="{{ $locale === 'ar' ? $product->name_ar : $product->name_en }}" class="img-fluid lazyload">
                                             </div>
                                         </a>
                                         <div class="product-info">
-                                            <h3 class="product-title">{{ $product->name_en }}</h3>
-                                            <p class="product-description">{{ Str::limit($product->description_en, 120) }}</p>
+                                            <h3 class="product-title">{{ $locale === 'ar' ? $product->name_ar : $product->name_en }}</h3>
+                                            <p class="product-description">
+                                                {{ Str::limit($locale === 'ar' ? $product->description_ar : $product->description_en, 120) }}
+                                            </p>
                                             <p class="product-date">{{ __('published_on') }} {{ $product->created_at->format('M d, Y') }}</p>
                                         </div>
                                     </div>
@@ -58,11 +61,11 @@
                                         <a class="text-dark" href="{{ route('product-category.show', $category->id) }}">
                                             <div class="category-image">
                                                 <img src="{{ $category->image ? asset('storage/' . $category->image) : asset('images/placeholder.png') }}"
-                                                     alt="{{ $category->name_en }}" class="img-fluid lazyload">
+                                                     alt="{{ $locale === 'ar' ? $category->name_ar : $category->name_en }}" class="img-fluid lazyload">
                                             </div>
                                         </a>
                                         <div class="category-info">
-                                            <h3 class="category-title">{{ $category->name_en }}</h3>
+                                            <h3 class="category-title">{{ $locale === 'ar' ? $category->name_ar : $category->name_en }}</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -82,11 +85,11 @@
                                         <a class="text-dark" href="{{ route('product-subcategory.show', $subcategory->id) }}">
                                             <div class="subcategory-image">
                                                 <img src="{{ $subcategory->image ? asset('storage/' . $subcategory->image) : asset('images/placeholder.png') }}"
-                                                     alt="{{ $subcategory->name_en }}" class="img-fluid lazyload">
+                                                     alt="{{ $locale === 'ar' ? $subcategory->name_ar : $subcategory->name_en }}" class="img-fluid lazyload">
                                             </div>
                                         </a>
                                         <div class="subcategory-info">
-                                            <h3 class="subcategory-title">{{ $subcategory->name_en }}</h3>
+                                            <h3 class="subcategory-title">{{ $locale === 'ar' ? $subcategory->name_ar : $subcategory->name_en }}</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -106,11 +109,11 @@
                                         <a class="text-dark" href="{{ route('projects.show', $project->id) }}">
                                             <div class="project-image">
                                                 <img src="{{ $project->image ? asset('storage/' . $project->image) : asset('images/placeholder.png') }}"
-                                                     alt="{{ $project->name_en }}" class="img-fluid lazyload">
+                                                     alt="{{ $locale === 'ar' ? $project->name_ar : $project->name_en }}" class="img-fluid lazyload">
                                             </div>
                                         </a>
                                         <div class="project-info">
-                                            <h3 class="project-title">{{ $project->name_en }}</h3>
+                                            <h3 class="project-title">{{ $locale === 'ar' ? $project->name_ar : $project->name_en }}</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -130,11 +133,11 @@
                                         <a class="text-dark" href="{{ route('projects-category.show', $category->id) }}">
                                             <div class="project-category-image">
                                                 <img src="{{ $category->image ? asset('storage/' . $category->image) : asset('images/placeholder.png') }}"
-                                                     alt="{{ $category->name_en }}" class="img-fluid lazyload">
+                                                     alt="{{ $locale === 'ar' ? $category->name_ar : $category->name_en }}" class="img-fluid lazyload">
                                             </div>
                                         </a>
                                         <div class="project-category-info">
-                                            <h3 class="project-category-title">{{ $category->name_en }}</h3>
+                                            <h3 class="project-category-title">{{ $locale === 'ar' ? $category->name_ar : $category->name_en }}</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -142,7 +145,6 @@
                         </div>
                     </div>
                 @endif
-
             </div>
 
             <div class="pagination d-flex justify-content-center mt-4">
@@ -150,8 +152,8 @@
             </div>
         @endif
     </div>
-
 </div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.1/lazysizes.min.js" async></script>
 

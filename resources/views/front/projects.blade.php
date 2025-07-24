@@ -59,30 +59,32 @@
         }
     </style>
 
-    <!-- Category/Subcategory Title -->
-    <h2 class="project-title text-center mb-4">{{ $categoryName }} Projects</h2>
+<!-- Category/Subcategory Title -->
+<h2 class="project-title text-center mb-4">
+    {{ $categoryName }} {{ __('Projects') }}
+</h2>
 
-    <!-- Projects Grid -->
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 justify-content-center">
-        @forelse($projects as $project)
-            <div class="col text-center project-item">
-                <a href="{{ route('projects.show', $project->id) }}">
-                    <img src="{{ $project->image ? asset('storage/' . $project->image) : asset('images/placeholder.png') }}"
-                         alt="{{ $project->name_en }}" class="img-fluid mb-2" style="max-height: 180px;">
-                    <p>{{ $project->name_en }}</p>
-                </a>
-            </div>
-        @empty
-            <div class="col-12 text-center">
-                <p>No projects available at the moment.</p>
-            </div>
-        @endforelse
-    </div>
-
-    <!-- Pagination -->
-    <div class="d-flex justify-content-center mt-4">
-        {{ $projects->links('pagination::bootstrap-5') }}
-    </div>
-
+<!-- Projects Grid -->
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 justify-content-center">
+    @forelse($projects as $project)
+        <div class="col text-center project-item">
+            <a href="{{ route('projects.show', $project->id) }}">
+                <img src="{{ $project->image ? asset('storage/' . $project->image) : asset('images/placeholder.png') }}"
+                     alt="{{ app()->getLocale() === 'ar' ? $project->name_ar : $project->name_en }}"
+                     class="img-fluid mb-2" style="max-height: 180px;">
+                <p>{{ app()->getLocale() === 'ar' ? $project->name_ar : $project->name_en }}</p>
+            </a>
+        </div>
+    @empty
+        <div class="col-12 text-center">
+            <p>{{ __('No projects available at the moment.') }}</p>
+        </div>
+    @endforelse
 </div>
+
+<!-- Pagination -->
+<div class="d-flex justify-content-center mt-4">
+    {{ $projects->links('pagination::bootstrap-5') }}
+</div>
+
 @endsection
