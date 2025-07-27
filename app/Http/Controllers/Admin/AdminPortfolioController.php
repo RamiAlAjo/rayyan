@@ -8,51 +8,35 @@ use App\Http\Controllers\Controller;
 
 class AdminPortfolioController extends Controller
 {
-    /**
-     * Display a listing of the portfolio.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Display all portfolios
     public function index()
     {
         $portfolios = Portfolio::all();
         return view('admin.portfolio.index', compact('portfolios'));
     }
 
-    /**
-     * Show the form for creating a new portfolio.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Show form to create new portfolio
     public function create()
     {
         return view('admin.portfolio.create');
     }
 
-    /**
-     * Store a newly created portfolio in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    // Store new portfolio
     public function store(Request $request)
     {
-        // Validate the incoming request data
         $request->validate([
             'portfolio_name_en' => 'required|string|max:255',
             'portfolio_name_ar' => 'required|string|max:255',
-            'resume' => 'nullable|file|mimes:pdf|max:10240', // Validate resume (PDF only, max 10MB)
+            'resume' => 'nullable|file|mimes:pdf|max:10240',
         ]);
 
-        // Create a new portfolio entry
         $portfolio = new Portfolio();
         $portfolio->portfolio_name_en = $request->portfolio_name_en;
         $portfolio->portfolio_name_ar = $request->portfolio_name_ar;
 
-        // Handle resume file upload if provided
         if ($request->hasFile('resume')) {
             $resumePath = $request->file('resume')->store('portfolios/resumes', 'public');
-            $portfolio->resume = $resumePath;
+            $portfolio->resume_path = $resumePath;
         }
 
         $portfolio->save();
@@ -60,47 +44,30 @@ class AdminPortfolioController extends Controller
         return redirect()->route('admin.portfolio.index')->with('status-success', 'Portfolio added successfully!');
     }
 
-    /**
-     * Show the form for editing the specified portfolio.
-     *
-     * @param  \App\Models\Portfolio  $portfolio
-     * @return \Illuminate\Http\Response
-     */
+    // Show form to edit existing portfolio
     public function edit(Portfolio $portfolio)
     {
         return view('admin.portfolio.edit', compact('portfolio'));
     }
 
-    /**
-     * Update the specified portfolio in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Portfolio  $portfolio
-     * @return \Illuminate\Http\Response
-     */
+    // Update existing portfolio
     public function update(Request $request, Portfolio $portfolio)
     {
-        // Validate the incoming request data
         $request->validate([
             'portfolio_name_en' => 'required|string|max:255',
             'portfolio_name_ar' => 'required|string|max:255',
-            'resume' => 'nullable|file|mimes:pdf|max:10240', // Validate resume (PDF only, max 10MB)
+            'resume' => 'nullable|file|mimes:pdf|max:10240',
         ]);
 
-        // Update portfolio details
         $portfolio->portfolio_name_en = $request->portfolio_name_en;
         $portfolio->portfolio_name_ar = $request->portfolio_name_ar;
 
-        // Handle resume file upload if provided
         if ($request->hasFile('resume')) {
-            // Delete the old resume if it exists
-            if ($portfolio->resume) {
-                \Storage::delete('public/' . $portfolio->resume);
+            if ($portfolio->resume_path) {
+                \Storage::delete('public/' . $portfolio->resume_path);
             }
-
-            // Store the new resume
             $resumePath = $request->file('resume')->store('portfolios/resumes', 'public');
-            $portfolio->resume = $resumePath;
+            $portfolio->resume_path = $resumePath;
         }
 
         $portfolio->save();
@@ -108,17 +75,11 @@ class AdminPortfolioController extends Controller
         return redirect()->route('admin.portfolio.index')->with('status-success', 'Portfolio updated successfully!');
     }
 
-    /**
-     * Remove the specified portfolio from storage.
-     *
-     * @param  \App\Models\Portfolio  $portfolio
-     * @return \Illuminate\Http\Response
-     */
+    // Delete a portfolio
     public function destroy(Portfolio $portfolio)
     {
-        // Delete the portfolio's resume file if exists
-        if ($portfolio->resume) {
-            \Storage::delete('public/' . $portfolio->resume);
+        if ($portfolio->resume_path) {
+            \Storage::delete('public/' . $portfolio->resume_path);
         }
 
         $portfolio->delete();

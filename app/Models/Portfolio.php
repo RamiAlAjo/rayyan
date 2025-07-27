@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Portfolio extends Model
 {
-      // Specify the fields that can be mass-assigned
     protected $fillable = [
-        'resume',
+        'portfolio_name_en',
+        'portfolio_name_ar',
+        'resume_path',
     ];
 }

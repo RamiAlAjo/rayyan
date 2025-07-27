@@ -365,6 +365,16 @@
         background-color: #f8f9fa;
     }
 
+
+.dropdown-menu-products {
+    min-width: 220px;
+    padding: 10px;
+}
+
+.dropdown-hover:hover .dropdown-menu {
+    display: block;
+}
+
 </style>
 
 <!-- Navbar -->
@@ -453,14 +463,97 @@
     </div>
 </li>
 
+@php
+    use App\Models\ProjectsCategory;
+
+    $projectsCategories = ProjectsCategory::with([
+        'subcategories.projects' => function ($query) {
+            $query->where('status', 1);
+        }
+    ])
+    ->where('status', 1)
+    ->get();
+@endphp
+
+<li class="nav-item dropdown position-static dropdown-hover">
+    <a class="nav-link nav-link-NA {{ Request::is('projects-category') ? 'active' : '' }}"
+       href="{{ route('projects-category.index') }}"
+       id="projectsDropdown">
+        {{ __('projects') }}
+    </a>
+
+    <!-- Level 1: Project Categories -->
+    <div class="dropdown-menu shadow mt-2 dropdown-menu-products" aria-labelledby="projectsDropdown">
+        @foreach($projectsCategories as $category)
+            <div class="dropdown-submenu">
+                <a class="dropdown-item d-flex justify-content-between align-items-center"
+                   href="{{ route('projects-category.show', $category->slug) }}">
+                    {{ app()->getLocale() === 'ar' ? $category->name_ar : $category->name_en }}
+                    @if($category->subcategories->count())
+                        <span class="ms-2">&#9656;</span>
+                    @endif
+                </a>
+
+                <!-- Level 2: Subcategories -->
+                @if($category->subcategories->count())
+                    <div class="dropdown-menu subcategory-menu">
+                        @foreach($category->subcategories as $subcategory)
+                            <div class="dropdown-submenu">
+                                <a class="dropdown-item d-flex justify-content-between align-items-center"
+                                   href="{{ route('projects-subcategory.show', $subcategory->slug) }}">
+                                    {{ app()->getLocale() === 'ar' ? $subcategory->name_ar : $subcategory->name_en }}
+                                    @if($subcategory->projects->count())
+                                        <span class="ms-2">&#9656;</span>
+                                    @endif
+                                </a>
+
+                                <!-- Level 3: Projects -->
+                                @if($subcategory->projects->count())
+                                    <div class="dropdown-menu product-menu">
+                                        @foreach($subcategory->projects as $project)
+                                            <a class="dropdown-item"
+                                               href="{{ route('projects.show', $project->slug) }}">
+                                                {{ app()->getLocale() === 'ar' ? $project->name_ar : $project->name_en }}
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+            </div>
+        @endforeach
+    </div>
+</li>
 
 
-        <li class="nav-item">
-            <a class="nav-link nav-link-NA {{ Request::is('projects-category') ? 'active' : '' }}" href="{{ route('projects-category.index') }}">{{ __('projects') }}</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link nav-link-NA {{ Request::is('portfolio') ? 'active' : '' }}" href="{{ route('portfolio.index') }}">{{ __('company_profile') }}</a>
-        </li>
+
+     @php
+    use App\Models\Portfolio;
+
+    $portfolios = Portfolio::latest()->get(); // or add ->where('status', 'active') if needed
+@endphp
+<li class="nav-item dropdown position-static dropdown-hover">
+    <a class="nav-link nav-link-NA {{ Request::is('portfolio') ? 'active' : '' }}"
+       href="{{ route('portfolio.index') }}"
+       id="portfolioDropdown">
+        {{ __('company_profile') }}
+    </a>
+
+    @if($portfolios->count())
+        <div class="dropdown-menu shadow mt-2 dropdown-menu-products" aria-labelledby="portfolioDropdown">
+            @foreach($portfolios as $portfolio)
+                <a class="dropdown-item" href="{{ asset('storage/' . $portfolio->resume_path) }}" target="_blank">
+                    {{ app()->getLocale() === 'ar' ? $portfolio->portfolio_name_ar : $portfolio->portfolio_name_en }}
+                </a>
+            @endforeach
+        </div>
+    @endif
+</li>
+
+
+
         <li class="nav-item">
             <a class="nav-link nav-link-NA {{ Request::is('faq') ? 'active' : '' }}" href="{{ route('faq.index') }}">{{ __('faq') }}</a>
         </li>

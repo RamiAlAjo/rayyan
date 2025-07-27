@@ -20,4 +20,9 @@ class ProjectsCategory extends Model
         'status',
         'slug',
     ];
+
+    public function subcategories()
+    {
+        return $this->hasMany(ProjectsSubcategory::class, 'category_id');
+    }
 }

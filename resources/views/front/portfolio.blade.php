@@ -40,14 +40,13 @@
         }
     </style>
 
-   <h2 class="profile-title">{{ __('Company Profile') }}</h2>
+   <h2 class="profile-title my-4">{{ __('Company Profile') }}</h2>
 
-<div class="pdf-container">
-    <iframe src="{{ asset('pdfs/rayyan-company-profile.pdf') }}" type="application/pdf">
-        {{ __('This browser does not support PDFs.') }}
-        {{ __('Please') }} <a href="{{ asset('pdfs/rayyan-company-profile.pdf') }}">{{ __('download the PDF') }}</a> {{ __('instead.') }}
-    </iframe>
-</div>
-
+    <div class="pdf-container">
+        <iframe src="{{ asset('storage/portfolios/resumes/VQzpo1C4cyLYcCuV1BH8ETp6A2Ev28W5sJfPf3qp.pdf') }}" type="application/pdf">
+            {{ __('This browser does not support PDFs.') }}
+            {{ __('Please') }} <a href="{{ asset('storage/portfolios/resumes/VQzpo1C4cyLYcCuV1BH8ETp6A2Ev28W5sJfPf3qp.pdf') }}">{{ __('download the PDF') }}</a> {{ __('instead.') }}
+        </iframe>
+    </div>
 
 @endsection

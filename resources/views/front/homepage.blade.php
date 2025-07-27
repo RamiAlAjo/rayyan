@@ -395,7 +395,7 @@
 
     <!-- View All Button -->
     <div style="display: flex; justify-content: center; margin-top: 30px;">
-        <a href="{{ route('projects.index') }}" style="
+        {{-- <a href="{{ route('projects.index') }}" style="
             padding: 12px 25px;
             background-color: #00704A;
             color: white;
@@ -407,45 +407,69 @@
             text-align: center;
         ">
             {{ __('view_all') }}
-        </a>
+        </a> --}}
     </div>
 </div>
 
-<!-- ================== NEWS SECTION ================== -->
-<div class="container py-5 news-section">
-    <h2 class="text-center mb-5 news-title">{{ __('news') }}</h2>
-    <div class="row g-4">
+<!-- ================== NEWS CAROUSEL ================== -->
+<div class="striped-background py-5">
+    <div class="container">
+        <h2 class="text-center mb-5 news-title">{{ __('news') }}</h2>
 
-        <!-- News Items -->
-        @foreach ($news as $item)
-            <div class="col-md-6 {{ $loop->last ? 'col-12' : '' }}">
-                <div class="news-card {{ $item->status == 'active' ? 'active-card' : '' }} p-4 h-100 text-center">
-                    <h5 class="news-heading {{ $item->status == 'active' ? 'text-success' : '' }}">
-                        {{ app()->getLocale() == 'ar' ? $item->title_ar ?? $item->title_en : $item->title_en }}
-                    </h5>
+        @if($news->count())
+            <div id="newsCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    @foreach ($news->chunk(2) as $chunkIndex => $newsChunk)
+                        <div class="carousel-item {{ $chunkIndex === 0 ? 'active' : '' }}">
+                            <div class="row g-4">
+                                @foreach ($newsChunk as $item)
+                                    <div class="col-md-6">
+                                        <div class="news-card p-4 h-100 text-center {{ $item->status == 'active' ? 'active-card' : '' }}">
+                                            <h5 class="news-heading {{ $item->status == 'active' ? 'text-success' : '' }}">
+                                                {{ app()->getLocale() == 'ar' ? ($item->title_ar ?? $item->title_en) : $item->title_en }}
+                                            </h5>
 
-                    @php
-                        $description = app()->getLocale() == 'ar' ? $item->description_ar : $item->description_en;
-                    @endphp
+                                            @php
+                                                $description = app()->getLocale() == 'ar' ? $item->description_ar : $item->description_en;
+                                            @endphp
 
-                    @if (!empty($description))
-                        <p class="news-text">{{ $description }}</p>
-                    @endif
+                                            @if (!empty($description))
+                                                <p class="news-text">{{ $description }}</p>
+                                            @endif
 
-                    @if (!empty($item->image))
-                        <img src="{{ asset('storage/' . $item->image) }}"
-                             alt="{{ app()->getLocale() == 'ar' ? $item->title_ar ?? $item->title_en : $item->title_en }}"
-                             class="img-fluid mt-3"
-                             style="max-height: 90px;">
-                    @else
-                        <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
-                             alt="{{ __('placeholder_image') }}"
-                             class="img-fluid mt-3"
-                             style="max-height: 90px;">
-                    @endif
+                                            @if (!empty($item->image))
+                                                <img src="{{ asset('storage/' . $item->image) }}"
+                                                     alt="{{ app()->getLocale() == 'ar' ? ($item->title_ar ?? $item->title_en) : $item->title_en }}"
+                                                     class="img-fluid mt-3"
+                                                     style="max-height: 90px;">
+                                            @else
+                                                <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
+                                                     alt="{{ __('placeholder_image') }}"
+                                                     class="img-fluid mt-3"
+                                                     style="max-height: 90px;">
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
+
+               <!-- Controls BELOW carousel -->
+<div class="carousel-controls-below text-center mt-4">
+    <button class="carousel-arrow-btn me-2" type="button" data-bs-target="#newsCarousel" data-bs-slide="prev">
+        <span class="triangle-left"></span>
+    </button>
+    <button class="carousel-arrow-btn" type="button" data-bs-target="#newsCarousel" data-bs-slide="next">
+        <span class="triangle-right"></span>
+    </button>
+</div>
+
             </div>
-        @endforeach
+        @else
+            <p class="text-center text-muted">{{ __('No news available.') }}</p>
+        @endif
     </div>
 </div>
 
@@ -462,22 +486,39 @@
         background-color: #fff;
         border-radius: 8px;
         box-shadow: 0 2px 6px rgba(0, 112, 74, 0.1);
+        transition: transform 0.2s ease-in-out;
     }
 
-    .dark-card {
-        background-color: #2f4a3d;
-        color: #fff;
+    .news-card:hover {
+        transform: translateY(-5px);
     }
 
     .news-heading {
         font-size: 18px;
         font-weight: 600;
+        margin-bottom: 10px;
     }
 
     .news-text {
         font-size: 15px;
         line-height: 1.5;
         color: inherit;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 50%;
+    }
+
+    .striped-background {
+        background: repeating-linear-gradient(
+            45deg,
+            #f8f9fa,
+            #f8f9fa 10px,
+            #ffffff 10px,
+            #ffffff 20px
+        );
     }
 
     @media (max-width: 576px) {
@@ -493,7 +534,65 @@
             font-size: 14px;
         }
     }
+
+        .carousel-arrow-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+    }
+
+    .triangle-left,
+    .triangle-right {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        border-style: solid;
+    }
+
+    .triangle-left {
+        border-width: 10px 14px 10px 0;
+        border-color: transparent #00704A transparent transparent;
+    }
+
+    .triangle-right {
+        border-width: 10px 0 10px 14px;
+        border-color: transparent transparent transparent #00704A;
+    }
+
+    .carousel-arrow-btn:hover .triangle-left,
+    .carousel-arrow-btn:hover .triangle-right {
+        filter: brightness(1.2);
+    }
+
+    .carousel-controls-below {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+.triangle-left,
+.triangle-right {
+    transition: transform 0.2s ease-in-out;
+}
+
+.carousel-arrow-btn:hover .triangle-left {
+    transform: translateX(-3px);
+}
+
+.carousel-arrow-btn:hover .triangle-right {
+    transform: translateX(3px);
+}
+
+
 </style>
+
 
 <!-- ================== CONTACT US SECTION ================== -->
 <div class="container mt-5">

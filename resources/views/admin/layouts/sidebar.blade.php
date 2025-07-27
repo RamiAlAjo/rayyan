@@ -34,6 +34,8 @@
     <ul class="collapse sub-menu" id="Homepage">
         <li><a class="sidenav-item-link" href="{{ route('admin.features.index') }}"><span class="nav-text">Features</span></a></li>
         <li><a class="sidenav-item-link" href="{{ route('admin.stats.index') }}"><span class="nav-text">Stats</span></a></li>
+        <li><a class="sidenav-item-link" href="{{ route('admin.gallery.index') }}"><span class="nav-text">Gallery</span></a></li>
+        <li><a class="sidenav-item-link" href="{{ route('admin.news.index') }}"><span class="nav-text">News</span></a></li>
     </ul>
 </li>
 
@@ -60,7 +62,7 @@
                     <b class="caret"></b>
                 </a>
                 <ul class="collapse sub-menu" id="About">
-                    <li><a class="sidenav-item-link" href="{{ route('admin.admin_home') }}"><span class="nav-text">About Us</span></a></li>
+                    <li><a class="sidenav-item-link" href="{{ route('admin.about.index') }}"><span class="nav-text">About Us</span></a></li>
                 </ul>
             </li>
 
@@ -122,7 +124,7 @@
                     <b class="caret"></b>
                 </a>
                 <ul class="collapse sub-menu" id="Portfolio">
-                    <li><a class="sidenav-item-link" href="{{ route('admin.admin_home') }}"><span class="nav-text">Portfolio List</span></a></li>
+                    <li><a class="sidenav-item-link" href="{{ route('admin.portfolio.index') }}"><span class="nav-text">Portfolio List</span></a></li>
                 </ul>
             </li>
 
@@ -170,7 +172,7 @@
 
             <!-- Website Settings -->
             <li>
-                <a class="sidenav-item-link" href="{{ route('admin.admin_home') }}">
+                <a class="sidenav-item-link" href="{{ route('admin.setting.index') }}">
                     <span class="material-icons">settings</span>
                     <span class="nav-text">Website Setting</span>
                 </a>
@@ -183,7 +185,7 @@
 <div class="sidebar-footer-content">
     <ul class="d-flex">
         <li>
-            <a href="{{ route('admin.admin_home') }}" data-toggle="tooltip" title="Website Settings">
+            <a href="{{ route('admin.setting.index') }}" data-toggle="tooltip" title="Website Settings">
                 <span class="material-icons">settings</span>
             </a>
         </li>
