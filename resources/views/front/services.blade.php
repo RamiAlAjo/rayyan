@@ -51,8 +51,11 @@
             @endphp
 
             <div class="col text-center service-item">
-                <img src="{{ $imagePath }}" alt="{{ $name }}">
-                <p>{{ $name }}</p>
+                <!-- Wrap the image and name with a link to the service's show page -->
+                <a href="{{ route('services.show', $service->slug) }}">
+                    <img src="{{ $imagePath }}" alt="{{ $name }}" class="img-fluid mb-3">
+                    <p>{{ $name }}</p>
+                </a>
             </div>
         @endforeach
     </div>

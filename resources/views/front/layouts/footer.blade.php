@@ -54,18 +54,27 @@
 <body>
 
   <!-- Footer -->
-  <footer class="footer mt-5" role="contentinfo" aria-label="Footer">
-    <div class="footer-top text-center">
-      <div class="footer-icons d-inline-block" role="list">
-        <a href="#" aria-label="Facebook" role="listitem" tabindex="0"><i class="fab fa-facebook facebook"></i></a>
-        <a href="#" aria-label="Twitter" role="listitem" tabindex="0"><i class="fab fa-twitter twitter"></i></a>
-        <a href="#" aria-label="YouTube" role="listitem" tabindex="0"><i class="fab fa-youtube youtube"></i></a>
-        <a href="#" aria-label="LinkedIn" role="listitem" tabindex="0"><i class="fab fa-linkedin linkedin"></i></a>
-        <a href="#" aria-label="Instagram" role="listitem" tabindex="0"><i class="fab fa-instagram instagram"></i></a>
-      </div>
+<!-- Footer -->
+<footer class="footer mt-5" role="contentinfo" aria-label="Footer">
+  <div class="footer-top text-center">
+    <div class="footer-icons d-inline-block" role="list">
+      <a href="{{ $settings->facebook ?? '#' }}" aria-label="Facebook" role="listitem" tabindex="0">
+        <i class="fab fa-facebook facebook"></i>
+      </a>
+      <a href="{{ $settings->twitter ?? '#' }}" aria-label="Twitter" role="listitem" tabindex="0">
+        <i class="fab fa-twitter twitter"></i>
+      </a>
+      <a href="{{ $settings->youtube ?? '#' }}" aria-label="YouTube" role="listitem" tabindex="0">
+        <i class="fab fa-youtube youtube"></i>
+      </a>
+      <a href="{{ $settings->instagram ?? '#' }}" aria-label="Instagram" role="listitem" tabindex="0">
+        <i class="fab fa-instagram instagram"></i>
+      </a>
     </div>
-    <div class="footer-bottom">
-      Web Design & Development by Jordancode © 2025
-    </div>
-  </footer>
+  </div>
+  <div class="footer-bottom">
+    Web Design & Development by Jordancode © 2025
+  </div>
+</footer>
+
 

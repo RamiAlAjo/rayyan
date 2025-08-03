@@ -1,8 +1,6 @@
-{{-- @include('front.layouts.pages_slider') --}}
-<x-front-slider />
 
 @extends('front.layouts.app')
-
+<x-front-slider />
 @section('content')
 
 <div class="container mt-5">

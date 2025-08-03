@@ -48,3 +48,27 @@
 
 <!-- Bootstrap 5 Bundle (contains both Bootstrap JS and Popper.js) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Link to Summernote JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-lite.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        // Initialize Summernote for Arabic textarea
+        $('#about_us_description_ar').summernote({
+            height: 200,  // Set the height of the editor
+            lang: 'ar-AR', // Use Arabic language settings
+            direction: 'rtl',  // Right-To-Left for Arabic text
+            placeholder: 'اكتب هنا...', // Placeholder text for the editor
+        });
+
+        // Initialize Summernote for English textarea
+        $('#about_us_description_en').summernote({
+            height: 200,  // Set the height of the editor
+            lang: 'en-US', // Use English language settings
+            direction: 'ltr',  // Left-To-Right for English text
+            placeholder: 'Write here...', // Placeholder text for the editor
+        });
+    });
+</script>

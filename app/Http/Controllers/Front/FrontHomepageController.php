@@ -11,6 +11,7 @@ use App\Models\Stat;
 use App\Models\Project;
 use App\Models\News;
 use App\Models\Service;
+use App\Models\WebsiteSetting;  // Make sure this matches the actual model
 use App\Models\PhotosGallery;  // Add the PhotosGallery model
 
 class FrontHomepageController extends Controller
@@ -25,6 +26,7 @@ class FrontHomepageController extends Controller
         $stats = Stat::all();
         $projects = Project::where('status', 1)->orderBy('created_at', 'desc')->limit(5)->get();
         $news = News::where('status', 'active')->orderBy('created_at', 'desc')->limit(6)->get();
+        $settings = WebsiteSetting::first();
 
         // Fetch active services (assuming the Service model exists)
         $services = Service::where('status', 'active')->get();
@@ -33,6 +35,6 @@ class FrontHomepageController extends Controller
         $photos = PhotosGallery::where('status', 'active')->get();
 
         // Return the view with all the necessary data, including photos
-        return view('front.homepage', compact('categories', 'features', 'aboutUs', 'products', 'stats', 'projects', 'news', 'services', 'photos'));
+        return view('front.homepage', compact('categories', 'features', 'aboutUs', 'products', 'stats', 'projects', 'news', 'services', 'photos', 'settings'));
     }
 }

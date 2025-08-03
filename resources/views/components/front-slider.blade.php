@@ -1,4 +1,4 @@
-<div id="carouselExample" class="carousel slide home-slider TS" data-bs-ride="carousel" aria-label="Top Slider">
+<div id="carouselExample" class="carousel slide home-slider TS mt-5"  data-bs-ride="carousel" aria-label="Top Slider">
     <div class="carousel-inner home-carousel-inner">
         @foreach($sliders as $index => $slider)
             @php

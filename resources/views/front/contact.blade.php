@@ -93,54 +93,54 @@
 }
     </style>
 
-   <h2 class="contact-title">{{ __('Contact Us') }}</h2>
+  <h2 class="contact-title">{!! __('Contact Us') !!}</h2>
 
 <div class="row g-4">
     <!-- Left Contact Form -->
     <div class="col-lg-8">
         <div class="form-section">
-            <form>
+            <form action="#" method="POST">
+                @csrf
                 <div class="mb-3">
-                    <label class="form-label">{{ __('Full Name') }}</label>
-                    <input type="text" class="form-control" placeholder="{{ __('Your full name') }}">
+                    <label class="form-label" for="full_name">{!! __('Full Name') !!}</label>
+                    <input type="text" id="full_name" name="full_name" class="form-control" placeholder="{!! __('Your full name') !!}" required>
                 </div>
+              <div class="mb-3">
+    <label class="form-label" for="email">{!! __('Email') !!}</label>
+    <input type="email" id="email" name="email" class="form-control" placeholder="{!! __('Your email address') !!}" required>
+</div>
+
                 <div class="mb-3">
-                    <label class="form-label">{{ __('Email') }}</label>
-                    <input type="email" class="form-control" placeholder="{{ __('Your email address') }}">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">{{ __('Message') }}</label>
-                    <textarea class="form-control" rows="5" placeholder="{{ __('Your message...') }}"></textarea>
+                    <label class="form-label" for="message">{!! __('Message') !!}</label>
+                    <textarea id="message" name="message" class="form-control" rows="5" placeholder="{!! __('Your message...') !!}" required></textarea>
                 </div>
 
-                <button type="submit" class="btn btn-success mt-2">{{ __('Send Message') }}</button>
+                <button type="submit" class="btn btn-success mt-2">{!! __('Send Message') !!}</button>
             </form>
         </div>
     </div>
 
-    <!-- Right Contact Information -->
-    <div class="col-lg-4">
-        <div class="contact-box">
-            <h4>{{ __('Get In Touch') }}</h4>
+  <!-- Right Contact Information -->
+<div class="col-lg-4">
+    <div class="contact-box">
+        <h4>{{ __('Get In Touch') }}</h4>
 
-            <p><strong>{{ __('Factory Address') }}</strong><br>
-                {!! nl2br(e($settings->address)) !!}
-            </p>
+        <p><strong>{{ __('Factory Address') }}</strong><br>
+            {!! nl2br(e($settings->address)) !!}
+        </p>
 
-            <p><strong>{{ __('Contact') }}</strong><br>
-                {{ __('Tel') }}: {{ $settings->phone }}<br>
-                {{ __('Fax') }}: {{ $settings->fax }}<br>
-                {{ __('Email') }}: {{ $settings->contact_email }}
-            </p>
+        <p><strong>{{ __('Contact') }}</strong><br>
+            {{ __('Tel') }}: {{ $settings->phone }}<br>
+            {{ __('Fax') }}: {{ $settings->fax }}<br>
+            {{ __('Email') }}: {{ $settings->email }}
+        </p>
 
-            <p class="mt-3">{{ __('Member of Munir Sukhtian International') }}</p>
+        <p class="mt-3">{{ __('Member of Munir Sukhtian International') }}</p>
 
-            <div class="company-logos">
-                <img src="{{ asset('path/to/logo/' . $settings->logo) }}" alt="Company Logo">
-            </div>
+        <div class="company-logos">
+            <img src="{{ asset('path/to/logo/' . $settings->logo) }}" alt="Company Logo" class="img-fluid">
         </div>
     </div>
 </div>
-
 
 @endsection

@@ -11,7 +11,7 @@
 
     .navbar-brand img {
         height: auto;
-        max-height: 100px;
+        max-height: 80px;
         width: auto;
         max-width: 200px;
         object-fit: contain;
@@ -378,10 +378,10 @@
 </style>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg fixed-top mt-4">
+<nav class="navbar navbar-expand-lg fixed-top ">
     <div class="container">
-        <a class="navbar-brand" href="/home">
-            <img src="{{ asset('Rayyan_Logo.svg') }}" alt="Rayyan Logo" class="navbar-logo">
+        <a class="navbar-brand" href="/">
+    <img src="{{ asset('Rayyan_Logo.svg') }}" alt="Rayyan Logo" class="navbar-logo">
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"

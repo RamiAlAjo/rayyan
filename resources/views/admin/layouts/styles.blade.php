@@ -32,3 +32,6 @@
 
 <!-- FAVICON (Choose one) -->
 <link href="{{ asset('dist/images/favicon.png') }}" rel="shortcut icon" />
+
+<!-- Link to Summernote CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-lite.min.css" rel="stylesheet">

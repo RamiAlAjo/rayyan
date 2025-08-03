@@ -32,6 +32,7 @@
         <b class="caret"></b>
     </a>
     <ul class="collapse sub-menu" id="Homepage">
+        <li><a class="sidenav-item-link" href="{{ route('admin.categories.index') }}"><span class="nav-text">Categories</span></a></li>
         <li><a class="sidenav-item-link" href="{{ route('admin.features.index') }}"><span class="nav-text">Features</span></a></li>
         <li><a class="sidenav-item-link" href="{{ route('admin.stats.index') }}"><span class="nav-text">Stats</span></a></li>
         <li><a class="sidenav-item-link" href="{{ route('admin.gallery.index') }}"><span class="nav-text">Gallery</span></a></li>

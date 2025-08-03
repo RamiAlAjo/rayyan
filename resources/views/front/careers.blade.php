@@ -8,7 +8,6 @@
 <!-- Main container for the page content -->
 <div class="container mt-5">
     <style>
-
         .career-title {
             font-size: 36px;
             font-weight: bold;
@@ -77,96 +76,94 @@
         }
     </style>
 
-   <div class="container mt-5">
-    <h2 class="career-title" style="font-size: 36px; margin: 8.5px 0; color: green;">
-        {{ __('careers') }}
-    </h2>
+    <div class="container mt-5">
+        <h2 class="career-title" style="font-size: 36px; margin: 8.5px 0; color: green;">
+            {{ __('careers') }}
+        </h2>
 
-    <div class="row g-4">
-        <!-- Left Form Section -->
-        <div class="col-lg-8">
-            <div class="form-section">
-                <form method="POST" action="#" enctype="multipart/form-data">
-                    @csrf
+        <div class="row g-4">
+            <!-- Left Form Section -->
+            <div class="col-lg-8">
+                <div class="form-section">
+                    <form method="POST" action="#" enctype="multipart/form-data">
+                        @csrf
 
-                    <div class="row mb-3">
-                        <div class="col">
-                            <label class="form-label">{{ __('First Name') }}</label>
-                            <input type="text" class="form-control" name="first_name" placeholder="{{ __('Enter your first name') }}">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label class="form-label">{{ __('First Name') }}</label>
+                                <input type="text" class="form-control" name="first_name" placeholder="{{ __('Enter your first name') }}">
+                            </div>
+                            <div class="col">
+                                <label class="form-label">{{ __('Last Name') }}</label>
+                                <input type="text" class="form-control" name="last_name" placeholder="{{ __('Enter your last name') }}">
+                            </div>
                         </div>
-                        <div class="col">
-                            <label class="form-label">{{ __('Last Name') }}</label>
-                            <input type="text" class="form-control" name="last_name" placeholder="{{ __('Enter your last name') }}">
-                        </div>
-                    </div>
 
-                    <div class="row mb-3">
-                        <div class="col">
-                            <label class="form-label">{{ __('Nationality') }}</label>
-                            <input type="text" class="form-control" name="nationality" placeholder="{{ __('Nationality') }}">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label class="form-label">{{ __('Nationality') }}</label>
+                                <input type="text" class="form-control" name="nationality" placeholder="{{ __('Nationality') }}">
+                            </div>
+                            <div class="col">
+                                <label class="form-label">{{ __('Gender') }}</label>
+                                <select class="form-select" name="gender">
+                                    <option selected disabled>{{ __('Select') }}</option>
+                                    <option value="male">{{ __('Male') }}</option>
+                                    <option value="female">{{ __('Female') }}</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="col">
-                            <label class="form-label">{{ __('Gender') }}</label>
-                            <select class="form-select" name="gender">
-                                <option selected disabled>{{ __('Select') }}</option>
-                                <option value="male">{{ __('Male') }}</option>
-                                <option value="female">{{ __('Female') }}</option>
-                            </select>
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label class="form-label">{{ __('Phone') }}</label>
+                                <input type="text" class="form-control" name="phone" placeholder="{{ __('Enter your phone number') }}">
+                            </div>
+                            <div class="col">
+                                <label class="form-label">{{ __('E-Mail') }}</label>
+                                <input type="email" class="form-control" name="email" placeholder="{{ __('Enter your email') }}">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="row mb-3">
-                        <div class="col">
-                            <label class="form-label">{{ __('Phone') }}</label>
-                            <input type="text" class="form-control" name="phone" placeholder="{{ __('Enter your phone number') }}">
+                        <div class="file-upload mb-3">
+                            <label class="form-label">{{ __('Upload CV') }}</label>
+                            <input type="file" class="form-control" name="cv">
+                            <p class="file-note">{{ __('Max. file size: 2MB') }}</p>
                         </div>
-                        <div class="col">
-                            <label class="form-label">{{ __('E-Mail') }}</label>
-                            <input type="email" class="form-control" name="email" placeholder="{{ __('Enter your email') }}">
+
+                        <div class="file-upload mb-3">
+                            <label class="form-label">{{ __('Upload Cover Letter') }}</label>
+                            <input type="file" class="form-control" name="cover_letter">
+                            <p class="file-note">{{ __('Max. file size: 2MB') }}</p>
                         </div>
-                    </div>
 
-                    <div class="file-upload mb-3">
-                        <label class="form-label">{{ __('Upload CV') }}</label>
-                        <input type="file" class="form-control" name="cv">
-                        <p class="file-note">{{ __('Max. file size: 2MB') }}</p>
-                    </div>
-
-                    <div class="file-upload mb-3">
-                        <label class="form-label">{{ __('Upload Cover Letter') }}</label>
-                        <input type="file" class="form-control" name="cover_letter">
-                        <p class="file-note">{{ __('Max. file size: 2MB') }}</p>
-                    </div>
-
-                    <button type="submit" class="btn btn-success mt-3">{{ __('Submit Application') }}</button>
-                </form>
+                        <button type="submit" class="btn btn-success mt-3">{{ __('Submit Application') }}</button>
+                    </form>
+                </div>
             </div>
-        </div>
 
-        <!-- Right Contact Info Section -->
-        <div class="col-lg-4">
-            <div class="contact-box">
-                <h4>{{ __('Get In Touch') }}</h4>
-                <p><strong>{{ __('Factory Address') }}</strong><br>
-                    {{ __('Amman – Jordan – Abu Alanda Industrial Area') }}<br>
-                    {{ __('Al-Hazam Street') }}<br><br>
-                    {{ __('Saudi Arabia – Al-Malaz') }}
-                </p>
+            <!-- Right Contact Info Section -->
+            <div class="col-lg-4">
+                <div class="contact-box">
+                    <h4>{{ __('Get In Touch') }}</h4>
+                    <p><strong>{{ __('Factory Address') }}</strong><br>
+                        {{ $settings->address ?? __('Address not available') }}
+                    </p>
 
-                <p><strong>{{ __('Contact') }}</strong><br>
-                    {{ __('Tel') }}: 0096264161787 / 009625643888<br>
-                    {{ __('Fax') }}: 0096264165081 / 009625543882<br>
-                    {{ __('Email') }}: admin@rayyan.com.jo
-                </p>
+                    <p><strong>{{ __('Contact') }}</strong><br>
+                        {{ __('Tel') }}: {{ $settings->phone ?? __('Phone not available') }}<br>
+                        {{ __('Fax') }}: {{ $settings->fax ?? __('Fax not available') }}<br>
+                        {{ __('Email') }}: {{ $settings->email ?? __('Email not available') }}
+                    </p>
 
-                <p class="mt-3">{{ __('Member of Munir Sukhtian International') }}</p>
+                    <p class="mt-3">{{ __('Member of Munir Sukhtian International') }}</p>
 
-                <div class="company-logos">
-                    <img src="{{ asset('Career.png') }}" alt="Company Logo">
+                    <div class="company-logos">
+                        <img src="{{ asset('path/to/logo/' . $settings->logo ?? 'default-logo.png') }}" alt="Company Logo">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 @endsection

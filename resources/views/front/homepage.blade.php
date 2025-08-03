@@ -1,5 +1,6 @@
 <x-front-slider />
 @extends('front.layouts.app')
+
 @section('content')
 
 <!-- ================== CATEGORY SECTION ================== -->
@@ -158,7 +159,7 @@
 <div class="section-spacing" style="background-color: #f4f4f4; padding: 50px 20px; width: 100%; box-sizing: border-box;">
     <div class="container" style="max-width: 1200px; margin: 0 auto; text-align: left;">
         <h2 style="font-size: 36px; margin: 8.5px 0; color: #00704A;">
-            {{ app()->getLocale() == 'ar' ? ($aboutUs->about_us_title_ar ?? __('welcome_to_our_site')) : ($aboutUs->about_us_title_en ?? __('welcome_to_our_site')) }}
+            {{__('welcome_to_our_site')}}
         </h2>
         <p class="mt-4" style="font-size: 20px; color: #333;">
             {!! nl2br(e(app()->getLocale() == 'ar' ? ($aboutUs->about_us_description_ar ?? __('welcome_description')) : ($aboutUs->about_us_description_en ?? __('welcome_description')))) !!}
@@ -211,6 +212,14 @@
       font-size: 16px;
       font-weight: 500;
     }
+
+    p.mt-4 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 </style>
 
 <!-- ================== GALLERY CAROUSEL ================== -->
