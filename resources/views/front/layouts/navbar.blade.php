@@ -375,6 +375,20 @@
     display: block;
 }
 
+/* Custom navbar link color */
+.navbar-nav .nav-link {
+    color: #3DA246 !important;
+}
+
+.navbar-nav .nav-link.active {
+    color: #3DA246 !important;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #3DA246 !important;
+}
+
+
 </style>
 
 <!-- Navbar -->
