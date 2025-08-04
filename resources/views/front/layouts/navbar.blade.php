@@ -1,370 +1,353 @@
 <style>
+   /* Navbar Styles */
+.navbar {
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    width: 100%;
+    font-size: 18px;
+    background-color: white;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand img {
+    height: auto;
+    max-height: 80px;
+    width: auto;
+    max-width: 200px;
+    object-fit: contain;
+}
+
+.nav-link {
+    color: black;
+    font-weight: bold;
+    padding: 10px 15px;
+    transition: color 0.2s ease-in-out;
+}
+
+.nav-link:hover {
+    color: gray;
+}
+
+.navbar-nav {
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+.nav-link.active {
+    border: 2px solid black;
+    color: black;
+    border-radius: 5px;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 992px) {
     .navbar {
-        position: fixed;
-        top: 0;
-        z-index: 999;
-        width: 100%;
-        font-size: 18px;
-        background-color: white;
-        padding: 0.5rem 1rem;
+        padding: 0.5rem;
     }
 
     .navbar-brand img {
-        height: auto;
-        max-height: 80px;
-        width: auto;
-        max-width: 200px;
-        object-fit: contain;
+        max-height: 70px;
+        max-width: 150px;
     }
 
-    .nav-link {
-        color: black;
-        font-weight: bold;
-        padding: 10px 15px;
-        transition: color 0.2s ease-in-out;
-    }
-
-    .nav-link:hover {
-        color: gray;
+    .navbar-collapse {
+        text-align: center;
+        background-color: #fff;
     }
 
     .navbar-nav {
-        margin: 0 auto;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        gap: 8px;
+        font-size: 14px;
+    }
+
+    .nav-item {
+        width: 100%;
+    }
+
+    .d-flex {
         flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
     }
-
-    .nav-link.active {
-        border: 2px solid black;
-        color: black;
-        border-radius: 5px;
-    }
-
-    @media (max-width: 992px) {
-        .navbar {
-            padding: 0.5rem;
-        }
-
-        .navbar-brand img {
-            max-height: 70px;
-            max-width: 150px;
-        }
-
-        .navbar-collapse {
-            text-align: center;
-            background-color: #fff;
-        }
-
-        .navbar-nav {
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            gap: 8px;
-            font-size: 14px;
-        }
-
-        .nav-item {
-            width: 100%;
-        }
-
-        .d-flex {
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem;
-        }
-    }
-
-    .navbar-logo {
-    max-height: 80px;
-    width: auto;
-    object-fit: contain;
 }
-@media (max-width: 992px) {
-    .navbar-logo {
-        max-height: 60px;
-    }
 
+/* Search Container and Input */
+.search-container-NA {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 20px;
+    flex-direction: column;
+    z-index: 100;
 }
-    /* Enhanced Search Container Design */
-        .search-container-NA {
-            position: relative;
-            display: flex;
-            align-items: center;
-            margin-left: auto;
-            margin-right: 20px; /* Space between the icon and other elements */
-            flex-direction: column; /* Stack items vertically */
-            z-index: 100;
-        }
 
-        .search-input-NA {
-            width: 0;
-            opacity: 0;
-            transition: width 0.4s ease, opacity 0.4s ease;
-            border: 1px solid #ccc;
-            border-radius: 50px;
-            padding: 8px 20px;
-            font-size: 1rem;
-            background: #f8f9fa;
-            outline: none;
-            display: none;
-            margin-top: 10px; /* Space below icon */
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        }
+.search-input-NA {
+    width: 0;
+    opacity: 0;
+    transition: width 0.4s ease, opacity 0.4s ease;
+    border: 1px solid #ccc;
+    border-radius: 50px;
+    padding: 8px 20px;
+    font-size: 1rem;
+    background: #f8f9fa;
+    outline: none;
+    display: none;
+    margin-top: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
 
-        .search-input-NA.show {
-            display: block;
-            width: 250px;
-            opacity: 1;
-        }
+.search-input-NA.show {
+    display: block;
+    width: 250px;
+    opacity: 1;
+}
 
-        #search-toggle-NA {
-            font-size: 1.6rem;
-            border: none;
-            background: none;
-            padding: 10px;
-            cursor: pointer;
-            transition: transform 0.3s ease, color 0.3s ease, background-color 0.3s ease;
-            border-radius: 50%;
-            color: #333;
-        }
+#search-toggle-NA {
+    font-size: 1.6rem;
+    border: none;
+    background: none;
+    padding: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease, background-color 0.3s ease;
+    border-radius: 50%;
+    color: #333;
+}
 
-        #search-toggle-NA:hover {
-            color: #fff;
-            background-color: #07d82a;
-            transform: rotate(360deg);
-        }
+#search-toggle-NA:hover {
+    color: #fff;
+    background-color: #07d82a;
+    transform: rotate(360deg);
+}
 
-        #search-toggle-NA:focus {
-            outline: none;
-            box-shadow: 0 0 5px #07d82a;
-        }
+#search-toggle-NA:focus {
+    outline: none;
+    box-shadow: 0 0 5px #07d82a;
+}
 
-        #search-results {
-            background: white;
-            width: 100%;
-            max-width: 250px;
-            max-height: 300px;
-            overflow-y: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            display: none;
-            margin-top: 8px;
-            z-index: 1000;
-            transition: opacity 0.3s ease-in-out;
-        }
+/* Search Results Styles */
+#search-results {
+    background: white;
+    width: 100%;
+    max-width: 250px;
+    max-height: 300px;
+    overflow-y: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: none;
+    margin-top: 8px;
+    z-index: 1000;
+    transition: opacity 0.3s ease-in-out;
+}
 
-        #search-results:not(:empty) {
-            display: block;
-        }
+#search-results:not(:empty) {
+    display: block;
+}
 
-        .search-results-list {
-            list-style: none;
-            padding: 10px;
-            margin: 0;
-        }
+.search-results-list {
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+}
 
-        .search-result-item {
-            padding: 12px 15px;
-            border-bottom: 1px solid #eee;
-            font-size: 1rem;
-            transition: background-color 0.3s ease;
-        }
+.search-result-item {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
 
-        .search-result-item:last-child {
-            border-bottom: none;
-        }
+.search-result-item:last-child {
+    border-bottom: none;
+}
 
-        .search-result-link {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            display: block;
-            transition: 0.2s ease-in-out;
-        }
+.search-result-item:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
 
-        .search-result-link:hover {
-            color: #07d82a;
-            background: #f1f1f1;
-            padding-left: 10px;
-        }
+.search-result-link {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    display: block;
+    transition: 0.2s ease-in-out;
+}
 
-        .search-no-results {
-            padding: 15px;
-            text-align: center;
-            color: #888;
-            font-size: 14px;
-        }
+.search-result-link:hover {
+    color: #07d82a;
+    background: #f1f1f1;
+    padding-left: 10px;
+}
 
-        #loading-indicator {
-            display: none;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1rem;
-            color: #07d82a;
-        }
+.search-no-results {
+    padding: 15px;
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+}
 
-        /* Mobile / Responsive adjustments */
-        @media (max-width: 991px) {
-            .search-container-NA {
-                margin-right: 0;
-                flex-direction: column;
-                align-items: center;
-            }
+#loading-indicator {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1rem;
+    color: #07d82a;
+}
 
-            .search-input-NA {
-                width: 100%;
-                max-width: 100%;
-                text-align: center;
-                margin-top: 10px;
-            }
-
-            #search-toggle-NA {
-                font-size: 1.6rem;
-                padding: 10px;
-                margin-top: 10px;
-            }
-        }
-
-        @media (max-width: 767px) {
-            .search-input-NA {
-                font-size: 1rem;
-            }
-
-            #search-results {
-                max-width: 100%;
-                margin-top: 10px;
-            }
-
-            .search-result-item {
-                padding: 12px 15px;
-            }
-        }
-
-        .see-all-link {
-            text-align: center;
-            display: block;
-            padding: 10px;
-            background-color: #07d82a;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-
-        .see-all-link:hover {
-            background-color: #05a922;
-        }
-
-        /* hover menu */
-
-        /* Show dropdown menu on hover */
-        .dropdown-hover:hover .dropdown-menu-products {
-            display: block;
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        /* Dropdown hidden by default */
-        .dropdown-menu-products {
-            display: block;
-            opacity: 0;
-            visibility: hidden;
-            position: absolute;
-            top: 100%;
-            /* left: 0; */
-            z-index: 1000;
-            min-width: 200px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            transition: all 0.2s ease-in-out;
-            transform: translateY(10px);
-            padding: 10px 0;
-        }
-
-        /* Optional styling */
-        .dropdown-menu-products a {
-            padding: 8px 16px;
-            color: #212529;
-            text-decoration: none;
-            display: block;
-        }
-
-        .dropdown-menu-products a:hover {
-            background-color: #f8f9fa;
-        }
-
-        /* Submenu container */
-         .dropdown-submenu {
-        position: relative;
+/* Mobile Styles */
+@media (max-width: 991px) {
+    .search-container-NA {
+        margin-right: 0;
+        flex-direction: column;
+        align-items: center;
     }
 
-    .subcategory-menu {
-        display: none;
-        position: absolute;
-        top: 10%;
-        left: 100%;
-        min-width: 200px;
-        background: white;
-        border: 1px solid #ddd;
-        z-index: 1001;
+    .search-input-NA {
+        width: 100%;
+        max-width: 100%;
+        text-align: center;
+        margin-top: 10px;
     }
 
-    /* Show submenu on hover */
-    .dropdown-submenu:hover .subcategory-menu {
-        display: block;
+    #search-toggle-NA {
+        font-size: 1.6rem;
+        padding: 10px;
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 767px) {
+    .search-input-NA {
+        font-size: 1rem;
     }
 
-    /* Optional styling */
-    .subcategory-menu a {
-        padding: 8px 16px;
-        color: #212529;
-        white-space: nowrap;
+    #search-results {
+        max-width: 100%;
+        margin-top: 10px;
     }
 
-    .subcategory-menu a:hover {
-        background-color: #f8f9fa;
+    .search-result-item {
+        padding: 12px 15px;
     }
+}
 
-    /* Subcategory submenu */
-    .dropdown-submenu {
-        position: relative;
-    }
+.see-all-link {
+    text-align: center;
+    display: block;
+    padding: 10px;
+    background-color: #07d82a;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
 
-    .subcategory-menu,
-    .product-menu {
-        display: none;
-        position: absolute;
-        top: 0;
-        left: 100%;
-        min-width: 200px;
-        background: white;
-        border: 1px solid #ddd;
-        z-index: 1001;
-        transition: all 0.2s ease;
-    }
+.see-all-link:hover {
+    background-color: #05a922;
+}
 
-    .dropdown-submenu:hover > .subcategory-menu,
-    .dropdown-submenu:hover > .product-menu {
-        display: block;
-    }
+/* Dropdown Hover Menu */
+.dropdown-hover:hover .dropdown-menu-products {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
 
-    /* Optional product link styling */
-    .product-menu a,
-    .subcategory-menu a {
-        white-space: nowrap;
-        padding: 8px 16px;
-        text-decoration: none;
-        display: block;
-        color: #212529;
-    }
+.dropdown-menu-products {
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 100%;
+    z-index: 1000;
+    min-width: 200px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    transition: all 0.2s ease-in-out;
+    transform: translateY(10px);
+    padding: 10px 0;
+}
 
-    .product-menu a:hover,
-    .subcategory-menu a:hover {
-        background-color: #f8f9fa;
-    }
+.dropdown-menu-products a {
+    padding: 8px 16px;
+    color: #212529;
+    text-decoration: none;
+    display: block;
+}
 
+.dropdown-menu-products a:hover {
+    background-color: #f8f9fa;
+}
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.subcategory-menu {
+    display: none;
+    position: absolute;
+    top: 10%;
+    left: 100%;
+    min-width: 200px;
+    background: white;
+    border: 1px solid #ddd;
+    z-index: 1001;
+}
+
+.dropdown-submenu:hover .subcategory-menu {
+    display: block;
+}
+
+.subcategory-menu a {
+    padding: 8px 16px;
+    color: #212529;
+    white-space: nowrap;
+}
+
+.subcategory-menu a:hover {
+    background-color: #f8f9fa;
+}
+
+.product-menu,
+.subcategory-menu {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    min-width: 200px;
+    background: white;
+    border: 1px solid #ddd;
+    z-index: 1001;
+    transition: all 0.2s ease;
+}
+
+.dropdown-submenu:hover > .subcategory-menu,
+.dropdown-submenu:hover > .product-menu {
+    display: block;
+}
+
+.product-menu a,
+.subcategory-menu a {
+    white-space: nowrap;
+    padding: 8px 16px;
+    text-decoration: none;
+    display: block;
+    color: #212529;
+}
+
+.product-menu a:hover,
+.subcategory-menu a:hover {
+    background-color: #f8f9fa;
+}
 
 .dropdown-menu-products {
     min-width: 220px;
@@ -375,7 +358,6 @@
     display: block;
 }
 
-/* Custom navbar link color */
 .navbar-nav .nav-link {
     color: #3DA246 !important;
 }
@@ -388,6 +370,35 @@
     color: #3DA246 !important;
 }
 
+
+/* Show nested hover dropdown only on large screens */
+@media (max-width: 991.98px) {
+    .dropdown-hover .dropdown-menu {
+        position: static !important;
+        display: none;
+    }
+
+    .dropdown-hover.show .dropdown-menu {
+        display: block;
+    }
+
+    .dropdown-submenu .dropdown-menu {
+        display: none;
+    }
+
+    .dropdown-submenu.show .dropdown-menu {
+        display: block;
+    }
+
+    .dropdown-submenu > a::after {
+        content: ' ▼';
+        float: right;
+    }
+
+    .dropdown-submenu > a {
+        cursor: pointer;
+    }
+}
 
 </style>
 
@@ -541,8 +552,6 @@
     </div>
 </li>
 
-
-
      @php
     use App\Models\Portfolio;
 
@@ -565,8 +574,6 @@
         </div>
     @endif
 </li>
-
-
 
         <li class="nav-item">
             <a class="nav-link nav-link-NA {{ Request::is('faq') ? 'active' : '' }}" href="{{ route('faq.index') }}">{{ __('faq') }}</a>
@@ -610,167 +617,172 @@
     </div>
 </nav>
 
-
   <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // --- Script for searchIcon toggle ---
-            const searchToggleNA = document.getElementById("search-toggle-NA");
-            const searchInputNA = document.getElementById("search-input-NA");
-            const searchResults = document.getElementById("search-results");
-            const loadingIndicator = document.getElementById("loading-indicator");
-            let searchTimeout;
-            let cache = {};
+    document.addEventListener("DOMContentLoaded", function () {
+        // --- Script for searchIcon toggle ---
+        const searchToggleNA = document.getElementById("search-toggle-NA");
+        const searchInputNA = document.getElementById("search-input-NA");
+        const searchResults = document.getElementById("search-results");
+        const loadingIndicator = document.getElementById("loading-indicator");
+        let searchTimeout;
+        let cache = {};
+        let selectedIndex = -1; // To track the selected search result
 
-            if (searchToggleNA && searchInputNA && searchResults && loadingIndicator) {
-                // Toggle search input visibility
-                searchToggleNA.addEventListener("click", function (e) {
-                    e.preventDefault();
-                    searchInputNA.classList.toggle("show");
+        if (searchToggleNA && searchInputNA && searchResults && loadingIndicator) {
+            // Toggle search input visibility
+            searchToggleNA.addEventListener("click", function (e) {
+                e.preventDefault();
+                searchInputNA.classList.toggle("show");
 
-                    if (searchInputNA.classList.contains("show")) {
-                        searchInputNA.focus();
-                    } else {
-                        searchInputNA.value = "";
-                        searchResults.innerHTML = "";
-                    }
-                });
-
-                // Debounced input listener
-                searchInputNA.addEventListener("input", debounce(function () {
-                    let query = searchInputNA.value.trim();
-
-                    if (query.length > 2) {
-                        if (cache[query]) {
-                            displaySearchResults(cache[query]);
-                        } else {
-                            loadingIndicator.style.display = "block";
-                            fetchSearchResults(query);
-                        }
-                    } else {
-                        searchResults.innerHTML = "";
-                        loadingIndicator.style.display = "none";
-                    }
-                }, 300));
-
-                // Fetch results from the backend
-                function fetchSearchResults(query) {
-                    fetch(`/search?query=${encodeURIComponent(query)}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            cache[query] = data;
-                            displaySearchResults(data);
-                            loadingIndicator.style.display = "none";
-                        })
-                        .catch(error => {
-                            console.error("Error fetching search results:", error);
-                            searchResults.innerHTML = "<p class='search-no-results'>Error fetching results.</p>";
-                            loadingIndicator.style.display = "none";
-                        });
-                }
-
-                // Render search results
-                function displaySearchResults(data) {
+                if (searchInputNA.classList.contains("show")) {
+                    searchInputNA.focus();
+                } else {
+                    searchInputNA.value = "";
                     searchResults.innerHTML = "";
-
-                    // Check if any data is returned
-                    if (data.products.length === 0 && data.productCategories.length === 0 && data.productSubcategories.length === 0 && data.projects.length === 0 && data.projectsCategories.length === 0 && data.categories.length === 0) {
-                        searchResults.innerHTML = "<p class='search-no-results'>No results found.</p>";
-                    } else {
-                        let ul = document.createElement("ul");
-                        ul.classList.add("search-results-list");
-
-                        // Display products
-                        data.products.forEach(product => {
-                            let li = document.createElement("li");
-                            li.classList.add("search-result-item");
-                            li.innerHTML = `
-                                <a href="/products/${product.id}" class="search-result-link">
-                                    <strong>EN:</strong> ${product.title_en}<br>
-                                    <strong>AR:</strong> ${product.title_ar}
-                                </a>`;
-                            ul.appendChild(li);
-                        });
-
-                        // Display product categories
-                        data.productCategories.forEach(category => {
-                            let li = document.createElement("li");
-                            li.classList.add("search-result-item");
-                            li.innerHTML = `
-                                <a href="/categories/${category.id}" class="search-result-link">
-                                    <strong>Category:</strong> ${category.name_en}
-                                </a>`;
-                            ul.appendChild(li);
-                        });
-
-                        // Display product subcategories
-                        data.productSubcategories.forEach(subcategory => {
-                            let li = document.createElement("li");
-                            li.classList.add("search-result-item");
-                            li.innerHTML = `
-                                <a href="/subcategories/${subcategory.id}" class="search-result-link">
-                                    <strong>Subcategory:</strong> ${subcategory.name_en}
-                                </a>`;
-                            ul.appendChild(li);
-                        });
-
-                        // Display projects
-                        data.projects.forEach(project => {
-                            let li = document.createElement("li");
-                            li.classList.add("search-result-item");
-                            li.innerHTML = `
-                                <a href="/projects/${project.id}" class="search-result-link">
-                                    <strong>Project:</strong> ${project.name_en}
-                                </a>`;
-                            ul.appendChild(li);
-                        });
-
-                        // Display project categories
-                        data.projectsCategories.forEach(projectCategory => {
-                            let li = document.createElement("li");
-                            li.classList.add("search-result-item");
-                            li.innerHTML = `
-                                <a href="/project-categories/${projectCategory.id}" class="search-result-link">
-                                    <strong>Project Category:</strong> ${projectCategory.name_en}
-                                </a>`;
-                            ul.appendChild(li);
-                        });
-
-                        searchResults.appendChild(ul);
-
-                        // See All button
-                        let seeAllDiv = document.createElement("div");
-                        seeAllDiv.classList.add("see-all-container");
-                        seeAllDiv.innerHTML = `<a href="/search_results?query=${encodeURIComponent(searchInputNA.value.trim())}" class="see-all-link">See All</a>`;
-                        searchResults.appendChild(seeAllDiv);
-                    }
                 }
+            });
 
-                // Redirect on Enter for full results page
-                searchInputNA.addEventListener("keydown", function (e) {
-                    if (e.key === "Enter") {
-                        e.preventDefault();
+            // Debounced input listener
+            searchInputNA.addEventListener("input", debounce(function () {
+                let query = searchInputNA.value.trim();
+
+                if (query.length > 2) {
+                    if (cache[query]) {
+                        displaySearchResults(cache[query]);
+                    } else {
+                        loadingIndicator.style.display = "block";
+                        fetchSearchResults(query);
+                    }
+                } else {
+                    searchResults.innerHTML = "";
+                    loadingIndicator.style.display = "none";
+                }
+            }, 300));
+
+            // Fetch results from the backend
+            function fetchSearchResults(query) {
+                fetch(`/search?query=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        cache[query] = data;
+                        displaySearchResults(data);
+                        loadingIndicator.style.display = "none";
+                    })
+                    .catch(error => {
+                        console.error("Error fetching search results:", error);
+                        searchResults.innerHTML = "<p class='search-no-results'>Error fetching results. Please try again.</p>";
+                        loadingIndicator.style.display = "none";
+                    });
+            }
+
+            // Render search results
+            function displaySearchResults(data) {
+                searchResults.innerHTML = "";
+                selectedIndex = -1; // Reset selected result on new input
+
+                // Check if any data is returned
+                if (!data || !Object.values(data).some(array => array.length > 0)) {
+                    searchResults.innerHTML = "<p class='search-no-results'>No results found.</p>";
+                } else {
+                    let ul = document.createElement("ul");
+                    ul.classList.add("search-results-list");
+
+                    // Display products, categories, subcategories, etc.
+                    createSearchResultItems(data, ul);
+
+                    searchResults.appendChild(ul);
+
+                    // See All button
+                    let seeAllDiv = document.createElement("div");
+                    seeAllDiv.classList.add("see-all-container");
+                    seeAllDiv.innerHTML = `<a href="/search_results?query=${encodeURIComponent(searchInputNA.value.trim())}" class="see-all-link">See All</a>`;
+                    searchResults.appendChild(seeAllDiv);
+                }
+            }
+
+            function createSearchResultItems(data, container) {
+                // Iterate and append each result type (products, categories, etc.)
+                ["products", "productCategories", "productSubcategories", "projects", "projectsCategories"].forEach(type => {
+                    data[type].forEach(item => {
+                        let li = document.createElement("li");
+                        li.classList.add("search-result-item");
+                        li.innerHTML = `
+                            <a href="/${type.slice(0, -1)}/${item.id}" class="search-result-link">
+                                <strong>${item.title_en || item.name_en || item.name_ar || item.project_name}</strong><br>
+                                <span>${item.title_ar || item.name_ar || item.description || ""}</span>
+                            </a>`;
+                        container.appendChild(li);
+                    });
+                });
+            }
+
+            // Redirect on Enter for full results page
+            searchInputNA.addEventListener("keydown", function (e) {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    if (selectedIndex >= 0) {
+                        let selectedItem = searchResults.querySelectorAll(".search-result-item")[selectedIndex];
+                        window.location.href = selectedItem.querySelector("a").href;
+                    } else {
                         const query = searchInputNA.value.trim();
                         if (query.length > 2) {
                             window.location.href = `/search_results?query=${encodeURIComponent(query)}`;
                         }
                     }
-                });
-
-                // Hide results when clicking outside
-                document.addEventListener("click", function (event) {
-                    if (!searchResults.contains(event.target) && !searchInputNA.contains(event.target)) {
-                        searchResults.innerHTML = "";
-                    }
-                });
-
-                // Debounce function to limit frequent requests
-                function debounce(func, delay) {
-                    return function () {
-                        clearTimeout(searchTimeout);
-                        searchTimeout = setTimeout(func, delay);
-                    };
+                } else if (e.key === "ArrowDown") {
+                    e.preventDefault();
+                    navigateResults(1);
+                } else if (e.key === "ArrowUp") {
+                    e.preventDefault();
+                    navigateResults(-1);
                 }
-            }
-        });
-    </script>
+            });
 
+            // Navigate through results using arrow keys
+            function navigateResults(direction) {
+                let items = searchResults.querySelectorAll(".search-result-item");
+                if (items.length === 0) return;
+
+                selectedIndex = (selectedIndex + direction + items.length) % items.length; // Wrap around
+                items.forEach((item, index) => {
+                    item.classList.toggle("selected", index === selectedIndex);
+                });
+            }
+
+            // Hide results when clicking outside
+            document.addEventListener("click", function (event) {
+                if (!searchResults.contains(event.target) && !searchInputNA.contains(event.target)) {
+                    searchResults.innerHTML = "";
+                }
+            });
+
+            // Debounce function to limit frequent requests
+            function debounce(func, delay) {
+                return function () {
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(func, delay);
+                };
+            }
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+    if (window.innerWidth < 992) {
+        // Toggle top-level dropdowns
+        document.querySelectorAll('.dropdown-submenu > a').forEach(function (el) {
+            el.addEventListener('click', function (e) {
+                e.preventDefault();
+                const submenu = this.nextElementSibling;
+
+                // Close all other submenus at same level
+                const siblingSubmenus = this.closest('.dropdown-menu').querySelectorAll('.dropdown-menu');
+                siblingSubmenus.forEach(s => {
+                    if (s !== submenu) s.classList.remove('show');
+                });
+
+                submenu?.classList.toggle('show');
+            });
+        });
+    }
+});
+</script>
