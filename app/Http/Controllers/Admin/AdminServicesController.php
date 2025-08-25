@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Service;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 
 class AdminServicesController extends Controller
 {
@@ -48,8 +49,12 @@ class AdminServicesController extends Controller
         $service->status = $request->status;
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('services/images', 'public');
-            $service->image = $path;
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName(); // Custom image name
+            $imagePath = public_path('uploads/services/images'); // Directory to store images
+            $image->move($imagePath, $imageName); // Move the file to the directory
+
+            $service->image = 'uploads/services/images/' . $imageName; // Store the relative path
         }
 
         $service->slug = Str::slug($request->name_en) . '-' . Str::random(5);
@@ -87,11 +92,17 @@ class AdminServicesController extends Controller
         $service->status = $request->status;
 
         if ($request->hasFile('image')) {
-            if ($service->image) {
-                \Storage::delete('public/' . $service->image);
+            // Delete old image if it exists
+            if (File::exists(public_path($service->image))) {
+                File::delete(public_path($service->image));
             }
-            $path = $request->file('image')->store('services/images', 'public');
-            $service->image = $path;
+
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName(); // Custom image name
+            $imagePath = public_path('uploads/services/images'); // Directory to store images
+            $image->move($imagePath, $imageName); // Move the file to the directory
+
+            $service->image = 'uploads/services/images/' . $imageName; // Store the relative path
         }
 
         $service->slug = Str::slug($request->name_en) . '-' . Str::random(5);
@@ -105,8 +116,9 @@ class AdminServicesController extends Controller
      */
     public function destroy(Service $service)
     {
-        if ($service->image) {
-            \Storage::delete('public/' . $service->image);
+        // Delete image if it exists
+        if (File::exists(public_path($service->image))) {
+            File::delete(public_path($service->image));
         }
 
         $service->delete();

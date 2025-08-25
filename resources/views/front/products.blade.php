@@ -69,7 +69,7 @@
     @forelse ($products as $product)
         <div class="col text-center product-item">
             <a href="{{ route('product.show', $product->id) }}">
-                <img src="{{ $product->image ? asset('storage/' . $product->image) : asset('images/placeholder.png') }}"
+                <img src="{{ $product->image ? asset('/' . $product->image) : asset('images/placeholder.png') }}"
                      alt="{{ app()->getLocale() === 'ar' ? $product->name_ar : $product->name_en }}"
                      class="img-fluid mb-2" style="max-height: 180px;">
                 <p>{{ app()->getLocale() === 'ar' ? $product->name_ar : $product->name_en }}</p>

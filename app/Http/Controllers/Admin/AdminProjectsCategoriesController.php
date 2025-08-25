@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ProjectsCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File; // Importing File facade for manual handling
 
 class AdminProjectsCategoriesController extends Controller
 {
@@ -44,10 +45,16 @@ class AdminProjectsCategoriesController extends Controller
             'name_en', 'name_ar', 'description_en', 'description_ar', 'status'
         ]);
 
+        // Generate slug with random unique part
         $data['slug'] = Str::slug($request->name_en) . '-' . Str::random(5);
 
+        // Handle image upload manually
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('uploads/projects_categories', 'public');
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName(); // Unique image name
+            $imagePath = public_path('uploads/projects_categories/images'); // Folder for storing images
+            $image->move($imagePath, $imageName); // Move the file manually
+            $data['image'] = 'uploads/projects_categories/images/' . $imageName; // Store relative path
         }
 
         ProjectsCategory::create($data);
@@ -86,12 +93,19 @@ class AdminProjectsCategoriesController extends Controller
             $data['slug'] = Str::slug($request->name_en) . '-' . Str::random(5);
         }
 
+        // Handle image update manually
         if ($request->hasFile('image')) {
             // Delete old image if exists
-            if ($projectsCategory->image && \Storage::disk('public')->exists($projectsCategory->image)) {
-                \Storage::disk('public')->delete($projectsCategory->image);
+            if ($projectsCategory->image && File::exists(public_path($projectsCategory->image))) {
+                File::delete(public_path($projectsCategory->image)); // Delete the old image file
             }
-            $data['image'] = $request->file('image')->store('uploads/projects_categories', 'public');
+
+            // Upload the new image manually
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName(); // Unique image name
+            $imagePath = public_path('uploads/projects_categories/images'); // Folder for storing images
+            $image->move($imagePath, $imageName); // Move the file manually
+            $data['image'] = 'uploads/projects_categories/images/' . $imageName; // Store relative path
         }
 
         $projectsCategory->update($data);
@@ -104,8 +118,9 @@ class AdminProjectsCategoriesController extends Controller
      */
     public function destroy(ProjectsCategory $projectsCategory)
     {
-        if ($projectsCategory->image && \Storage::disk('public')->exists($projectsCategory->image)) {
-            \Storage::disk('public')->delete($projectsCategory->image);
+        // Delete the image if it exists
+        if ($projectsCategory->image && File::exists(public_path($projectsCategory->image))) {
+            File::delete(public_path($projectsCategory->image)); // Delete the old image file
         }
 
         $projectsCategory->delete();

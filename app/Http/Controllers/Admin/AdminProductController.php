@@ -7,8 +7,8 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductSubcategory;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File; // Import the File facade
 
 class AdminProductController extends Controller
 {
@@ -25,7 +25,6 @@ class AdminProductController extends Controller
         return view('admin.products.create', compact('categories', 'subcategories'));
     }
 
-
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -40,8 +39,13 @@ class AdminProductController extends Controller
             'status' => 'required|in:active,inactive,pending',
         ]);
 
+        // Handle image upload
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('products/images', 'public');
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName(); // Custom name for the image
+            $imagePath = public_path('uploads/products/images'); // Folder where the image will be stored
+            $image->move($imagePath, $imageName); // Move the file
+            $validated['image'] = 'uploads/products/images/' . $imageName; // Save the relative path
         }
 
         Product::create($validated);
@@ -70,11 +74,18 @@ class AdminProductController extends Controller
             'status' => 'required|in:active,inactive,pending',
         ]);
 
+        // Handle image upload if a new image is provided
         if ($request->hasFile('image')) {
-            if ($product->image) {
-                Storage::disk('public')->delete($product->image);
+            // Delete the old image if it exists
+            if ($product->image && File::exists(public_path($product->image))) {
+                File::delete(public_path($product->image));
             }
-            $validated['image'] = $request->file('image')->store('products/images', 'public');
+
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName(); // Custom name for the image
+            $imagePath = public_path('uploads/products/images'); // Folder where the image will be stored
+            $image->move($imagePath, $imageName); // Move the file
+            $validated['image'] = 'uploads/products/images/' . $imageName; // Save the relative path
         }
 
         $product->update($validated);
@@ -84,8 +95,9 @@ class AdminProductController extends Controller
 
     public function destroy(Product $product)
     {
-        if ($product->image) {
-            Storage::disk('public')->delete($product->image);
+        // Delete the image if it exists
+        if ($product->image && File::exists(public_path($product->image))) {
+            File::delete(public_path($product->image));
         }
 
         $product->delete();

@@ -16,7 +16,7 @@
                         </p>
                     </div>
                     <img
-                        src="{{ $category->image ? asset('storage/' . $category->image) : 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png' }}"
+                        src="{{ $category->image ? asset('/' . $category->image) : 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png' }}"
                         class="card-img-bottom category-img"
                         alt="{{ app()->getLocale() == 'ar' ? $category->name_ar : $category->name_en }}"
                         title="{{ app()->getLocale() == 'ar' ? $category->name_ar : $category->name_en }}"
@@ -121,7 +121,7 @@
                 <div class="col-md-4">
                     @foreach ($chunk as $feature)
                         <div class="feature-icon">
-                            <img src="{{ asset('storage/' . $feature->icon_path) }}" alt="{{ $feature->title_en }}">
+                            <img src="{{ asset('/' . $feature->icon_path) }}" alt="{{ $feature->title_en }}" class="img-fluid">
                             <span>{{ app()->getLocale() == 'ar' ? $feature->title_ar : $feature->title_en }}</span>
                         </div>
                     @endforeach
@@ -131,29 +131,44 @@
         </div>
     </div>
 </div>
+
 <!-- Features Section Styles -->
 <style>
      .features-section {
-      background-color: #fff;
-      padding: 50px 0;
+        background-color: #fff;
+        padding: 50px 0;
     }
 
     .feature-icon {
-      display: flex;
-      align-items: center;
-      margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 25px;
+        text-align: center;  /* Center the icon and text */
     }
 
     .feature-icon img {
-      width: 30px;
-      margin-right: 15px;
+        width: 80px;  /* Increased icon size */
+        margin-right: 20px;  /* Space between icon and text */
     }
 
     .feature-icon span {
-      color: #222;
-      font-size: 16px;
+        color: #222;
+        font-size: 20px;  /* Increased font size for text */
+        font-weight: bold;  /* Make text bolder */
+    }
+
+    /* Responsive Design */
+    @media (max-width: 576px) {
+        .feature-icon img {
+            width: 60px;  /* Adjust icon size for smaller screens */
+        }
+
+        .feature-icon span {
+            font-size: 18px;  /* Adjust text size for smaller screens */
+        }
     }
 </style>
+
 
 <!-- ================== WELCOME SECTION ================== -->
 <div class="section-spacing" style="background-color: #f4f4f4; padding: 50px 20px; width: 100%; box-sizing: border-box;">
@@ -235,7 +250,7 @@
                                 @if($photo->status === 'active') <!-- Check if the photo is active -->
                                     <div class="col-md-4">
                                         @if($photo->images)
-                                            <img src="{{ asset('storage/' . $photo->images) }}" class="d-block w-100" alt="{{ app()->getLocale() == 'ar' ? $photo->image_title_ar : $photo->image_title_en }}" style="max-height: 400px; object-fit: cover;">
+                                            <img src="{{ asset('/' . $photo->images) }}" class="d-block w-100" alt="{{ app()->getLocale() == 'ar' ? $photo->image_title_ar : $photo->image_title_en }}" style="max-height: 400px; object-fit: cover;">
                                         @else
                                             <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" class="d-block w-100" alt="{{ __('placeholder_image') }}" style="max-height: 400px; object-fit: cover;">
                                         @endif
@@ -320,7 +335,7 @@
             @if($product->status === 'active') <!-- Filter only active products -->
                 <div class="card text-center border-0" style="width: 10rem; min-width: 10rem;">
                     <img
-                        src="{{ asset('storage/' . $product->image) }}"
+                        src="{{ asset('/' . $product->image) }}"
                         class="card-img-top"
                         alt="{{ app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en }}"
                         loading="lazy"
@@ -347,10 +362,10 @@
                 <div class="col-md-4 mb-4">
                     <div class="service-icon">
                         <img
-                            src="{{ $service->image ? asset('storage/' . $service->image) : 'https://via.placeholder.com/150' }}"
+                            src="{{ $service->image ? asset('/' . $service->image) : 'https://via.placeholder.com/150' }}"
                             alt="{{ app()->getLocale() == 'ar' ? $service->name_ar : $service->name_en }}"
                             class="img-fluid mb-2"
-                            width="60"
+                            width="80"
                         >
                         <span class="d-block fw-semibold">{{ app()->getLocale() == 'ar' ? $service->name_ar : $service->name_en }}</span>
                     </div>
@@ -360,29 +375,41 @@
     </div>
 </div>
 
-  <!-- Services Section Styles -->
-  <style>
+<!-- Services Section Styles -->
+<style>
     .services-section {
-      background-color: #fff;
-      padding: 50px 0;
+        background-color: #fff;
+        padding: 50px 0;
     }
 
     .service-icon {
-      display: flex;
-      align-items: center;
-      margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 25px;
+        text-align: center;  /* Center the icon and text */
     }
 
     .service-icon img {
-      width: 30px;
-      margin-right: 15px;
+        width: 80px; /* Increased icon size */
+        margin-right: 20px; /* Space between icon and text */
     }
 
     .service-icon span {
-      color: #222;
-      font-size: 16px;
+        color: #222;
+        font-size: 20px;  /* Increased font size for text */
+        font-weight: bold; /* Make text bolder */
     }
-  </style>
+
+    @media (max-width: 576px) {
+        .service-icon img {
+            width: 60px; /* Adjust image size for smaller screens */
+        }
+
+        .service-icon span {
+            font-size: 18px;  /* Adjust text size for smaller screens */
+        }
+    }
+</style>
 
 <!-- ================== PROJECTS SECTION ================== -->
 <div class="container mt-5">
@@ -391,7 +418,7 @@
     <div class="d-flex flex-nowrap overflow-auto gap-3 pb-3" style="min-height: 250px;">
         @foreach ($projects as $project)
             <div class="card text-center border-0" style="width: 10rem; min-width: 10rem;">
-                <img src="{{ asset('storage/' . $project->image) }}"
+                <img src="{{ asset('/' . $project->image) }}"
                      class="card-img-top"
                      alt="{{ app()->getLocale() == 'ar' ? $project->name_ar : $project->name_en }}"
                      loading="lazy">
@@ -447,7 +474,7 @@
                                             @endif
 
                                             @if (!empty($item->image))
-                                                <img src="{{ asset('storage/' . $item->image) }}"
+                                                <img src="{{ asset('/' . $item->image) }}"
                                                      alt="{{ app()->getLocale() == 'ar' ? ($item->title_ar ?? $item->title_en) : $item->title_en }}"
                                                      class="img-fluid mt-3"
                                                      style="max-height: 90px;">
@@ -636,7 +663,7 @@
 
                 <p>
                     <strong>{{ __('address') }}</strong><br>
-                    {!! nl2br(e(app()->getLocale() == 'ar' ? ($settings->address_ar ?? 'عمان – الأردن – منطقة أبو علندا الصناعية<br>شارع الحزام') : ($settings->address ?? 'Amman – Jordan – Abu Alanda Industrial Area<br>Al-Hazam Street'))) !!}
+                    {!! nl2br(e(app()->getLocale() == 'ar' ? ($settings->address_ar ?? 'عمان – الأردن – منطقة أبو علندا الصناعية شارع الحزام') : ($settings->address ?? 'Amman – Jordan – Abu Alanda Industrial Area Al-Hazam Street'))) !!}
                 </p>
 
                 <p>
@@ -665,7 +692,7 @@
                 <p class="mt-3">{{ __('member_of_munir_sukhtian') }}</p>
 
                 <div class="company-logos">
-                    <img src="{{ asset('Career.png') }}" alt="{{ __('company_logo') }}">
+                    <img src="{{ asset('Rayyan_Logo.svg') }}" alt="{{ __('company_logo') }}" height="50"  width="100">
                 </div>
             </div>
         </div>

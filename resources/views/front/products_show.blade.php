@@ -57,14 +57,14 @@
 
 <!-- Display 3 Clickable Products from the Same Subcategory -->
 <h2 class="product-title text-center mb-4">
-    {{ __('Other Products in This Subcategory') }}
+    {{ __('other_projects_in_subcategory') }}
 </h2>
 
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 justify-content-center">
     @forelse ($otherProducts as $otherProduct)
         <div class="col text-center product-item">
             <a href="{{ route('product.show', $otherProduct->id) }}">
-                <img src="{{ $otherProduct->image ? asset('storage/' . $otherProduct->image) : asset('images/placeholder.png') }}"
+                <img src="{{ $otherProduct->image ? asset('/' . $otherProduct->image) : asset('images/placeholder.png') }}"
                      alt="{{ app()->getLocale() === 'ar' ? $otherProduct->name_ar : $otherProduct->name_en }}"
                      class="img-fluid mb-2" style="max-height: 180px;">
                 <p>{{ app()->getLocale() === 'ar' ? $otherProduct->name_ar : $otherProduct->name_en }}</p>

@@ -1,33 +1,20 @@
 <style>
-   /* Navbar Styles */
+/* ----------------- Navbar ----------------- */
 .navbar {
     position: fixed;
     top: 0;
-    z-index: 999;
     width: 100%;
-    font-size: 18px;
-    background-color: white;
+    z-index: 999;
     padding: 0.5rem 1rem;
+    background-color: #fff;
+    font-size: 18px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-brand img {
-    height: auto;
     max-height: 80px;
-    width: auto;
     max-width: 200px;
     object-fit: contain;
-}
-
-.nav-link {
-    color: black;
-    font-weight: bold;
-    padding: 10px 15px;
-    transition: color 0.2s ease-in-out;
-}
-
-.nav-link:hover {
-    color: gray;
 }
 
 .navbar-nav {
@@ -35,13 +22,24 @@
     flex-wrap: wrap;
 }
 
+.nav-link {
+    color: #3DA246;
+    font-weight: bold;
+    padding: 10px 15px;
+    transition: color 0.2s ease-in-out;
+}
+
+.nav-link:hover,
 .nav-link.active {
-    border: 2px solid black;
-    color: black;
+    color: #3DA246;
+}
+
+.nav-link.active {
+    border: 2px solid #3DA246;
     border-radius: 5px;
 }
 
-/* Responsive adjustments for smaller screens */
+/* ----------------- Responsive Navbar ----------------- */
 @media (max-width: 992px) {
     .navbar {
         padding: 0.5rem;
@@ -53,59 +51,36 @@
     }
 
     .navbar-collapse {
-        text-align: center;
         background-color: #fff;
+        text-align: center;
     }
 
     .navbar-nav {
         flex-direction: column;
         align-items: center;
-        width: 100%;
         gap: 8px;
         font-size: 14px;
-    }
-
-    .nav-item {
         width: 100%;
     }
 
+    .nav-item,
     .d-flex {
-        flex-wrap: wrap;
+        width: 100%;
         justify-content: center;
+        flex-wrap: wrap;
         gap: 1rem;
     }
 }
 
-/* Search Container and Input */
+/* ----------------- Search ----------------- */
 .search-container-NA {
     position: relative;
     display: flex;
+    flex-direction: column;
     align-items: center;
     margin-left: auto;
     margin-right: 20px;
-    flex-direction: column;
     z-index: 100;
-}
-
-.search-input-NA {
-    width: 0;
-    opacity: 0;
-    transition: width 0.4s ease, opacity 0.4s ease;
-    border: 1px solid #ccc;
-    border-radius: 50px;
-    padding: 8px 20px;
-    font-size: 1rem;
-    background: #f8f9fa;
-    outline: none;
-    display: none;
-    margin-top: 10px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.search-input-NA.show {
-    display: block;
-    width: 250px;
-    opacity: 1;
 }
 
 #search-toggle-NA {
@@ -113,15 +88,15 @@
     border: none;
     background: none;
     padding: 10px;
-    cursor: pointer;
-    transition: transform 0.3s ease, color 0.3s ease, background-color 0.3s ease;
-    border-radius: 50%;
     color: #333;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 #search-toggle-NA:hover {
-    color: #fff;
     background-color: #07d82a;
+    color: #fff;
     transform: rotate(360deg);
 }
 
@@ -130,9 +105,39 @@
     box-shadow: 0 0 5px #07d82a;
 }
 
-/* Search Results Styles */
+.search-input-NA {
+    width: 0;
+    opacity: 0;
+    margin-top: 10px;
+    display: none;
+    padding: 8px 20px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 50px;
+    background: #f8f9fa;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: width 0.4s ease, opacity 0.4s ease;
+}
+
+.search-input-NA.show {
+    display: block;
+    width: 250px;
+    opacity: 1;
+}
+
+#loading-indicator {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #07d82a;
+    font-size: 1rem;
+}
+
+/* ----------------- Search Results ----------------- */
 #search-results {
-    background: white;
+    background: #fff;
     width: 100%;
     max-width: 250px;
     max-height: 300px;
@@ -151,14 +156,14 @@
 
 .search-results-list {
     list-style: none;
-    padding: 10px;
     margin: 0;
+    padding: 10px;
 }
 
 .search-result-item {
     padding: 12px 15px;
-    border-bottom: 1px solid #eee;
     font-size: 1rem;
+    border-bottom: 1px solid #eee;
     transition: background-color 0.3s ease;
 }
 
@@ -172,11 +177,11 @@
 }
 
 .search-result-link {
+    display: block;
+    font-weight: 500;
     text-decoration: none;
     color: #333;
-    font-weight: 500;
-    display: block;
-    transition: 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
 .search-result-link:hover {
@@ -192,35 +197,125 @@
     font-size: 14px;
 }
 
-#loading-indicator {
-    display: none;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 1rem;
-    color: #07d82a;
+.see-all-link {
+    display: block;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    text-align: center;
+    background-color: #07d82a;
+    color: white;
+    text-decoration: none;
 }
 
-/* Mobile Styles */
-@media (max-width: 991px) {
+.see-all-link:hover {
+    background-color: #05a922;
+}
+
+/* ----------------- Dropdown Hover Menus ----------------- */
+.dropdown-hover:hover .dropdown-menu-products {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-menu-products {
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 100%;
+    z-index: 1000;
+    min-width: 220px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    transition: all 0.2s ease-in-out;
+    transform: translateY(10px);
+}
+
+.dropdown-menu-products a {
+    display: block;
+    padding: 8px 16px;
+    color: #212529;
+    text-decoration: none;
+}
+
+.dropdown-menu-products a:hover {
+    background-color: #f8f9fa;
+}
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.subcategory-menu,
+.product-menu {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    min-width: 200px;
+    z-index: 1001;
+    background: white;
+    border: 1px solid #ddd;
+    transition: all 0.2s ease;
+}
+
+.dropdown-submenu:hover > .subcategory-menu,
+.dropdown-submenu:hover > .product-menu {
+    display: block;
+}
+
+.subcategory-menu a,
+.product-menu a {
+    padding: 8px 16px;
+    white-space: nowrap;
+    color: #212529;
+    text-decoration: none;
+    display: block;
+}
+
+.subcategory-menu a:hover,
+.product-menu a:hover {
+    background-color: #f8f9fa;
+}
+
+/* ----------------- Mobile Tweaks ----------------- */
+@media (max-width: 991.98px) {
     .search-container-NA {
         margin-right: 0;
-        flex-direction: column;
         align-items: center;
     }
 
     .search-input-NA {
         width: 100%;
-        max-width: 100%;
         text-align: center;
         margin-top: 10px;
     }
 
     #search-toggle-NA {
-        font-size: 1.6rem;
-        padding: 10px;
         margin-top: 10px;
+    }
+
+    .dropdown-hover .dropdown-menu {
+        position: static !important;
+        display: none;
+    }
+
+    .dropdown-hover.show .dropdown-menu,
+    .dropdown-submenu.show .dropdown-menu {
+        display: block;
+    }
+
+    .dropdown-submenu > a::after {
+        content: ' ▼';
+        float: right;
+    }
+
+    .dropdown-submenu > a {
+        cursor: pointer;
     }
 }
 
@@ -239,174 +334,11 @@
     }
 }
 
-.see-all-link {
-    text-align: center;
-    display: block;
-    padding: 10px;
-    background-color: #07d82a;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    margin-top: 10px;
-}
-
-.see-all-link:hover {
-    background-color: #05a922;
-}
-
-/* Dropdown Hover Menu */
-.dropdown-hover:hover .dropdown-menu-products {
-    display: block;
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-.dropdown-menu-products {
-    display: block;
-    opacity: 0;
-    visibility: hidden;
-    position: absolute;
-    top: 100%;
-    z-index: 1000;
-    min-width: 200px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    transition: all 0.2s ease-in-out;
-    transform: translateY(10px);
-    padding: 10px 0;
-}
-
-.dropdown-menu-products a {
-    padding: 8px 16px;
-    color: #212529;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown-menu-products a:hover {
-    background-color: #f8f9fa;
-}
-
-.dropdown-submenu {
-    position: relative;
-}
-
-.subcategory-menu {
-    display: none;
-    position: absolute;
-    top: 10%;
-    left: 100%;
-    min-width: 200px;
-    background: white;
-    border: 1px solid #ddd;
-    z-index: 1001;
-}
-
-.dropdown-submenu:hover .subcategory-menu {
-    display: block;
-}
-
-.subcategory-menu a {
-    padding: 8px 16px;
-    color: #212529;
-    white-space: nowrap;
-}
-
-.subcategory-menu a:hover {
-    background-color: #f8f9fa;
-}
-
-.product-menu,
-.subcategory-menu {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 100%;
-    min-width: 200px;
-    background: white;
-    border: 1px solid #ddd;
-    z-index: 1001;
-    transition: all 0.2s ease;
-}
-
-.dropdown-submenu:hover > .subcategory-menu,
-.dropdown-submenu:hover > .product-menu {
-    display: block;
-}
-
-.product-menu a,
-.subcategory-menu a {
-    white-space: nowrap;
-    padding: 8px 16px;
-    text-decoration: none;
-    display: block;
-    color: #212529;
-}
-
-.product-menu a:hover,
-.subcategory-menu a:hover {
-    background-color: #f8f9fa;
-}
-
-.dropdown-menu-products {
-    min-width: 220px;
-    padding: 10px;
-}
-
-.dropdown-hover:hover .dropdown-menu {
-    display: block;
-}
-
-.navbar-nav .nav-link {
-    color: #3DA246 !important;
-}
-
-.navbar-nav .nav-link.active {
-    color: #3DA246 !important;
-}
-
-.navbar-nav .nav-link:hover {
-    color: #3DA246 !important;
-}
-
-
-/* Show nested hover dropdown only on large screens */
-@media (max-width: 991.98px) {
-    .dropdown-hover .dropdown-menu {
-        position: static !important;
-        display: none;
-    }
-
-    .dropdown-hover.show .dropdown-menu {
-        display: block;
-    }
-
-    .dropdown-submenu .dropdown-menu {
-        display: none;
-    }
-
-    .dropdown-submenu.show .dropdown-menu {
-        display: block;
-    }
-
-    .dropdown-submenu > a::after {
-        content: ' ▼';
-        float: right;
-    }
-
-    .dropdown-submenu > a {
-        cursor: pointer;
-    }
-}
-
 </style>
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg fixed-top ">
     <div class="container">
-        <a class="navbar-brand" href="/">
-    <img src="{{ asset('Rayyan_Logo.svg') }}" alt="Rayyan Logo" class="navbar-logo">
         <a class="navbar-brand" href="/">
     <img src="{{ asset('Rayyan_Logo.svg') }}" alt="Rayyan Logo" class="navbar-logo">
         </a>
@@ -427,8 +359,6 @@
         <li class="nav-item">
             <a class="nav-link nav-link-NA {{ Request::is('services') ? 'active' : '' }}" href="{{ route('services.index') }}">{{ __('services') }}</a>
         </li>
-
-
  @php
     use App\Models\ProductCategory;
 
@@ -614,172 +544,168 @@
 
                 <!-- Search Results -->
                 <div id="search-results"></div>
+
             </div>
         </div>
     </div>
 </nav>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // --- Script for searchIcon toggle ---
-        const searchToggleNA = document.getElementById("search-toggle-NA");
-        const searchInputNA = document.getElementById("search-input-NA");
-        const searchResults = document.getElementById("search-results");
-        const loadingIndicator = document.getElementById("loading-indicator");
-        let searchTimeout;
-        let cache = {};
-        let selectedIndex = -1; // To track the selected search result
+document.addEventListener("DOMContentLoaded", function () {
+    const searchToggle = document.getElementById("search-toggle-NA");
+    const searchInput = document.getElementById("search-input-NA");
+    const searchResults = document.getElementById("search-results");
+    const loadingSpinner = document.getElementById("loading-indicator");
 
-        if (searchToggleNA && searchInputNA && searchResults && loadingIndicator) {
-            // Toggle search input visibility
-            searchToggleNA.addEventListener("click", function (e) {
-                e.preventDefault();
-                searchInputNA.classList.toggle("show");
+    let cache = {};
+    let selectedIndex = -1;
+    let searchTimeout;
 
-                if (searchInputNA.classList.contains("show")) {
-                    searchInputNA.focus();
-                } else {
-                    searchInputNA.value = "";
-                    searchResults.innerHTML = "";
-                }
+    if (!searchToggle || !searchInput || !searchResults || !loadingSpinner) return;
+
+    // --- Toggle Search Input ---
+    searchToggle.addEventListener("click", function (e) {
+        e.preventDefault();
+        searchInput.classList.toggle("show");
+
+        if (searchInput.classList.contains("show")) {
+            searchInput.focus();
+        } else {
+            resetSearch();
+        }
+    });
+
+    // --- Search Input Listener with Debounce ---
+    searchInput.addEventListener("input", debounce(handleSearchInput, 300));
+
+    function handleSearchInput() {
+        const query = searchInput.value.trim();
+
+        if (query.length <= 2) {
+            resetResults();
+            return;
+        }
+
+        if (cache[query]) {
+            displayResults(cache[query]);
+        } else {
+            showLoading(true);
+            fetch(`/search?query=${encodeURIComponent(query)}`)
+                .then(res => res.json())
+                .then(data => {
+                    cache[query] = data;
+                    displayResults(data);
+                })
+                .catch(() => {
+                    searchResults.innerHTML = `<p class="search-no-results">Error fetching results. Please try again.</p>`;
+                })
+                .finally(() => {
+                    showLoading(false);
+                });
+        }
+    }
+
+    // --- Display Results ---
+    function displayResults(data) {
+        searchResults.innerHTML = "";
+        selectedIndex = -1;
+
+        const hasResults = data && Object.values(data).some(arr => arr.length > 0);
+        if (!hasResults) {
+            searchResults.innerHTML = `<p class="search-no-results">No results found.</p>`;
+            return;
+        }
+
+        const ul = document.createElement("ul");
+        ul.classList.add("search-results-list");
+
+        const types = ["products", "productCategories", "productSubcategories", "projects", "projectsCategories"];
+        types.forEach(type => {
+            (data[type] || []).forEach(item => {
+                const li = document.createElement("li");
+                li.className = "search-result-item";
+                li.innerHTML = `
+                    <a href="/${type.slice(0, -1)}/${item.id}" class="search-result-link">
+                        <strong>${item.title_en || item.name_en || item.name_ar || item.project_name}</strong><br>
+                        <span>${item.title_ar || item.name_ar || item.description || ""}</span>
+                    </a>
+                `;
+                ul.appendChild(li);
             });
+        });
 
-            // Debounced input listener
-            searchInputNA.addEventListener("input", debounce(function () {
-                let query = searchInputNA.value.trim();
+        searchResults.appendChild(ul);
 
+        const seeAll = document.createElement("div");
+        seeAll.classList.add("see-all-container");
+        seeAll.innerHTML = `<a href="/search_results?query=${encodeURIComponent(searchInput.value.trim())}" class="see-all-link">See All</a>`;
+        searchResults.appendChild(seeAll);
+    }
+
+    // --- Handle Keyboard Navigation ---
+    searchInput.addEventListener("keydown", function (e) {
+        const items = searchResults.querySelectorAll(".search-result-item");
+        if (!items.length) return;
+
+        if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+            e.preventDefault();
+            const dir = e.key === "ArrowDown" ? 1 : -1;
+            selectedIndex = (selectedIndex + dir + items.length) % items.length;
+            items.forEach((item, i) => item.classList.toggle("selected", i === selectedIndex));
+        } else if (e.key === "Enter") {
+            e.preventDefault();
+            if (selectedIndex >= 0) {
+                const link = items[selectedIndex].querySelector("a");
+                if (link) window.location.href = link.href;
+            } else {
+                const query = searchInput.value.trim();
                 if (query.length > 2) {
-                    if (cache[query]) {
-                        displaySearchResults(cache[query]);
-                    } else {
-                        loadingIndicator.style.display = "block";
-                        fetchSearchResults(query);
-                    }
-                } else {
-                    searchResults.innerHTML = "";
-                    loadingIndicator.style.display = "none";
+                    window.location.href = `/search_results?query=${encodeURIComponent(query)}`;
                 }
-            }, 300));
-
-            // Fetch results from the backend
-            function fetchSearchResults(query) {
-                fetch(`/search?query=${encodeURIComponent(query)}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        cache[query] = data;
-                        displaySearchResults(data);
-                        loadingIndicator.style.display = "none";
-                    })
-                    .catch(error => {
-                        console.error("Error fetching search results:", error);
-                        searchResults.innerHTML = "<p class='search-no-results'>Error fetching results. Please try again.</p>";
-                        loadingIndicator.style.display = "none";
-                    });
-            }
-
-            // Render search results
-            function displaySearchResults(data) {
-                searchResults.innerHTML = "";
-                selectedIndex = -1; // Reset selected result on new input
-
-                // Check if any data is returned
-                if (!data || !Object.values(data).some(array => array.length > 0)) {
-                    searchResults.innerHTML = "<p class='search-no-results'>No results found.</p>";
-                } else {
-                    let ul = document.createElement("ul");
-                    ul.classList.add("search-results-list");
-
-                    // Display products, categories, subcategories, etc.
-                    createSearchResultItems(data, ul);
-
-                    searchResults.appendChild(ul);
-
-                    // See All button
-                    let seeAllDiv = document.createElement("div");
-                    seeAllDiv.classList.add("see-all-container");
-                    seeAllDiv.innerHTML = `<a href="/search_results?query=${encodeURIComponent(searchInputNA.value.trim())}" class="see-all-link">See All</a>`;
-                    searchResults.appendChild(seeAllDiv);
-                }
-            }
-
-            function createSearchResultItems(data, container) {
-                // Iterate and append each result type (products, categories, etc.)
-                ["products", "productCategories", "productSubcategories", "projects", "projectsCategories"].forEach(type => {
-                    data[type].forEach(item => {
-                        let li = document.createElement("li");
-                        li.classList.add("search-result-item");
-                        li.innerHTML = `
-                            <a href="/${type.slice(0, -1)}/${item.id}" class="search-result-link">
-                                <strong>${item.title_en || item.name_en || item.name_ar || item.project_name}</strong><br>
-                                <span>${item.title_ar || item.name_ar || item.description || ""}</span>
-                            </a>`;
-                        container.appendChild(li);
-                    });
-                });
-            }
-
-            // Redirect on Enter for full results page
-            searchInputNA.addEventListener("keydown", function (e) {
-                if (e.key === "Enter") {
-                    e.preventDefault();
-                    if (selectedIndex >= 0) {
-                        let selectedItem = searchResults.querySelectorAll(".search-result-item")[selectedIndex];
-                        window.location.href = selectedItem.querySelector("a").href;
-                    } else {
-                        const query = searchInputNA.value.trim();
-                        if (query.length > 2) {
-                            window.location.href = `/search_results?query=${encodeURIComponent(query)}`;
-                        }
-                    }
-                } else if (e.key === "ArrowDown") {
-                    e.preventDefault();
-                    navigateResults(1);
-                } else if (e.key === "ArrowUp") {
-                    e.preventDefault();
-                    navigateResults(-1);
-                }
-            });
-
-            // Navigate through results using arrow keys
-            function navigateResults(direction) {
-                let items = searchResults.querySelectorAll(".search-result-item");
-                if (items.length === 0) return;
-
-                selectedIndex = (selectedIndex + direction + items.length) % items.length; // Wrap around
-                items.forEach((item, index) => {
-                    item.classList.toggle("selected", index === selectedIndex);
-                });
-            }
-
-            // Hide results when clicking outside
-            document.addEventListener("click", function (event) {
-                if (!searchResults.contains(event.target) && !searchInputNA.contains(event.target)) {
-                    searchResults.innerHTML = "";
-                }
-            });
-
-            // Debounce function to limit frequent requests
-            function debounce(func, delay) {
-                return function () {
-                    clearTimeout(searchTimeout);
-                    searchTimeout = setTimeout(func, delay);
-                };
             }
         }
     });
 
-    document.addEventListener('DOMContentLoaded', function () {
+    // --- Hide Results on Outside Click ---
+    document.addEventListener("click", function (e) {
+        if (!searchResults.contains(e.target) && !searchInput.contains(e.target)) {
+            resetResults();
+        }
+    });
+
+    function debounce(func, delay) {
+        return function () {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(func, delay);
+        };
+    }
+
+    function resetSearch() {
+        searchInput.value = "";
+        resetResults();
+    }
+
+    function resetResults() {
+        searchResults.innerHTML = "";
+        showLoading(false);
+        selectedIndex = -1;
+    }
+
+    function showLoading(state) {
+        loadingSpinner.style.display = state ? "block" : "none";
+    }
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
     if (window.innerWidth < 992) {
-        // Toggle top-level dropdowns
-        document.querySelectorAll('.dropdown-submenu > a').forEach(function (el) {
-            el.addEventListener('click', function (e) {
+        document.querySelectorAll('.dropdown-submenu > a').forEach(link => {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 const submenu = this.nextElementSibling;
 
-                // Close all other submenus at same level
-                const siblingSubmenus = this.closest('.dropdown-menu').querySelectorAll('.dropdown-menu');
-                siblingSubmenus.forEach(s => {
-                    if (s !== submenu) s.classList.remove('show');
+                this.closest('.dropdown-menu').querySelectorAll('.dropdown-menu').forEach(menu => {
+                    if (menu !== submenu) menu.classList.remove('show');
                 });
 
                 submenu?.classList.toggle('show');
@@ -788,3 +714,4 @@
     }
 });
 </script>
+

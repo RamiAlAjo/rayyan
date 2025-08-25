@@ -29,4 +29,15 @@ class ProjectsSubcategory extends Model
     {
         return $this->hasMany(Project::class, 'subcategory_id');
     }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($subcategory) {
+            if (!$subcategory->slug) {
+                $subcategory->slug = \Str::slug($subcategory->name_en);
+            }
+        });
+    }
 }

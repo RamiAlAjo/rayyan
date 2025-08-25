@@ -33,10 +33,11 @@ class ProductSubcategory extends Model
     ];
 
     // Define the relationship to the Category model
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
+  public function category()
+{
+    return $this->belongsTo(Category::class);
+}
+
 
     // Define the relationship to the Product model
     public function products()

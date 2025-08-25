@@ -12,7 +12,7 @@ class CreateProjectsCategoriesTable extends Migration
     public function up(): void
     {
         Schema::create('projects_categories', function (Blueprint $table) {
-            $table->id(); // id
+            $table->id();
             $table->string('name_en');
             $table->string('name_ar');
             $table->text('description_en')->nullable();
@@ -20,7 +20,7 @@ class CreateProjectsCategoriesTable extends Migration
             $table->string('image')->nullable();
             $table->boolean('status')->default(1); // 1 = active, 0 = inactive
             $table->string('slug')->unique();
-            $table->timestamps(); // created_at and updated_at
+            $table->timestamps();
         });
     }
 

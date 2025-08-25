@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class AdminCategoriesController extends Controller
 {
@@ -46,7 +46,14 @@ class AdminCategoriesController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('uploads/categories', 'public');
+            // Handle the image upload manually
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName(); // Custom image name
+            $imagePath = public_path('uploads/categories'); // Directory to store images
+            $image->move($imagePath, $imageName); // Move the image to the directory
+
+            // Store the relative path in the database
+            $data['image'] = 'uploads/categories/' . $imageName;
         }
 
         Category::create($data);
@@ -81,10 +88,19 @@ class AdminCategoriesController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            if ($category->image && Storage::disk('public')->exists($category->image)) {
-                Storage::disk('public')->delete($category->image);
+            // Delete old image if it exists
+            if (File::exists(public_path($category->image))) {
+                File::delete(public_path($category->image));
             }
-            $data['image'] = $request->file('image')->store('uploads/categories', 'public');
+
+            // Handle the new image upload manually
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName(); // Custom image name
+            $imagePath = public_path('uploads/categories'); // Directory to store images
+            $image->move($imagePath, $imageName); // Move the file to the directory
+
+            // Store the relative path in the database
+            $data['image'] = 'uploads/categories/' . $imageName;
         }
 
         $category->update($data);
@@ -97,8 +113,9 @@ class AdminCategoriesController extends Controller
      */
     public function destroy(Category $category)
     {
-        if ($category->image && Storage::disk('public')->exists($category->image)) {
-            Storage::disk('public')->delete($category->image);
+        // Delete the image if it exists
+        if ($category->image && File::exists(public_path($category->image))) {
+            File::delete(public_path($category->image));
         }
 
         $category->delete();

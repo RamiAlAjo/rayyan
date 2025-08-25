@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Feature;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class AdminFeaturesController extends Controller
 {
@@ -31,7 +31,13 @@ class AdminFeaturesController extends Controller
         ]);
 
         if ($request->hasFile('icon_path')) {
-            $validated['icon_path'] = $request->file('icon_path')->store('features', 'public');
+            // Handle file upload manually
+            $icon = $request->file('icon_path');
+            $iconName = time() . '_' . $icon->getClientOriginalName(); // Custom image name
+            $iconPath = public_path('uploads/features'); // Directory to store icons
+            $icon->move($iconPath, $iconName); // Move the file to the directory
+
+            $validated['icon_path'] = 'uploads/features/' . $iconName; // Store relative path in the DB
         }
 
         Feature::create($validated);
@@ -55,10 +61,18 @@ class AdminFeaturesController extends Controller
         ]);
 
         if ($request->hasFile('icon_path')) {
-            if ($feature->icon_path) {
-                Storage::disk('public')->delete($feature->icon_path);
+            // Delete old icon if it exists
+            if ($feature->icon_path && File::exists(public_path($feature->icon_path))) {
+                File::delete(public_path($feature->icon_path));
             }
-            $validated['icon_path'] = $request->file('icon_path')->store('features', 'public');
+
+            // Handle file upload manually
+            $icon = $request->file('icon_path');
+            $iconName = time() . '_' . $icon->getClientOriginalName(); // Custom image name
+            $iconPath = public_path('uploads/features'); // Directory to store icons
+            $icon->move($iconPath, $iconName); // Move the file to the directory
+
+            $validated['icon_path'] = 'uploads/features/' . $iconName; // Store relative path in the DB
         }
 
         $feature->update($validated);
@@ -68,8 +82,9 @@ class AdminFeaturesController extends Controller
 
     public function destroy(Feature $feature)
     {
-        if ($feature->icon_path) {
-            Storage::disk('public')->delete($feature->icon_path);
+        // Delete icon if it exists
+        if ($feature->icon_path && File::exists(public_path($feature->icon_path))) {
+            File::delete(public_path($feature->icon_path));
         }
 
         $feature->delete();

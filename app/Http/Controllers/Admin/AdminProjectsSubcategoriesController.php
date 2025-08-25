@@ -7,6 +7,8 @@ use App\Models\ProjectsCategory;
 use App\Models\ProjectsSubcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage; // for improved file handling
+use Illuminate\Support\Facades\File; // for file deletion
 
 class AdminProjectsSubcategoriesController extends Controller
 {
@@ -47,10 +49,12 @@ class AdminProjectsSubcategoriesController extends Controller
             'name_en', 'name_ar', 'description_en', 'description_ar', 'status', 'category_id'
         ]);
 
-        $data['slug'] = Str::slug($request->name_en) . '-' . Str::random(5);
+        // Generate a unique slug for the subcategory
+        $data['slug'] = $this->generateSlug($request->name_en);
 
+        // Handle image upload
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('uploads/projects_subcategories', 'public');
+            $data['image'] = $this->uploadImage($request->file('image'));
         }
 
         ProjectsSubcategory::create($data);
@@ -89,15 +93,15 @@ class AdminProjectsSubcategoriesController extends Controller
             'name_en', 'name_ar', 'description_en', 'description_ar', 'status', 'category_id'
         ]);
 
+        // Generate a new unique slug if the name has changed
         if ($request->name_en !== $projectsSubcategory->name_en) {
-            $data['slug'] = Str::slug($request->name_en) . '-' . Str::random(5);
+            $data['slug'] = $this->generateSlug($request->name_en);
         }
 
+        // Handle image upload
         if ($request->hasFile('image')) {
-            if ($projectsSubcategory->image && \Storage::disk('public')->exists($projectsSubcategory->image)) {
-                \Storage::disk('public')->delete($projectsSubcategory->image);
-            }
-            $data['image'] = $request->file('image')->store('uploads/projects_subcategories', 'public');
+            $this->deleteImage($projectsSubcategory); // Delete the old image
+            $data['image'] = $this->uploadImage($request->file('image')); // Upload new image
         }
 
         $projectsSubcategory->update($data);
@@ -110,12 +114,44 @@ class AdminProjectsSubcategoriesController extends Controller
      */
     public function destroy(ProjectsSubcategory $projectsSubcategory)
     {
-        if ($projectsSubcategory->image && \Storage::disk('public')->exists($projectsSubcategory->image)) {
-            \Storage::disk('public')->delete($projectsSubcategory->image);
-        }
-
+        $this->deleteImage($projectsSubcategory); // Delete the image before deleting the subcategory
         $projectsSubcategory->delete();
 
         return redirect()->route('admin.projects_subcategories.index')->with('success', 'Subcategory deleted successfully.');
+    }
+
+    /**
+     * Helper function to generate unique slug.
+     */
+    private function generateSlug($name)
+    {
+        $slug = Str::slug($name);
+        $slugExists = ProjectsSubcategory::where('slug', $slug)->exists();
+
+        if ($slugExists) {
+            $slug .= '-' . Str::random(5); // Add random string if slug exists
+        }
+
+        return $slug;
+    }
+
+    /**
+     * Helper function to handle image upload.
+     */
+    private function uploadImage($image)
+    {
+        // Generate unique name for the image
+        $imageName = time() . '_' . $image->getClientOriginalName();
+        return $image->storeAs('uploads/projects_subcategories', $imageName, 'public');
+    }
+
+    /**
+     * Helper function to delete the image.
+     */
+    private function deleteImage($projectsSubcategory)
+    {
+        if ($projectsSubcategory->image && Storage::disk('public')->exists($projectsSubcategory->image)) {
+            Storage::disk('public')->delete($projectsSubcategory->image); // Delete old image
+        }
     }
 }

@@ -25,4 +25,15 @@ class ProjectsCategory extends Model
     {
         return $this->hasMany(ProjectsSubcategory::class, 'category_id');
     }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($category) {
+            if (!$category->slug) {
+                $category->slug = \Str::slug($category->name_en);
+            }
+        });
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Portfolio;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File; // Import the File facade
 
 class AdminPortfolioController extends Controller
 {
@@ -15,7 +16,7 @@ class AdminPortfolioController extends Controller
         return view('admin.portfolio.index', compact('portfolios'));
     }
 
-    // Show form to create new portfolio
+    // Show form to create a new portfolio
     public function create()
     {
         return view('admin.portfolio.create');
@@ -35,8 +36,12 @@ class AdminPortfolioController extends Controller
         $portfolio->portfolio_name_ar = $request->portfolio_name_ar;
 
         if ($request->hasFile('resume')) {
-            $resumePath = $request->file('resume')->store('portfolios/resumes', 'public');
-            $portfolio->resume_path = $resumePath;
+            // Manual file handling for resume
+            $resume = $request->file('resume');
+            $resumeName = time() . '_' . $resume->getClientOriginalName(); // Custom name for the resume
+            $resumePath = public_path('uploads/portfolios/resumes'); // Folder where the resume will be stored
+            $resume->move($resumePath, $resumeName); // Move the file
+            $portfolio->resume_path = 'uploads/portfolios/resumes/' . $resumeName; // Save the relative path
         }
 
         $portfolio->save();
@@ -63,11 +68,17 @@ class AdminPortfolioController extends Controller
         $portfolio->portfolio_name_ar = $request->portfolio_name_ar;
 
         if ($request->hasFile('resume')) {
-            if ($portfolio->resume_path) {
-                \Storage::delete('public/' . $portfolio->resume_path);
+            // Delete the old resume if exists
+            if ($portfolio->resume_path && File::exists(public_path($portfolio->resume_path))) {
+                File::delete(public_path($portfolio->resume_path));
             }
-            $resumePath = $request->file('resume')->store('portfolios/resumes', 'public');
-            $portfolio->resume_path = $resumePath;
+
+            // Handle new resume upload
+            $resume = $request->file('resume');
+            $resumeName = time() . '_' . $resume->getClientOriginalName(); // Custom name for the resume
+            $resumePath = public_path('uploads/portfolios/resumes'); // Folder where the resume will be stored
+            $resume->move($resumePath, $resumeName); // Move the file
+            $portfolio->resume_path = 'uploads/portfolios/resumes/' . $resumeName; // Save the relative path
         }
 
         $portfolio->save();
@@ -78,10 +89,12 @@ class AdminPortfolioController extends Controller
     // Delete a portfolio
     public function destroy(Portfolio $portfolio)
     {
-        if ($portfolio->resume_path) {
-            \Storage::delete('public/' . $portfolio->resume_path);
+        // Delete the resume if it exists
+        if ($portfolio->resume_path && File::exists(public_path($portfolio->resume_path))) {
+            File::delete(public_path($portfolio->resume_path));
         }
 
+        // Delete the portfolio record
         $portfolio->delete();
 
         return redirect()->route('admin.portfolio.index')->with('status-success', 'Portfolio deleted successfully!');

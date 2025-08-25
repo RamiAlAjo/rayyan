@@ -121,11 +121,11 @@
             <li class="has-sub">
                 <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#Portfolio" aria-expanded="false" aria-controls="Portfolio">
                     <span class="material-icons">work</span>
-                    <span class="nav-text">Portfolio</span>
+                    <span class="nav-text">Company Profile</span>
                     <b class="caret"></b>
                 </a>
                 <ul class="collapse sub-menu" id="Portfolio">
-                    <li><a class="sidenav-item-link" href="{{ route('admin.portfolio.index') }}"><span class="nav-text">Portfolio List</span></a></li>
+                    <li><a class="sidenav-item-link" href="{{ route('admin.portfolio.index') }}"><span class="nav-text">Company Profile List</span></a></li>
                 </ul>
             </li>
 

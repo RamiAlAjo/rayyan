@@ -32,7 +32,7 @@
                                     <div class="product-card">
                                         <a class="text-dark" href="{{ route('product.show', $product->id) }}">
                                             <div class="product-image">
-                                                <img src="{{ $product->image ? asset('storage/' . $product->image) : asset('images/placeholder.png') }}"
+                                                <img src="{{ $product->image ? asset('/' . $product->image) : asset('images/placeholder.png') }}"
                                                      alt="{{ $locale === 'ar' ? $product->name_ar : $product->name_en }}" class="img-fluid lazyload">
                                             </div>
                                         </a>
@@ -60,7 +60,7 @@
                                     <div class="category-card">
                                         <a class="text-dark" href="{{ route('product-category.show', $category->id) }}">
                                             <div class="category-image">
-                                                <img src="{{ $category->image ? asset('storage/' . $category->image) : asset('images/placeholder.png') }}"
+                                                <img src="{{ $category->image ? asset('/' . $category->image) : asset('images/placeholder.png') }}"
                                                      alt="{{ $locale === 'ar' ? $category->name_ar : $category->name_en }}" class="img-fluid lazyload">
                                             </div>
                                         </a>
@@ -84,7 +84,7 @@
                                     <div class="subcategory-card">
                                         <a class="text-dark" href="{{ route('product-subcategory.show', $subcategory->id) }}">
                                             <div class="subcategory-image">
-                                                <img src="{{ $subcategory->image ? asset('storage/' . $subcategory->image) : asset('images/placeholder.png') }}"
+                                                <img src="{{ $subcategory->image ? asset('/' . $subcategory->image) : asset('images/placeholder.png') }}"
                                                      alt="{{ $locale === 'ar' ? $subcategory->name_ar : $subcategory->name_en }}" class="img-fluid lazyload">
                                             </div>
                                         </a>
@@ -108,7 +108,7 @@
                                     <div class="project-card">
                                         <a class="text-dark" href="{{ route('projects.show', $project->id) }}">
                                             <div class="project-image">
-                                                <img src="{{ $project->image ? asset('storage/' . $project->image) : asset('images/placeholder.png') }}"
+                                                <img src="{{ $project->image ? asset('/' . $project->image) : asset('images/placeholder.png') }}"
                                                      alt="{{ $locale === 'ar' ? $project->name_ar : $project->name_en }}" class="img-fluid lazyload">
                                             </div>
                                         </a>
@@ -132,7 +132,7 @@
                                     <div class="project-category-card">
                                         <a class="text-dark" href="{{ route('projects-category.show', $category->id) }}">
                                             <div class="project-category-image">
-                                                <img src="{{ $category->image ? asset('storage/' . $category->image) : asset('images/placeholder.png') }}"
+                                                <img src="{{ $category->image ? asset('/' . $category->image) : asset('images/placeholder.png') }}"
                                                      alt="{{ $locale === 'ar' ? $category->name_ar : $category->name_en }}" class="img-fluid lazyload">
                                             </div>
                                         </a>

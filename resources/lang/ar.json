@@ -6,15 +6,15 @@
   "projects": "المشاريع",
   "company_profile": "الملف التعريفي",
   "faq": "الأسئلة الشائعة",
-  "careers": "التوظيف",
+  "careers": "الوظائف",
   "contact_us": "اتصل بنا",
 
   "welcome_to_our_site": "مرحبًا بكم في موقعنا",
-  "welcome_description": "يسعدنا أن تكونوا هنا. استكشف خدماتنا وتعرف على المزيد عن ما نقدمه.",
+  "welcome_description": "يسعدنا تواجدكم معنا! استكشفوا خدماتنا وتعرفوا على ما نقدمه.",
   "view_all": "عرض الكل",
 
   "full_name": "الاسم الكامل",
-  "your_full_name": "اسمك الكامل",
+  "your_full_name": "أدخل اسمك الكامل",
   "email": "البريد الإلكتروني",
   "your_email_address": "عنوان بريدك الإلكتروني",
   "message": "الرسالة",
@@ -24,10 +24,10 @@
   "get_in_touch": "تواصل معنا",
   "address": "العنوان",
   "contact": "جهات الاتصال",
-  "tel": "هاتف",
-  "fax": "فاكس",
+  "tel": "الهاتف",
+  "fax": "الفاكس",
 
-  "member_of_munir_sukhtian": "عضو في شركة منير سخطيان الدولية",
+  "member_of_munir_sukhtian": "عضو في مجموعة منير سختيان",
   "company_logo": "شعار الشركة",
 
   "first_name": "الاسم الأول",
@@ -42,7 +42,7 @@
 
   "phone": "رقم الهاتف",
   "enter_your_phone_number": "أدخل رقم الهاتف",
-  "enter_your_email": "أدخل البريد الإلكتروني",
+  "enter_your_email": "أدخل عنوان البريد الإلكتروني",
 
   "upload_cv": "تحميل السيرة الذاتية",
   "upload_cover_letter": "تحميل خطاب التغطية",
@@ -64,19 +64,19 @@
   "instead": "بدلاً من ذلك.",
 
   "product_categories": "فئات المنتجات",
-  "no_categories_available": "لا توجد فئات متاحة حالياً.",
+  "no_categories_available": "لا توجد فئات منتجات متاحة حالياً.",
   "product_subcategories": "الفئات الفرعية للمنتجات",
   "no_subcategories_available": "لا توجد فئات فرعية متاحة حالياً.",
-  "other_products_in_subcategory": "منتجات أخرى في نفس الفئة الفرعية",
-  "no_other_products_in_subcategory": "لا توجد منتجات أخرى في نفس الفئة الفرعية حالياً.",
+  "other_products_in_subcategory": "منتجات أخرى ضمن هذه الفئة الفرعية",
+  "no_other_products_in_subcategory": "لا توجد منتجات أخرى ضمن هذه الفئة حالياً.",
   "no_description_available": "لا يوجد وصف متاح.",
   "no_products_available": "لا توجد منتجات متاحة حالياً.",
 
   "project_categories": "فئات المشاريع",
   "no_project_categories_available": "لا توجد فئات مشاريع متاحة حالياً.",
   "subcategories": "الفئات الفرعية",
-  "other_projects_in_subcategory": "مشاريع أخرى ضمن نفس الفئة",
-  "no_other_projects_in_subcategory": "لا توجد مشاريع أخرى ضمن نفس الفئة حالياً.",
+  "other_projects_in_subcategory": "مشاريع أخرى ضمن هذه الفئة",
+  "no_other_projects_in_subcategory": "لا توجد مشاريع أخرى ضمن هذه الفئة حالياً.",
   "no_projects_available": "لا توجد مشاريع متاحة حالياً.",
 
   "search_results_for": "نتائج البحث عن",

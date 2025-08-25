@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\News;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File; // Import File facade
 
 class AdminNewsController extends Controller
 {
@@ -42,7 +42,11 @@ class AdminNewsController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('news/images', 'public');
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName(); // Custom image name
+            $imagePath = public_path('uploads/news/images'); // Directory to store images
+            $image->move($imagePath, $imageName); // Move the file to the directory
+            $validated['image'] = 'uploads/news/images/' . $imageName; // Store the relative path
         }
 
         News::create($validated);
@@ -74,10 +78,17 @@ class AdminNewsController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            if ($news->image) {
-                Storage::disk('public')->delete($news->image);
+            // Delete the old image if it exists
+            if ($news->image && File::exists(public_path($news->image))) {
+                File::delete(public_path($news->image));
             }
-            $validated['image'] = $request->file('image')->store('news/images', 'public');
+
+            // Upload new image
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName(); // Custom image name
+            $imagePath = public_path('uploads/news/images'); // Directory to store images
+            $image->move($imagePath, $imageName); // Move the file to the directory
+            $validated['image'] = 'uploads/news/images/' . $imageName; // Store the relative path
         }
 
         $news->update($validated);
@@ -90,9 +101,11 @@ class AdminNewsController extends Controller
      */
     public function destroy(News $news)
     {
-        if ($news->image) {
-            Storage::disk('public')->delete($news->image);
+        // Delete the image if it exists
+        if ($news->image && File::exists(public_path($news->image))) {
+            File::delete(public_path($news->image));
         }
+
         $news->delete();
 
         return redirect()->route('admin.news.index')->with('status-success', 'News deleted successfully!');

@@ -47,7 +47,7 @@
             @php
                 $locale = app()->getLocale();
                 $name = $locale === 'ar' ? $service->name_ar : $service->name_en;
-                $imagePath = $service->image ? asset('storage/' . $service->image) : asset('default-service.png');
+                $imagePath = $service->image ? asset('/' . $service->image) : asset('default-service.png');
             @endphp
 
             <div class="col text-center service-item">

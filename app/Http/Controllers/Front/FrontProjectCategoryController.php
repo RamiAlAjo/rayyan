@@ -13,20 +13,19 @@ class FrontProjectCategoryController extends Controller
     {
         $categories = ProjectsCategory::where('status', 1)
             ->latest()
-            ->paginate(6);
+            ->paginate(6); // Pagination for categories
 
         return view('front.project_categories', compact('categories'));
     }
 
-
-    // Show all subcategories under a selected category
+    // Show all subcategories under a selected category, paginated
     public function show(ProjectsCategory $projects_category)
     {
-        // Get all active subcategories for the selected category
+        // Get all active subcategories for the selected category, paginated
         $subcategories = ProjectsSubcategory::where('category_id', $projects_category->id)
             ->where('status', 1)
             ->latest()
-            ->get();
+            ->paginate(6); // Paginate subcategories (6 per page)
 
         return view('front.project_subcategories', [
             'subcategories' => $subcategories,

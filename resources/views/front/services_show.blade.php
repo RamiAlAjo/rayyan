@@ -64,7 +64,7 @@
         @forelse ($otherServices as $otherService)
             <div class="col text-center service-item">
                 <a href="{{ route('services.show', $otherService->slug) }}">
-                    <img src="{{ $otherService->image ? asset('storage/' . $otherService->image) : asset('images/placeholder.png') }}"
+                    <img src="{{ $otherService->image ? asset('/' . $otherService->image) : asset('images/placeholder.png') }}"
                          alt="{{ app()->getLocale() === 'ar' ? $otherService->name_ar : $otherService->name_en }}"
                          class="img-fluid mb-2" style="max-height: 180px;">
                     <p>{{ app()->getLocale() === 'ar' ? $otherService->name_ar : $otherService->name_en }}</p>

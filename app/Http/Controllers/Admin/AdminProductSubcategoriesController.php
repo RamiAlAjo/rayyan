@@ -7,7 +7,7 @@ use App\Models\ProductSubcategory;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File; // Import the File facade
 
 class AdminProductSubcategoriesController extends Controller
 {
@@ -46,8 +46,13 @@ class AdminProductSubcategoriesController extends Controller
 
         $data['slug'] = Str::slug($request->name_en);
 
+        // Handle image upload manually
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('product_subcategories', 'public');
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName(); // Custom name for the image
+            $imagePath = public_path('uploads/product_subcategories/images'); // Folder where the image will be stored
+            $image->move($imagePath, $imageName); // Move the file
+            $data['image'] = 'uploads/product_subcategories/images/' . $imageName; // Save the relative path
         }
 
         ProductSubcategory::create($data);
@@ -88,12 +93,19 @@ class AdminProductSubcategoriesController extends Controller
 
         $data['slug'] = Str::slug($request->name_en);
 
+        // Handle image upload if a new image is provided
         if ($request->hasFile('image')) {
-            // Delete old image if exists
-            if ($product_subcategory->image) {
-                Storage::disk('public')->delete($product_subcategory->image);
+            // Delete old image if it exists
+            if ($product_subcategory->image && File::exists(public_path($product_subcategory->image))) {
+                File::delete(public_path($product_subcategory->image));
             }
-            $data['image'] = $request->file('image')->store('product_subcategories', 'public');
+
+            // Upload the new image
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName(); // Custom name for the image
+            $imagePath = public_path('uploads/product_subcategories/images'); // Folder where the image will be stored
+            $image->move($imagePath, $imageName); // Move the file
+            $data['image'] = 'uploads/product_subcategories/images/' . $imageName; // Save the relative path
         }
 
         $product_subcategory->update($data);
@@ -104,8 +116,9 @@ class AdminProductSubcategoriesController extends Controller
 
     public function destroy(ProductSubcategory $product_subcategory)
     {
-        if ($product_subcategory->image) {
-            Storage::disk('public')->delete($product_subcategory->image);
+        // Delete the image if it exists
+        if ($product_subcategory->image && File::exists(public_path($product_subcategory->image))) {
+            File::delete(public_path($product_subcategory->image));
         }
 
         $product_subcategory->delete();

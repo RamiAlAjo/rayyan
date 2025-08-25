@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ProductCategory;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File; // Import the File facade
 
 class AdminProductCategoriesController extends Controller
 {
@@ -41,7 +41,11 @@ class AdminProductCategoriesController extends Controller
 
         // Handle image upload
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('categories', 'public');
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName(); // Custom name for the image
+            $imagePath = public_path('uploads/categories'); // Folder where the image will be stored
+            $image->move($imagePath, $imageName); // Move the file
+            $data['image'] = 'uploads/categories/' . $imageName; // Save the relative path
         }
 
         // Generate unique slug
@@ -81,11 +85,15 @@ class AdminProductCategoriesController extends Controller
 
         if ($request->hasFile('image')) {
             // Delete old image if exists
-            if ($product_category->image) {
-                Storage::disk('public')->delete($product_category->image);
+            if ($product_category->image && File::exists(public_path($product_category->image))) {
+                File::delete(public_path($product_category->image));
             }
 
-            $data['image'] = $request->file('image')->store('categories', 'public');
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName(); // Custom name for the image
+            $imagePath = public_path('uploads/categories'); // Folder where the image will be stored
+            $image->move($imagePath, $imageName); // Move the file
+            $data['image'] = 'uploads/categories/' . $imageName; // Save the relative path
         }
 
         // Update slug if name_en changed
@@ -106,8 +114,9 @@ class AdminProductCategoriesController extends Controller
     // Delete category
     public function destroy(ProductCategory $product_category)
     {
-        if ($product_category->image) {
-            Storage::disk('public')->delete($product_category->image);
+        // Delete the image if exists
+        if ($product_category->image && File::exists(public_path($product_category->image))) {
+            File::delete(public_path($product_category->image));
         }
 
         $product_category->delete();

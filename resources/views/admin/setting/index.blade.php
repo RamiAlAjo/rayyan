@@ -130,7 +130,7 @@
                                 <input type="text" class="form-control" name="url" id="url" placeholder="Site URL" value="{{ $settings->url ?? '' }}">
                             </div>
 
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label for="address">Location</label>
                                 <input type="text" class="form-control" name="location" id="location" placeholder="Location URL" value="{{ $settings->location ?? '' }}">
                             </div>
@@ -139,9 +139,9 @@
                             <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
                             <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-                                                        <div id="admin-map" style="width: 100%; height: 200px; margin-top: 10px;"></div>
+                                                        <div id="admin-map" style="width: 100%; height: 200px; margin-top: 10px;"></div> --}}
 
-                            <script>
+                            {{-- <script>
                                 document.addEventListener("DOMContentLoaded", function() {
                                     var locationInput = document.getElementById('location');
                                     var map = L.map('admin-map').setView([51.505, -0.09], 13);
@@ -170,7 +170,7 @@
                                     locationInput.addEventListener('input', updateMap);
                                     updateMap(); // Initialize on page load
                                 });
-                            </script>
+                            </script> --}}
 
 
                             <!--<div class="form-group">-->

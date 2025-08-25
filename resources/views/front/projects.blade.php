@@ -69,7 +69,7 @@
     @forelse($projects as $project)
         <div class="col text-center project-item">
             <a href="{{ route('projects.show', $project->id) }}">
-                <img src="{{ $project->image ? asset('storage/' . $project->image) : asset('images/placeholder.png') }}"
+                <img src="{{ $project->image ? asset('/' . $project->image) : asset('images/placeholder.png') }}"
                      alt="{{ app()->getLocale() === 'ar' ? $project->name_ar : $project->name_en }}"
                      class="img-fluid mb-2" style="max-height: 180px;">
                 <p>{{ app()->getLocale() === 'ar' ? $project->name_ar : $project->name_en }}</p>
