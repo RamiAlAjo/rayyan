@@ -1,4 +1,3 @@
-<x-front-slider />
 @extends('front.layouts.app')
 
 @section('content')
@@ -40,13 +39,30 @@
         }
     </style>
 
-   <h2 class="profile-title my-4">{{ __('Company Profile') }}</h2>
+    @if($portfolio)
+    <!-- Portfolio Title -->
+    <h2 class="profile-title my-4">
+        {{ app()->getLocale() == 'ar' ? $portfolio->portfolio_name_ar : $portfolio->portfolio_name_en }}
+    </h2>
 
+    <!-- PDF Container -->
     <div class="pdf-container">
-        <iframe src="{{ asset('storage/portfolios/resumes/VQzpo1C4cyLYcCuV1BH8ETp6A2Ev28W5sJfPf3qp.pdf') }}" type="application/pdf">
-            {{ __('This browser does not support PDFs.') }}
-            {{ __('Please') }} <a href="{{ asset('storage/portfolios/resumes/VQzpo1C4cyLYcCuV1BH8ETp6A2Ev28W5sJfPf3qp.pdf') }}">{{ __('download the PDF') }}</a> {{ __('instead.') }}
-        </iframe>
+        @if($portfolio->resume_path && file_exists(public_path($portfolio->resume_path)))
+            <iframe src="{{ asset($portfolio->resume_path) }}" type="application/pdf">
+                {{ __('This browser does not support PDFs.') }}
+                {{ __('Please') }} <a href="{{ asset($portfolio->resume_path) }}">{{ __('download the PDF') }}</a> {{ __('instead.') }}
+            </iframe>
+        @else
+            <div class="text-center p-5">
+                <p class="text-danger">{{ __('No resume available to display.') }}</p>
+            </div>
+        @endif
     </div>
+@else
+    <div class="text-center p-5">
+        <p class="text-danger">{{ __('Portfolio not found.') }}</p>
+    </div>
+@endif
+
 
 @endsection

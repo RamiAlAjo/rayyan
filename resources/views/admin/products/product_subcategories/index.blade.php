@@ -56,7 +56,7 @@
                                             @forelse($subcategories as $subcategory)
                                                 <tr>
                                                     <td>{{ $subcategory->id }}</td>
-                                                    <td><img src="{{ asset('storage/' . $subcategory->image) }}" alt="image" width="60"></td>
+                                                    <td><img src="{{ asset('/' . $subcategory->image) }}" alt="image" width="60"></td>
                                                     <td>{{ $subcategory->name_en }}</td>
                                                     <td>{{ $subcategory->category->name_en ?? '—' }}</td>
                                                     <td>{!! Str::limit($subcategory->description_en, 100) !!}</td>
@@ -99,7 +99,7 @@
                                             @forelse($subcategories as $subcategory)
                                                 <tr>
                                                     <td>{{ $subcategory->id }}</td>
-                                                    <td><img src="{{ asset('storage/' . $subcategory->image) }}" alt="image" width="60"></td>
+                                                    <td><img src="{{ asset('/' . $subcategory->image) }}" alt="image" width="60"></td>
                                                     <td>{{ $subcategory->name_ar }}</td>
                                                     <td>{{ $subcategory->category->name_ar ?? '—' }}</td>
                                                     <td>{!! Str::limit($subcategory->description_ar, 100) !!}</td>

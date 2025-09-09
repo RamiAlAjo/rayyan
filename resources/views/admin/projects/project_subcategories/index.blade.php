@@ -47,7 +47,7 @@
                                             <td>{{ $subcategory->id }}</td>
                                             <td>
                                                 @if($subcategory->image)
-                                                    <img src="{{ asset('storage/' . $subcategory->image) }}" width="60" alt="Image">
+                                                    <img src="{{ asset('/' . $subcategory->image) }}" width="60" alt="Image">
                                                 @else
                                                     —
                                                 @endif
@@ -101,7 +101,7 @@
                                             <td>{{ $subcategory->id }}</td>
                                             <td>
                                                 @if($subcategory->image)
-                                                    <img src="{{ asset('storage/' . $subcategory->image) }}" width="60" alt="Image">
+                                                    <img src="{{ asset('/' . $subcategory->image) }}" width="60" alt="Image">
                                                 @else
                                                     —
                                                 @endif

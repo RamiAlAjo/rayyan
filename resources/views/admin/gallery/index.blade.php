@@ -41,7 +41,7 @@
                                     <td>{{ $photo->image_title_ar }}</td>
                                     <td>
                                         @if($photo->images)
-                                            <img src="{{ asset('storage/' . $photo->images) }}" alt="Image" width="100">
+                                            <img src="{{ asset('/' . $photo->images) }}" alt="Image" width="100">
                                         @else
                                             <span class="text-muted">No image</span>
                                         @endif

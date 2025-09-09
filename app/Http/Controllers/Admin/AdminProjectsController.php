@@ -37,13 +37,13 @@ class AdminProjectsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name_en' => 'required|string|max:255',
-            'name_ar' => 'required|string|max:255',
+            'name_en' => 'required|string|max:2055',
+            'name_ar' => 'required|string|max:2055',
             'description_en' => 'nullable|string',
             'description_ar' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:20048',
             'status' => 'required|boolean',
-            'category_id' => 'required|exists:projects_categories,id',
+            'category_id' => 'nullable|exists:projects_categories,id',
             'subcategory_id' => 'nullable|exists:projects_subcategories,id',
         ]);
 
@@ -64,7 +64,14 @@ class AdminProjectsController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName(); // Unique name
-            $imagePath = public_path('uploads/projects'); // Storage folder
+            $imagePath = ('uploads/projects'); // Storage folder
+
+            // Check if folder exists, if not create it
+            if (!File::exists($imagePath)) {
+                File::makeDirectory($imagePath, 0775, true); // Create folder with appropriate permissions
+            }
+
+            // Move the image to the public folder
             $image->move($imagePath, $imageName); // Move the file manually
             $data['image'] = 'uploads/projects/' . $imageName; // Save relative path
         }
@@ -90,13 +97,13 @@ class AdminProjectsController extends Controller
     public function update(Request $request, Project $project)
     {
         $request->validate([
-            'name_en' => 'required|string|max:255',
-            'name_ar' => 'required|string|max:255',
+            'name_en' => 'required|string|max:2055',
+            'name_ar' => 'required|string|max:2055',
             'description_en' => 'nullable|string',
             'description_ar' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:20048',
             'status' => 'required|boolean',
-            'category_id' => 'required|exists:projects_categories,id',
+            'category_id' => 'nullable|exists:projects_categories,id',
             'subcategory_id' => 'nullable|exists:projects_subcategories,id',
         ]);
 
@@ -118,15 +125,22 @@ class AdminProjectsController extends Controller
         // Handle image upload manually
         if ($request->hasFile('image')) {
             // Delete old image if exists
-            if ($project->image && File::exists(public_path($project->image))) {
-                File::delete(public_path($project->image)); // Delete old file
+            if ($project->image && File::exists(($project->image))) {
+                File::delete(($project->image)); // Delete old file
             }
 
             // Upload the new image
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName(); // Unique image name
-            $imagePath = public_path('uploads/projects'); // Folder to store the image
-            $image->move($imagePath, $imageName); // Move image to the folder
+            $imagePath = ('uploads/projects'); // Folder to store the image
+
+            // Check if folder exists, if not create it
+            if (!File::exists($imagePath)) {
+                File::makeDirectory($imagePath, 0775, true); // Create folder with appropriate permissions
+            }
+
+            // Move image to the folder
+            $image->move($imagePath, $imageName); // Move image to the public folder
             $data['image'] = 'uploads/projects/' . $imageName; // Save relative path
         }
 
@@ -141,8 +155,8 @@ class AdminProjectsController extends Controller
     public function destroy(Project $project)
     {
         // Delete image if exists
-        if ($project->image && File::exists(public_path($project->image))) {
-            File::delete(public_path($project->image)); // Delete old image
+        if ($project->image && File::exists(($project->image))) {
+            File::delete(($project->image)); // Delete old image
         }
 
         $project->delete();

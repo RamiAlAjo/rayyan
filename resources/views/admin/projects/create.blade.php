@@ -80,7 +80,7 @@
                     <!-- Category -->
                     <div class="form-group mb-3">
                         <label>Category</label>
-                        <select name="category_id" class="form-control" required>
+                        <select id="category_id" name="category_id" class="form-control" >
                             <option value="">-- Select Category --</option>
                             @foreach($categories as $category)
                                 <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
@@ -112,4 +112,36 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // AJAX script for dynamically updating subcategories
+        $(document).ready(function() {
+            $('#category_id').on('change', function() {
+                var categoryId = $(this).val();
+                if (categoryId) {
+                    $.ajax({
+                        url: '/admin/get-subcategories/' + categoryId,
+                        type: 'GET',
+                        success: function(response) {
+                            var subcategorySelect = $('select[name="subcategory_id"]');
+                            subcategorySelect.empty();
+                            subcategorySelect.append('<option value="">-- Select Subcategory --</option>');
+                            $.each(response.subcategories, function(index, subcategory) {
+                                subcategorySelect.append('<option value="' + subcategory.id + '">' + subcategory.name_en + '</option>');
+                            });
+                        },
+                        error: function() {
+                            alert('Could not retrieve subcategories.');
+                        }
+                    });
+                } else {
+                    $('select[name="subcategory_id"]').empty();
+                    $('select[name="subcategory_id"]').append('<option value="">-- Select Subcategory --</option>');
+                }
+            });
+        });
+    </script>
 @endsection

@@ -159,7 +159,7 @@
                     <p class="mt-3">{{ __('Member of Munir Sukhtian International') }}</p>
 
                     <div class="company-logos">
-                        <img src="{{ asset('path/to/logo/' . $settings->logo ?? 'default-logo.png') }}" alt="Company Logo">
+                        <img src="{{ asset('/Rayyan_Logo.svg' . $settings->logo ?? 'Rayyan_Logo.svg') }}" alt="Company Logo" width="200">
                     </div>
                 </div>
             </div>

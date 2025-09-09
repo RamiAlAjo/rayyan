@@ -26,6 +26,13 @@ class ProjectsCategory extends Model
         return $this->hasMany(ProjectsSubcategory::class, 'category_id');
     }
 
+    // ✅ Add this to load direct category-level projects (no subcategory)
+    public function projects()
+    {
+        return $this->hasMany(\App\Models\Project::class, 'category_id')
+                    ->whereNull('subcategory_id');
+    }
+
     public static function boot()
     {
         parent::boot();

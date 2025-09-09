@@ -63,40 +63,39 @@
         }
     </style>
 
-    <div class="subcategory-section">
-        <h2 class="category-title">{{ __('Product Subcategories') }}</h2>
+   <div class="subcategory-section">
+    <h2 class="category-title">{{ __('Product Subcategories') }}</h2>
 
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 justify-content-center">
-            @forelse ($subcategories as $subcategory)
-                @if ($subcategory->status === 'active')
-                    <div class="col text-center subcategory-item">
-                        <a href="{{ route('product-subcategory.show', $subcategory->id) }}" class="text-decoration-none">
-                            <img src="{{ $subcategory->image ? asset('/' . $subcategory->image) : asset('images/placeholder.png') }}"
-                                 alt="{{ app()->getLocale() === 'ar' ? $subcategory->name_ar : $subcategory->name_en }}"
-                                 class="img-fluid mb-2" style="max-height: 180px;">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 justify-content-center">
+        @forelse ($subcategories as $subcategory)
+            @if ($subcategory->status === 'active')
+                <div class="col text-center subcategory-item">
+                    <a href="{{ route('product-subcategory.show', $subcategory->id) }}" class="text-decoration-none">
+                        <img src="{{ $subcategory->image ? asset($subcategory->image) : asset('images/placeholder.png') }}"
+                             alt="{{ app()->getLocale() === 'ar' ? $subcategory->name_ar : $subcategory->name_en }}"
+                             class="img-fluid mb-2" style="max-height: 180px;">
 
-                            <p class="subcategory-name">
-                                {{ app()->getLocale() === 'ar' ? $subcategory->name_ar : $subcategory->name_en }}
+                        <p class="subcategory-name">
+                            {{ app()->getLocale() === 'ar' ? $subcategory->name_ar : $subcategory->name_en }}
+                        </p>
+
+                        @php
+                            $description = app()->getLocale() === 'ar' ? $subcategory->description_ar : $subcategory->description_en;
+                        @endphp
+
+                        @if (!empty($description))
+                            <p class="subcategory-description">
+                                {{ \Illuminate\Support\Str::limit(strip_tags($description), 100) }}
                             </p>
-
-                            @php
-                                $description = app()->getLocale() === 'ar' ? $subcategory->description_ar : $subcategory->description_en;
-                            @endphp
-
-                            @if (!empty($description))
-                                <p class="subcategory-description">
-                                    {{ \Illuminate\Support\Str::limit(strip_tags($description), 100) }}
-                                </p>
-                            @endif
-                        </a>
-                    </div>
-                @endif
-            @empty
-                <div class="col-12 text-center">
-                    <p>{{ __('No subcategories available at the moment.') }}</p>
+                        @endif
+                    </a>
                 </div>
-            @endforelse
-        </div>
+            @endif
+        @empty
+            <div class="col-12 text-center">
+                <p>{{ __('No subcategories available at the moment.') }}</p>
+            </div>
+        @endforelse
     </div>
 </div>
 

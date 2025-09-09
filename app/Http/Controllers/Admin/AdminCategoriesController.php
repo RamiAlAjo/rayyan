@@ -2,124 +2,115 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Category;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\File;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File; // For handling file uploads
 
 class AdminCategoriesController extends Controller
 {
-    /**
-     * Display a listing of categories.
-     */
+    // Display a listing of the categories
     public function index()
     {
-        $categories = Category::latest()->paginate(10);
+        $categories = Category::all(); // Fetch all categories
         return view('admin.categories.index', compact('categories'));
     }
 
-    /**
-     * Show the form for creating a new category.
-     */
+    // Show the form for creating a new category
     public function create()
     {
         return view('admin.categories.create');
     }
 
-    /**
-     * Store a newly created category in storage.
-     */
+    // Store a newly created category
     public function store(Request $request)
     {
         $request->validate([
-            'name_en' => 'required|string|max:255',
-            'name_ar' => 'required|string|max:255',
+            'name_en' => 'required|string|max:2055',
+            'name_ar' => 'required|string|max:2055',
             'description_en' => 'nullable|string',
             'description_ar' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
-            'status' => 'required|boolean',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:20048',
         ]);
 
-        $data = $request->only([
-            'name_en', 'name_ar', 'description_en', 'description_ar', 'status'
-        ]);
-
+        // Handle the image upload if present
+        $imagePath = null;
         if ($request->hasFile('image')) {
-            // Handle the image upload manually
             $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName(); // Custom image name
-            $imagePath = public_path('uploads/categories'); // Directory to store images
-            $image->move($imagePath, $imageName); // Move the image to the directory
-
-            // Store the relative path in the database
-            $data['image'] = 'uploads/categories/' . $imageName;
+            // Store the image under public/uploads/
+            $imagePath = $image->move(public_path('uploads'), $image->getClientOriginalName()); // Move file to public/uploads/
         }
 
-        Category::create($data);
+        // Create the category
+        Category::create([
+            'name_en' => $request->name_en,
+            'name_ar' => $request->name_ar,
+            'description_en' => $request->description_en,
+            'description_ar' => $request->description_ar,
+            'image' => 'uploads/' . $image->getClientOriginalName(), // Save relative path for the image
+            'status' => $request->status ?? 'active',
+        ]);
 
-        return redirect()->route('admin.categories.index')->with('success', 'Category created successfully.');
+        return redirect()->route('admin.categories.index')->with('success', 'Category created successfully!');
     }
 
-    /**
-     * Show the form for editing the specified category.
-     */
-    public function edit(Category $category)
+    // Show the form for editing the specified category
+    public function edit($id)
     {
+        $category = Category::findOrFail($id); // Find the category by ID
         return view('admin.categories.edit', compact('category'));
     }
 
-    /**
-     * Update the specified category in storage.
-     */
-    public function update(Request $request, Category $category)
+    // Update the specified category
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'name_en' => 'required|string|max:255',
-            'name_ar' => 'required|string|max:255',
+            'name_en' => 'required|string|max:2055',
+            'name_ar' => 'required|string|max:2055',
             'description_en' => 'nullable|string',
             'description_ar' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
-            'status' => 'required|boolean',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $data = $request->only([
-            'name_en', 'name_ar', 'description_en', 'description_ar', 'status'
-        ]);
+        $category = Category::findOrFail($id);
 
+        // Handle image update if present
         if ($request->hasFile('image')) {
-            // Delete old image if it exists
-            if (File::exists(public_path($category->image))) {
-                File::delete(public_path($category->image));
+            // Delete old image if exists
+            if ($category->image && file_exists(public_path($category->image))) {
+                unlink(public_path($category->image)); // Delete the old image
             }
 
-            // Handle the new image upload manually
+            // Save the new image
             $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName(); // Custom image name
-            $imagePath = public_path('uploads/categories'); // Directory to store images
-            $image->move($imagePath, $imageName); // Move the file to the directory
-
-            // Store the relative path in the database
-            $data['image'] = 'uploads/categories/' . $imageName;
+            $category->image = 'uploads/' . $image->getClientOriginalName(); // Save relative path for the new image
+            $image->move(public_path('uploads'), $image->getClientOriginalName()); // Move the new file to public/uploads/
         }
 
-        $category->update($data);
+        // Update category data
+        $category->update([
+            'name_en' => $request->name_en,
+            'name_ar' => $request->name_ar,
+            'description_en' => $request->description_en,
+            'description_ar' => $request->description_ar,
+            'status' => $request->status ?? $category->status,
+        ]);
 
-        return redirect()->route('admin.categories.index')->with('success', 'Category updated successfully.');
+        return redirect()->route('admin.categories.index')->with('success', 'Category updated successfully!');
     }
 
-    /**
-     * Remove the specified category from storage.
-     */
-    public function destroy(Category $category)
+    // Delete the specified category
+    public function destroy($id)
     {
+        $category = Category::findOrFail($id);
+
         // Delete the image if it exists
-        if ($category->image && File::exists(public_path($category->image))) {
-            File::delete(public_path($category->image));
+        if ($category->image && file_exists(public_path($category->image))) {
+            unlink(public_path($category->image)); // Delete the image file
         }
 
         $category->delete();
 
-        return redirect()->route('admin.categories.index')->with('success', 'Category deleted successfully.');
+        return redirect()->route('admin.categories.index')->with('success', 'Category deleted successfully!');
     }
 }

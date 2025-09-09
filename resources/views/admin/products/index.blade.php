@@ -55,7 +55,7 @@
                                             @forelse($products as $product)
                                                 <tr>
                                                     <td>{{ $product->id }}</td>
-                                                    <td><img src="{{ asset('storage/' . $product->image) }}" alt="image" width="60"></td>
+                                                    <td><img src="{{ asset('/' . $product->image) }}" alt="image" width="60"></td>
                                                     <td>{{ $product->name_en }}</td>
                                                     <td>{!! Str::limit($product->description_en, 100) !!}</td>
                                                     <td><span class="badge bg-{{ $product->status == 'active' ? 'success' : 'secondary' }}">{{ ucfirst($product->status) }}</span></td>
@@ -116,7 +116,7 @@
                                             @forelse($products as $product)
                                                 <tr>
                                                     <td>{{ $product->id }}</td>
-                                                    <td><img src="{{ asset('storage/' . $product->image) }}" alt="image" width="60"></td>
+                                                    <td><img src="{{ asset('/' . $product->image) }}" alt="image" width="60"></td>
                                                     <td>{{ $product->name_ar }}</td>
                                                     <td>{!! Str::limit($product->description_ar, 100) !!}</td>
                                                     <td><span class="badge bg-{{ $product->status == 'active' ? 'success' : 'secondary' }}">{{ ucfirst($product->status) }}</span></td>

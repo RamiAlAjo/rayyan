@@ -15,7 +15,7 @@ class FrontProjectCategoryController extends Controller
             ->latest()
             ->paginate(6); // Pagination for categories
 
-        return view('front.project_categories', compact('categories'));
+        return view('front.project_Categories', compact('categories'));
     }
 
     // Show all subcategories under a selected category, paginated

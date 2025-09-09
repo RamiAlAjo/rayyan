@@ -41,7 +41,7 @@
                                     <td>{{ $feature->id }}</td>
                                     <td>
                                         @if($feature->icon_path)
-                                            <img src="{{ asset('storage/' . $feature->icon_path) }}" alt="icon" width="30">
+                                            <img src="{{ asset('/' . $feature->icon_path) }}" alt="icon" width="30">
                                         @else
                                             <span class="text-muted">No icon</span>
                                         @endif

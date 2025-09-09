@@ -53,8 +53,7 @@
 </head>
 <body>
 
-  <!-- Footer -->
-<!-- Footer -->
+    <!-- Footer -->
 <footer class="footer mt-5" role="contentinfo" aria-label="Footer">
   <div class="footer-top text-center">
     <div class="footer-icons d-inline-block" role="list">

@@ -86,7 +86,7 @@
                     <!-- Category -->
                     <div class="form-group mb-3">
                         <label>Category</label>
-                        <select name="category_id" class="form-control" required>
+                        <select name="category_id" class="form-control" >
                             <option value="">-- Select Category --</option>
                             @foreach($categories as $category)
                                 <option value="{{ $category->id }}" {{ $project->category_id == $category->id ? 'selected' : '' }}>

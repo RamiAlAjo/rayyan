@@ -57,7 +57,7 @@
                                                     <td>{{ $category->id }}</td>
                                                     <td>
                                                         @if($category->image)
-                                                            <img src="{{ asset('storage/' . $category->image) }}" alt="image" width="60">
+                                                            <img src="{{ asset('/' . $category->image) }}" alt="image" width="60">
                                                         @else
                                                             <span class="text-muted">No image</span>
                                                         @endif
@@ -124,7 +124,7 @@
                                                     <td>{{ $category->id }}</td>
                                                     <td>
                                                         @if($category->image)
-                                                            <img src="{{ asset('storage/' . $category->image) }}" alt="image" width="60">
+                                                            <img src="{{ asset('/' . $category->image) }}" alt="image" width="60">
                                                         @else
                                                             <span class="text-muted">No image</span>
                                                         @endif

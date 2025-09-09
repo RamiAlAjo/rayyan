@@ -59,7 +59,7 @@
     }
     </style>
 
-   <!-- Category Title -->
+ <!-- Category Title -->
 <h2 class="product-title text-center mb-4">
     {{ app()->getLocale() === 'ar' ? $categoryNameAr . ' ' . __('Products') : $categoryName . ' ' . __('Products') }}
 </h2>
@@ -69,7 +69,7 @@
     @forelse ($products as $product)
         <div class="col text-center product-item">
             <a href="{{ route('product.show', $product->id) }}">
-                <img src="{{ $product->image ? asset('/' . $product->image) : asset('images/placeholder.png') }}"
+                <img src="{{ $product->image ? asset($product->image) : asset('images/placeholder.png') }}"
                      alt="{{ app()->getLocale() === 'ar' ? $product->name_ar : $product->name_en }}"
                      class="img-fluid mb-2" style="max-height: 180px;">
                 <p>{{ app()->getLocale() === 'ar' ? $product->name_ar : $product->name_en }}</p>
@@ -86,5 +86,6 @@
 <div class="d-flex justify-content-center mt-4">
     {{ $products->links('pagination::bootstrap-5') }}
 </div>
+
 
 @endsection

@@ -317,6 +317,11 @@
     .dropdown-submenu > a {
         cursor: pointer;
     }
+
+    /* Mobile search button tweaks */
+    #search-toggle-NA {
+        margin-right: 10px;
+    }
 }
 
 @media (max-width: 767px) {
@@ -337,10 +342,10 @@
 </style>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg fixed-top ">
+<nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
         <a class="navbar-brand" href="/">
-    <img src="{{ asset('Rayyan_Logo.svg') }}" alt="Rayyan Logo" class="navbar-logo">
+            <img src="{{ asset('Rayyan_Logo.svg') }}" alt="Rayyan Logo" class="navbar-logo">
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -350,62 +355,81 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto d-flex justify-content-center align-items-center w-100 gap-2">
-                 <li class="nav-item">
-            <a class="nav-link nav-link-NA {{ Request::is('/') ? 'active' : '' }}" href="{{ route('home') }}">{{ __('home') }}</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link nav-link-NA {{ Request::is('about') ? 'active' : '' }}" href="{{ route('about.index') }}">{{ __('about_us') }}</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link nav-link-NA {{ Request::is('services') ? 'active' : '' }}" href="{{ route('services.index') }}">{{ __('services') }}</a>
-        </li>
- @php
+                <li class="nav-item">
+                    <a class="nav-link nav-link-NA {{ Request::is('/') ? 'active' : '' }}" href="{{ route('home') }}">{{ __('home') }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-NA {{ Request::is('about') ? 'active' : '' }}" href="{{ route('about.index') }}">{{ __('about_us') }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-NA {{ Request::is('services') ? 'active' : '' }}" href="{{ route('services.index') }}">{{ __('services') }}</a>
+                </li>
+
+             @php
     use App\Models\ProductCategory;
+    use App\Models\Product;
 
     $productCategories = ProductCategory::with([
         'subcategories.products' => function ($query) {
             $query->where('status', 'active');
+        },
+        'products' => function ($query) {
+            $query->where('status', 'active')->whereNull('subcategory_id');
         }
     ])
     ->where('status', 'active')
     ->get();
+
+    // Fully uncategorized products (not attached to category or subcategory)
+    $uncategorizedProducts = Product::whereNull('category_id')
+        ->whereNull('subcategory_id')
+        ->where('status', 'active')
+        ->get();
 @endphp
 
 <li class="nav-item dropdown position-static dropdown-hover">
-    <a class="nav-link nav-link-NA {{ Request::is('product-category') ? 'active' : '' }}"
-       href="{{ route('product-category.index') }}"
-       id="productsDropdown">
+    <a class="nav-link nav-link-NA {{ Request::is('product-category*') ? 'active' : '' }}"
+       href="{{ route('product-category.index') }}" id="productsDropdown">
         {{ __('products') }}
     </a>
 
-    <!-- Level 1: Categories -->
     <div class="dropdown-menu shadow mt-2 dropdown-menu-products" aria-labelledby="productsDropdown">
+        {{-- Loop through product categories --}}
         @foreach($productCategories as $category)
             <div class="dropdown-submenu">
-                <a class="dropdown-item d-flex justify-content-between align-items-center" href="{{ route('product-category.show', $category->slug) }}">
+                <a class="dropdown-item d-flex justify-content-between align-items-center"
+                   href="{{ route('product-category.show', $category->id) }}">
                     {{ app()->getLocale() === 'ar' ? $category->name_ar : $category->name_en }}
                     @if($category->subcategories->count())
                         <span class="ms-2">&#9656;</span>
                     @endif
                 </a>
 
-                <!-- Level 2: Subcategories -->
-                @if($category->subcategories->count())
+                {{-- Subcategories --}}
+                @if($category->subcategories->count() || $category->products->count())
                     <div class="dropdown-menu subcategory-menu">
+                        {{-- Products directly under the category (no subcategory) --}}
+                        @foreach($category->products as $product)
+                            <a class="dropdown-item" href="{{ route('product.show', $product->id) }}">
+                                {{ app()->getLocale() === 'ar' ? $product->name_ar : $product->name_en }}
+                            </a>
+                        @endforeach
+
+                        {{-- Subcategories with their products --}}
                         @foreach($category->subcategories as $subcategory)
                             <div class="dropdown-submenu">
-                                <a class="dropdown-item d-flex justify-content-between align-items-center" href="{{ route('product-subcategory.show', $subcategory->slug) }}">
+                                <a class="dropdown-item d-flex justify-content-between align-items-center"
+                                   href="{{ route('product-subcategory.show', $subcategory->id) }}">
                                     {{ app()->getLocale() === 'ar' ? $subcategory->name_ar : $subcategory->name_en }}
                                     @if($subcategory->products->count())
                                         <span class="ms-2">&#9656;</span>
                                     @endif
                                 </a>
 
-                                <!-- Level 3: Products -->
                                 @if($subcategory->products->count())
                                     <div class="dropdown-menu product-menu">
                                         @foreach($subcategory->products as $product)
-                                            <a class="dropdown-item" href="{{ route('product.show', $product->slug) }}">
+                                            <a class="dropdown-item" href="{{ route('product.show', $product->id) }}">
                                                 {{ app()->getLocale() === 'ar' ? $product->name_ar : $product->name_en }}
                                             </a>
                                         @endforeach
@@ -417,59 +441,81 @@
                 @endif
             </div>
         @endforeach
+
+        {{-- Fully uncategorized products (no category, no subcategory) --}}
+        @foreach($uncategorizedProducts as $product)
+            <a class="dropdown-item" href="{{ route('product.show', $product->id) }}">
+                {{ app()->getLocale() === 'ar' ? $product->name_ar : $product->name_en }}
+            </a>
+        @endforeach
     </div>
 </li>
 
+
 @php
     use App\Models\ProjectsCategory;
+    use App\Models\Project;
 
+    // Load categories with their subcategories and all related projects
     $projectsCategories = ProjectsCategory::with([
         'subcategories.projects' => function ($query) {
             $query->where('status', 1);
+        },
+        'projects' => function ($query) {
+            $query->where('status', 1);
         }
-    ])
-    ->where('status', 1)
-    ->get();
-@endphp
+    ])->where('status', 1)->get();
 
+    // Projects with no category and no subcategory
+    $uncategorizedProjects = Project::whereNull('category_id')
+        ->whereNull('subcategory_id')
+        ->where('status', 1)
+        ->get();
+@endphp
 <li class="nav-item dropdown position-static dropdown-hover">
-    <a class="nav-link nav-link-NA {{ Request::is('projects-category') ? 'active' : '' }}"
-       href="{{ route('projects-category.index') }}"
-       id="projectsDropdown">
+    <a class="nav-link nav-link-NA {{ Request::is('projects-category*') ? 'active' : '' }}"
+       href="{{ route('projects-category.index') }}" id="projectsDropdown">
         {{ __('projects') }}
     </a>
 
-    <!-- Level 1: Project Categories -->
     <div class="dropdown-menu shadow mt-2 dropdown-menu-products" aria-labelledby="projectsDropdown">
+
+        {{-- Loop through categories --}}
         @foreach($projectsCategories as $category)
             <div class="dropdown-submenu">
                 <a class="dropdown-item d-flex justify-content-between align-items-center"
-                   href="{{ route('projects-category.show', $category->slug) }}">
+                   href="{{ route('projects-category.show', $category->id) }}">
                     {{ app()->getLocale() === 'ar' ? $category->name_ar : $category->name_en }}
-                    @if($category->subcategories->count())
+                    @if($category->subcategories->count() || $category->projects->count())
                         <span class="ms-2">&#9656;</span>
                     @endif
                 </a>
 
-                <!-- Level 2: Subcategories -->
-                @if($category->subcategories->count())
+                @if($category->subcategories->count() || $category->projects->count())
                     <div class="dropdown-menu subcategory-menu">
+
+                        {{-- Category-level projects (no subcategory) --}}
+                        @foreach($category->projects as $project)
+                            <a class="dropdown-item" href="{{ route('projects.show', $project->id) }}">
+                                {{ app()->getLocale() === 'ar' ? $project->name_ar : $project->name_en }}
+                            </a>
+                        @endforeach
+
+                        {{-- Subcategories --}}
                         @foreach($category->subcategories as $subcategory)
                             <div class="dropdown-submenu">
                                 <a class="dropdown-item d-flex justify-content-between align-items-center"
-                                   href="{{ route('projects-subcategory.show', $subcategory->slug) }}">
+                                   href="{{ route('projects-subcategory.show', $subcategory->id) }}">
                                     {{ app()->getLocale() === 'ar' ? $subcategory->name_ar : $subcategory->name_en }}
                                     @if($subcategory->projects->count())
                                         <span class="ms-2">&#9656;</span>
                                     @endif
                                 </a>
 
-                                <!-- Level 3: Projects -->
                                 @if($subcategory->projects->count())
                                     <div class="dropdown-menu product-menu">
                                         @foreach($subcategory->projects as $project)
-                                            <a class="dropdown-item"
-                                               href="{{ route('projects.show', $project->slug) }}">
+                                            <a class="dropdown-item" href="{{ route('projects.show', $project->id) }}">
                                                 {{ app()->getLocale() === 'ar' ? $project->name_ar : $project->name_en }}
                                             </a>
                                         @endforeach
@@ -481,25 +527,33 @@
                 @endif
             </div>
         @endforeach
+
+        {{-- Projects without any category or subcategory --}}
+        @foreach($uncategorizedProjects as $project)
+            <a class="dropdown-item" href="{{ route('projects.show', $project->id) }}">
+                {{ app()->getLocale() === 'ar' ? $project->name_ar : $project->name_en }}
+            </a>
+        @endforeach
+
     </div>
 </li>
 
-     @php
-    use App\Models\Portfolio;
 
-    $portfolios = Portfolio::latest()->get(); // or add ->where('status', 'active') if needed
+@php
+    use App\Models\Portfolio;
+    $portfolios = Portfolio::latest()->get();
 @endphp
+
 <li class="nav-item dropdown position-static dropdown-hover">
     <a class="nav-link nav-link-NA {{ Request::is('portfolio') ? 'active' : '' }}"
-       href="{{ route('portfolio.index') }}"
-       id="portfolioDropdown">
+       href="{{ route('portfolio.index') }}" id="portfolioDropdown">
         {{ __('company_profile') }}
     </a>
 
     @if($portfolios->count())
         <div class="dropdown-menu shadow mt-2 dropdown-menu-products" aria-labelledby="portfolioDropdown">
             @foreach($portfolios as $portfolio)
-                <a class="dropdown-item" href="{{ asset('storage/' . $portfolio->resume_path) }}" target="_blank">
+                <a class="dropdown-item" href="{{ asset('/' . $portfolio->resume_path) }}" target="_blank">
                     {{ app()->getLocale() === 'ar' ? $portfolio->portfolio_name_ar : $portfolio->portfolio_name_en }}
                 </a>
             @endforeach
@@ -507,15 +561,16 @@
     @endif
 </li>
 
-        <li class="nav-item">
-            <a class="nav-link nav-link-NA {{ Request::is('faq') ? 'active' : '' }}" href="{{ route('faq.index') }}">{{ __('faq') }}</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link nav-link-NA {{ Request::is('career') ? 'active' : '' }}" href="{{ route('career.index') }}">{{ __('careers') }}</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link nav-link-NA {{ Request::is('contact') ? 'active' : '' }}" href="{{ route('contact.index') }}">{{ __('contact_us') }}</a>
-        </li>
+
+                <li class="nav-item">
+                    <a class="nav-link nav-link-NA {{ Request::is('faq') ? 'active' : '' }}" href="{{ route('faq.index') }}">{{ __('faq') }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-NA {{ Request::is('career') ? 'active' : '' }}" href="{{ route('career.index') }}">{{ __('careers') }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-NA {{ Request::is('contact') ? 'active' : '' }}" href="{{ route('contact.index') }}">{{ __('contact_us') }}</a>
+                </li>
 
                 <!-- Language Dropdown -->
                 <li class="nav-item dropdown">
@@ -531,187 +586,83 @@
 
             <!-- Search -->
             <div class="search-container-NA">
-                <!-- Search Icon Button -->
                 <button id="search-toggle-NA" type="button">
                     <i class="bi bi-search"></i>
                 </button>
-
-                <!-- Search Input -->
                 <input type="text" class="form-control_NA search-input-NA" id="search-input-NA" placeholder="Search...">
-
-                <!-- Loading Indicator -->
                 <div id="loading-indicator" style="display: none;">Loading...</div>
-
-                <!-- Search Results -->
                 <div id="search-results"></div>
-
             </div>
         </div>
     </div>
 </nav>
 
-  <script>
+
+<script>
 document.addEventListener("DOMContentLoaded", function () {
     const searchToggle = document.getElementById("search-toggle-NA");
     const searchInput = document.getElementById("search-input-NA");
+    const searchContainer = document.querySelector(".search-container-NA");
+    const loadingIndicator = document.getElementById("loading-indicator");
     const searchResults = document.getElementById("search-results");
-    const loadingSpinner = document.getElementById("loading-indicator");
 
-    let cache = {};
-    let selectedIndex = -1;
-    let searchTimeout;
-
-    if (!searchToggle || !searchInput || !searchResults || !loadingSpinner) return;
-
-    // --- Toggle Search Input ---
-    searchToggle.addEventListener("click", function (e) {
-        e.preventDefault();
-        searchInput.classList.toggle("show");
-
-        if (searchInput.classList.contains("show")) {
-            searchInput.focus();
-        } else {
-            resetSearch();
-        }
+    searchToggle.addEventListener("click", function() {
+        searchContainer.classList.toggle("active");
+        searchInput.focus();
     });
 
-    // --- Search Input Listener with Debounce ---
-    searchInput.addEventListener("input", debounce(handleSearchInput, 300));
-
-    function handleSearchInput() {
-        const query = searchInput.value.trim();
-
-        if (query.length <= 2) {
-            resetResults();
-            return;
-        }
-
-        if (cache[query]) {
-            displayResults(cache[query]);
-        } else {
-            showLoading(true);
-            fetch(`/search?query=${encodeURIComponent(query)}`)
-                .then(res => res.json())
+    searchInput.addEventListener("input", function() {
+        const query = searchInput.value;
+        if (query.length >= 3) {
+            loadingIndicator.style.display = "block";
+            searchResults.innerHTML = "";  // Clear previous results
+            fetch(`/search?q=${query}`)
+                .then(response => response.json())
                 .then(data => {
-                    cache[query] = data;
-                    displayResults(data);
-                })
-                .catch(() => {
-                    searchResults.innerHTML = `<p class="search-no-results">Error fetching results. Please try again.</p>`;
-                })
-                .finally(() => {
-                    showLoading(false);
+                    loadingIndicator.style.display = "none";
+                    if (data.results.length > 0) {
+                        searchResults.innerHTML = data.results.map(item => `<div class="result-item">${item.name}</div>`).join('');
+                    } else {
+                        searchResults.innerHTML = "<div class='no-results'>No results found</div>";
+                    }
                 });
-        }
-    }
-
-    // --- Display Results ---
-    function displayResults(data) {
-        searchResults.innerHTML = "";
-        selectedIndex = -1;
-
-        const hasResults = data && Object.values(data).some(arr => arr.length > 0);
-        if (!hasResults) {
-            searchResults.innerHTML = `<p class="search-no-results">No results found.</p>`;
-            return;
-        }
-
-        const ul = document.createElement("ul");
-        ul.classList.add("search-results-list");
-
-        const types = ["products", "productCategories", "productSubcategories", "projects", "projectsCategories"];
-        types.forEach(type => {
-            (data[type] || []).forEach(item => {
-                const li = document.createElement("li");
-                li.className = "search-result-item";
-                li.innerHTML = `
-                    <a href="/${type.slice(0, -1)}/${item.id}" class="search-result-link">
-                        <strong>${item.title_en || item.name_en || item.name_ar || item.project_name}</strong><br>
-                        <span>${item.title_ar || item.name_ar || item.description || ""}</span>
-                    </a>
-                `;
-                ul.appendChild(li);
-            });
-        });
-
-        searchResults.appendChild(ul);
-
-        const seeAll = document.createElement("div");
-        seeAll.classList.add("see-all-container");
-        seeAll.innerHTML = `<a href="/search_results?query=${encodeURIComponent(searchInput.value.trim())}" class="see-all-link">See All</a>`;
-        searchResults.appendChild(seeAll);
-    }
-
-    // --- Handle Keyboard Navigation ---
-    searchInput.addEventListener("keydown", function (e) {
-        const items = searchResults.querySelectorAll(".search-result-item");
-        if (!items.length) return;
-
-        if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-            e.preventDefault();
-            const dir = e.key === "ArrowDown" ? 1 : -1;
-            selectedIndex = (selectedIndex + dir + items.length) % items.length;
-            items.forEach((item, i) => item.classList.toggle("selected", i === selectedIndex));
-        } else if (e.key === "Enter") {
-            e.preventDefault();
-            if (selectedIndex >= 0) {
-                const link = items[selectedIndex].querySelector("a");
-                if (link) window.location.href = link.href;
-            } else {
-                const query = searchInput.value.trim();
-                if (query.length > 2) {
-                    window.location.href = `/search_results?query=${encodeURIComponent(query)}`;
-                }
-            }
+        } else {
+            searchResults.innerHTML = "";
+            loadingIndicator.style.display = "none";
         }
     });
-
-    // --- Hide Results on Outside Click ---
-    document.addEventListener("click", function (e) {
-        if (!searchResults.contains(e.target) && !searchInput.contains(e.target)) {
-            resetResults();
-        }
-    });
-
-    function debounce(func, delay) {
-        return function () {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(func, delay);
-        };
-    }
-
-    function resetSearch() {
-        searchInput.value = "";
-        resetResults();
-    }
-
-    function resetResults() {
-        searchResults.innerHTML = "";
-        showLoading(false);
-        selectedIndex = -1;
-    }
-
-    function showLoading(state) {
-        loadingSpinner.style.display = state ? "block" : "none";
-    }
-});
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    if (window.innerWidth < 992) {
-        document.querySelectorAll('.dropdown-submenu > a').forEach(link => {
-            link.addEventListener('click', function (e) {
-                e.preventDefault();
-                const submenu = this.nextElementSibling;
-
-                this.closest('.dropdown-menu').querySelectorAll('.dropdown-menu').forEach(menu => {
-                    if (menu !== submenu) menu.classList.remove('show');
-                });
-
-                submenu?.classList.toggle('show');
-            });
-        });
-    }
 });
 </script>
 
+<style>
+/* Mobile search input */
+.search-container-NA {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    width: 200px;
+    transition: all 0.3s ease;
+}
+.search-container-NA.active {
+    display: block;
+}
+.search-input-NA {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+}
+#search-results {
+    margin-top: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+#search-results .result-item {
+    padding: 8px;
+    cursor: pointer;
+}
+#search-results .no-results {
+    padding: 8px;
+    color: gray;
+}
+</style>

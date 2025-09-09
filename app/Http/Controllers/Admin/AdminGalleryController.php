@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\PhotosGallery;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage; // Import the Storage facade
 
 class AdminGalleryController extends Controller
 {
@@ -30,9 +30,9 @@ class AdminGalleryController extends Controller
     {
         // Validate the incoming request
         $request->validate([
-            'image_title_en' => 'nullable|string|max:255',
-            'image_title_ar' => 'nullable|string|max:255',
-            'images' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image_title_en' => 'nullable|string|max:2055',
+            'image_title_ar' => 'nullable|string|max:2055',
+            'images' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:20048',
         ]);
 
         // Create a new photo record
@@ -40,15 +40,16 @@ class AdminGalleryController extends Controller
         $photo->image_title_en = $request->image_title_en;
         $photo->image_title_ar = $request->image_title_ar;
 
-        // Handle file upload manually
+        // Handle file upload
         if ($request->hasFile('images')) {
             $image = $request->file('images');
             $imageName = time() . '_' . $image->getClientOriginalName(); // Custom image name
-            $imagePath = public_path('uploads/photos'); // Directory to store images
-            $image->move($imagePath, $imageName); // Move the file to the directory
+
+            // Move the image to the 'public/uploads' directory
+            $image->move(public_path('uploads'), $imageName); // Directly saving to 'public/uploads'
 
             // Save the relative path of the image
-            $photo->images = 'uploads/photos/' . $imageName;
+            $photo->images = 'uploads/' . $imageName; // Save path without 'public/' as it's assumed to be public
         }
 
         // Save the record in the database
@@ -71,9 +72,9 @@ class AdminGalleryController extends Controller
     {
         // Validate the incoming request
         $request->validate([
-            'image_title_en' => 'nullable|string|max:255',
-            'image_title_ar' => 'nullable|string|max:255',
-            'images' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image_title_en' => 'nullable|string|max:2055',
+            'image_title_ar' => 'nullable|string|max:2055',
+            'images' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:20048',
         ]);
 
         // Find the photo and update the record
@@ -81,21 +82,22 @@ class AdminGalleryController extends Controller
         $photo->image_title_en = $request->image_title_en;
         $photo->image_title_ar = $request->image_title_ar;
 
-        // Handle file upload manually (if a new image is uploaded)
+        // Handle file upload (if a new image is uploaded)
         if ($request->hasFile('images')) {
             // Delete the old image if it exists
-            if (File::exists(public_path($photo->images))) {
-                File::delete(public_path($photo->images));
+            if ($photo->images && file_exists(public_path('uploads/' . $photo->images))) {
+                unlink(public_path('uploads/' . $photo->images)); // Delete old image manually
             }
 
             // Upload new image
             $image = $request->file('images');
             $imageName = time() . '_' . $image->getClientOriginalName(); // Custom image name
-            $imagePath = public_path('uploads/photos'); // Directory to store images
-            $image->move($imagePath, $imageName); // Move the file to the directory
+
+            // Move the new image to the 'public/uploads' directory
+            $image->move(public_path('uploads'), $imageName); // Directly saving to 'public/uploads'
 
             // Save the new image path
-            $photo->images = 'uploads/photos/' . $imageName;
+            $photo->images = 'uploads/' . $imageName; // Save path without 'public/' as it's assumed to be public
         }
 
         // Save the updated record
@@ -111,8 +113,8 @@ class AdminGalleryController extends Controller
         $photo = PhotosGallery::findOrFail($id);
 
         // Delete the photo from the file system
-        if ($photo->images && File::exists(public_path($photo->images))) {
-            File::delete(public_path($photo->images));
+        if ($photo->images && file_exists(public_path('uploads/' . $photo->images))) {
+            unlink(public_path('uploads/' . $photo->images)); // Delete the old image manually
         }
 
         // Delete the photo record from the database

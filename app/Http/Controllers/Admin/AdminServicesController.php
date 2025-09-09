@@ -33,11 +33,11 @@ class AdminServicesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name_en' => 'required|string|max:255',
-            'name_ar' => 'required|string|max:255',
+            'name_en' => 'required|string|max:2055',
+            'name_ar' => 'required|string|max:2055',
             'description_en' => 'nullable|string',
             'description_ar' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:20048',
             'status' => 'required|in:active,inactive,pending',
         ]);
 
@@ -48,15 +48,24 @@ class AdminServicesController extends Controller
         $service->description_ar = $request->description_ar;
         $service->status = $request->status;
 
+        // Handle Image Upload
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName(); // Custom image name
-            $imagePath = public_path('uploads/services/images'); // Directory to store images
-            $image->move($imagePath, $imageName); // Move the file to the directory
+            $imageName = time() . '_' . Str::slug($image->getClientOriginalName()); // Clean image name
+            $imagePath = ('uploads/services/images'); // Directory to store images
 
-            $service->image = 'uploads/services/images/' . $imageName; // Store the relative path
+            // Ensure the directory exists
+            if (!File::exists($imagePath)) {
+                File::makeDirectory($imagePath, 0775, true); // Create directory if it doesn't exist
+            }
+
+            // Move the uploaded image to the desired directory
+            $image->move($imagePath, $imageName);
+
+            $service->image = 'uploads/services/images/' . $imageName; // Store relative path
         }
 
+        // Generate a unique slug with a random string
         $service->slug = Str::slug($request->name_en) . '-' . Str::random(5);
         $service->save();
 
@@ -77,11 +86,11 @@ class AdminServicesController extends Controller
     public function update(Request $request, Service $service)
     {
         $request->validate([
-            'name_en' => 'required|string|max:255',
-            'name_ar' => 'required|string|max:255',
+            'name_en' => 'required|string|max:2055',
+            'name_ar' => 'required|string|max:2055',
             'description_en' => 'nullable|string',
             'description_ar' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:20048',
             'status' => 'required|in:active,inactive,pending',
         ]);
 
@@ -91,20 +100,29 @@ class AdminServicesController extends Controller
         $service->description_ar = $request->description_ar;
         $service->status = $request->status;
 
+        // Handle Image Upload
         if ($request->hasFile('image')) {
-            // Delete old image if it exists
-            if (File::exists(public_path($service->image))) {
-                File::delete(public_path($service->image));
+            // Delete old image if exists
+            if (File::exists(($service->image))) {
+                File::delete(($service->image)); // Delete old image file
             }
 
             $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName(); // Custom image name
-            $imagePath = public_path('uploads/services/images'); // Directory to store images
-            $image->move($imagePath, $imageName); // Move the file to the directory
+            $imageName = time() . '_' . Str::slug($image->getClientOriginalName()); // Clean image name
+            $imagePath = ('uploads/services/images'); // Directory to store images
 
-            $service->image = 'uploads/services/images/' . $imageName; // Store the relative path
+            // Ensure the directory exists
+            if (!File::exists($imagePath)) {
+                File::makeDirectory($imagePath, 0775, true); // Create directory if it doesn't exist
+            }
+
+            // Move the uploaded image to the desired directory
+            $image->move($imagePath, $imageName);
+
+            $service->image = 'uploads/services/images/' . $imageName; // Store relative path
         }
 
+        // Update slug (even though it's the same, regenerate to ensure consistency)
         $service->slug = Str::slug($request->name_en) . '-' . Str::random(5);
         $service->save();
 
@@ -117,8 +135,8 @@ class AdminServicesController extends Controller
     public function destroy(Service $service)
     {
         // Delete image if it exists
-        if (File::exists(public_path($service->image))) {
-            File::delete(public_path($service->image));
+        if (File::exists(($service->image))) {
+            File::delete(($service->image)); // Delete old image file
         }
 
         $service->delete();

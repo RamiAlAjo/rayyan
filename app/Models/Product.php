@@ -4,19 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\ProductCategory;
-use App\Models\ProductSubcategory;
-
-
 
 class Product extends Model
 {
     use HasFactory;
 
-    // Define the table name (optional if it's the plural of the model name)
-    protected $table = 'products';
-
-    // Define the fillable attributes
     protected $fillable = [
         'name_en',
         'name_ar',
@@ -29,28 +21,24 @@ class Product extends Model
         'slug',
     ];
 
-    // Optionally define the cast types for certain attributes
-    protected $casts = [
-        'status' => 'string',
-        'category_id' => 'integer',
-        'subcategory_id' => 'integer',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
-
-    // Relationships (if you have category and subcategory models)
     public function category()
     {
         return $this->belongsTo(ProductCategory::class, 'category_id');
     }
-
 
     public function subcategory()
     {
         return $this->belongsTo(ProductSubcategory::class, 'subcategory_id');
     }
 
+    public static function boot()
+    {
+        parent::boot();
 
-    // For slug generation, you can use a package like `cviebrock/eloquent-sluggable`
-    // or create a method to handle it manually.
+        static::creating(function ($product) {
+            if (!$product->slug) {
+                $product->slug = \Str::slug($product->name_en);
+            }
+        });
+    }
 }

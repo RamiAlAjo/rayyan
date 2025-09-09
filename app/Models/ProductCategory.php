@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\ProductSubcategory;
 
 class ProductCategory extends Model
 {
@@ -22,22 +21,15 @@ class ProductCategory extends Model
         'slug',
     ];
 
-    protected $casts = [
-        'status' => 'string',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
-
-    // Existing relationship with products
-    public function products()
-    {
-        return $this->hasMany(Product::class, 'category_id');
-    }
-
-    // New relationship with subcategories
     public function subcategories()
     {
         return $this->hasMany(ProductSubcategory::class, 'category_id');
+    }
+
+    // ✅ Add this:
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'category_id')->whereNull('subcategory_id');
     }
 
     public static function boot()

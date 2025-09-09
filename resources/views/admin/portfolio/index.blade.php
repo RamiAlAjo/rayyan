@@ -36,137 +36,81 @@
                         </ul>
 
                         <!-- Tab Contents -->
-                        <div class="tab-content mt-3" id="languageTabsContent">
-                            <!-- English Tab -->
-                            <div class="tab-pane fade show active" id="en" role="tabpanel" aria-labelledby="en-tab">
-                                <div class="table-responsive">
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Resume Name (EN)</th>
-                                                <th>Resume File</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @forelse($portfolios as $portfolio)
-                                                <tr>
-                                                    <td>{{ $portfolio->id }}</td>
-                                                    <td>{{ $portfolio->portfolio_name_en }}</td>
-                                                    <td>
-                                                        @if($portfolio->resume_path)
-                                                            <iframe src="{{ asset('storage/' . $portfolio->resume_path) }}" width="300" height="200" frameborder="0"></iframe>
-                                                            <p><a href="{{ asset('storage/' . $portfolio->resume_path) }}" target="_blank" class="btn btn-sm btn-secondary mt-2">Download</a></p>
-                                                        @else
-                                                            No file available
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        <a href="{{ route('admin.portfolio.edit', $portfolio->id) }}" class="btn btn-sm btn-info">Edit</a>
-                                                        <form action="{{ route('admin.portfolio.destroy', $portfolio->id) }}" method="POST" style="display:inline;">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $portfolio->id }}">
-                                                                Delete
-                                                            </button>
+                 @php
+    $languages = [
+        ['id' => 'en', 'label' => 'Resume Name (EN)', 'nameField' => 'portfolio_name_en', 'modalPrefix' => 'deleteModal'],
+        ['id' => 'ar', 'label' => 'Resume Name (AR)', 'nameField' => 'portfolio_name_ar', 'modalPrefix' => 'deleteModalAR'],
+    ];
+@endphp
 
-                                                            <!-- Modal -->
-                                                            <div class="modal fade" id="deleteModal{{ $portfolio->id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ $portfolio->id }}" aria-hidden="true">
-                                                                <div class="modal-dialog">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title">Delete Confirmation</h5>
-                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            Are you sure you want to delete "{{ $portfolio->portfolio_name_en }}"?
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                                            <button type="submit" class="btn btn-danger">Yes, Delete</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                            @empty
-                                                <tr>
-                                                    <td colspan="4" class="text-center">No resumes found.</td>
-                                                </tr>
-                                            @endforelse
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+<div class="tab-content mt-3" id="languageTabsContent">
+    @foreach($languages as $index => $lang)
+        <div class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}" id="{{ $lang['id'] }}" role="tabpanel">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>{{ $lang['label'] }}</th>
+                            <th>Resume File</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($portfolios as $portfolio)
+                            <tr>
+                                <td>{{ $portfolio->id }}</td>
+                                <td>{{ $portfolio->{$lang['nameField']} }}</td>
+                                <td>
+                                    @if($portfolio->resume_path)
+                                        <iframe src="{{ asset('/' . $portfolio->resume_path) }}" width="300" height="200" frameborder="0"></iframe>
+                                        <p><a href="{{ asset('/' . $portfolio->resume_path) }}" target="_blank" class="btn btn-sm btn-secondary mt-2">Download</a></p>
+                                    @else
+                                        No file available
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{ route('admin.portfolio.edit', $portfolio->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                    <form action="{{ route('admin.portfolio.destroy', $portfolio->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#{{ $lang['modalPrefix'] }}{{ $portfolio->id }}">
+                                            Delete
+                                        </button>
 
-                            <!-- Arabic Tab -->
-                            <div class="tab-pane fade" id="ar" role="tabpanel" aria-labelledby="ar-tab">
-                                <div class="table-responsive">
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Resume Name (AR)</th>
-                                                <th>Resume File</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @forelse($portfolios as $portfolio)
-                                                <tr>
-                                                    <td>{{ $portfolio->id }}</td>
-                                                    <td>{{ $portfolio->portfolio_name_ar }}</td>
-                                                    <td>
-                                                        @if($portfolio->resume_path)
-                                                            <iframe src="{{ asset('storage/' . $portfolio->resume_path) }}" width="300" height="200" frameborder="0"></iframe>
-                                                            <p><a href="{{ asset('storage/' . $portfolio->resume_path) }}" target="_blank" class="btn btn-sm btn-secondary mt-2">Download</a></p>
-                                                        @else
-                                                            No file available
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        <a href="{{ route('admin.portfolio.edit', $portfolio->id) }}" class="btn btn-sm btn-info">Edit</a>
-                                                        <form action="{{ route('admin.portfolio.destroy', $portfolio->id) }}" method="POST" style="display:inline;">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModalAR{{ $portfolio->id }}">
-                                                                Delete
-                                                            </button>
-
-                                                            <!-- Modal -->
-                                                            <div class="modal fade" id="deleteModalAR{{ $portfolio->id }}" tabindex="-1" aria-labelledby="deleteModalARLabel{{ $portfolio->id }}" aria-hidden="true">
-                                                                <div class="modal-dialog">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title">Delete Confirmation</h5>
-                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            Are you sure you want to delete "{{ $portfolio->portfolio_name_ar }}"?
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                                            <button type="submit" class="btn btn-danger">Yes, Delete</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                            @empty
-                                                <tr>
-                                                    <td colspan="4" class="text-center">No resumes found.</td>
-                                                </tr>
-                                            @endforelse
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div> <!-- End tab-content -->
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="{{ $lang['modalPrefix'] }}{{ $portfolio->id }}" tabindex="-1" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Delete Confirmation</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Are you sure you want to delete "{{ $portfolio->{$lang['nameField']} }}"?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="text-center">No resumes found.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    @endforeach
+</div>
+ <!-- End tab-content -->
                     </div>
                 </div>
             </div>

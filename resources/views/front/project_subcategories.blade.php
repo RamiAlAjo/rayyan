@@ -95,7 +95,7 @@
         @forelse ($subcategories as $subcategory)
             <div class="col text-center category-item">
                 <a href="{{ route('projects-subcategory.show', $subcategory->id) }}" class="text-decoration-none">
-                    <img src="{{ $subcategory->image ? asset('storage/' . $subcategory->image) : asset('images/placeholder.png') }}"
+                    <img src="{{ $subcategory->image ? asset('/' . $subcategory->image) : asset('images/placeholder.png') }}"
                          alt="{{ app()->getLocale() === 'ar' ? $subcategory->name_ar : $subcategory->name_en }}"
                          class="img-fluid mb-2" style="max-height: 180px;">
                     <p class="fw-bold">

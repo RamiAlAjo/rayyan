@@ -22,8 +22,8 @@ class AdminFaqController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'question_en' => 'required|string|max:255',
-            'question_ar' => 'nullable|string|max:255',
+            'question_en' => 'required|string|max:2055',
+            'question_ar' => 'nullable|string|max:2055',
             'answer_en'   => 'required|string',
             'answer_ar'   => 'nullable|string',
         ]);
@@ -47,8 +47,8 @@ class AdminFaqController extends Controller
     public function update(Request $request, Faq $faq)
     {
         $request->validate([
-            'question_en' => 'required|string|max:255',
-            'question_ar' => 'nullable|string|max:255',
+            'question_en' => 'required|string|max:2055',
+            'question_ar' => 'nullable|string|max:2055',
             'answer_en'   => 'required|string',
             'answer_ar'   => 'nullable|string',
         ]);

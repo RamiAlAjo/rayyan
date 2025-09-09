@@ -7,7 +7,6 @@ use App\Models\ProjectsCategory;
 use App\Models\ProjectsSubcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage; // for improved file handling
 use Illuminate\Support\Facades\File; // for file deletion
 
 class AdminProjectsSubcategoriesController extends Controller
@@ -36,11 +35,11 @@ class AdminProjectsSubcategoriesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name_en' => 'required|string|max:255',
-            'name_ar' => 'required|string|max:255',
+            'name_en' => 'required|string|max:2055',
+            'name_ar' => 'required|string|max:2055',
             'description_en' => 'nullable|string',
             'description_ar' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:20048',
             'status' => 'required|boolean',
             'category_id' => 'required|exists:projects_categories,id',
         ]);
@@ -80,11 +79,11 @@ class AdminProjectsSubcategoriesController extends Controller
     public function update(Request $request, ProjectsSubcategory $projectsSubcategory)
     {
         $request->validate([
-            'name_en' => 'required|string|max:255',
-            'name_ar' => 'required|string|max:255',
+            'name_en' => 'required|string|max:2055',
+            'name_ar' => 'required|string|max:2055',
             'description_en' => 'nullable|string',
             'description_ar' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:20048',
             'status' => 'required|boolean',
             'category_id' => 'required|exists:projects_categories,id',
         ]);
@@ -142,7 +141,20 @@ class AdminProjectsSubcategoriesController extends Controller
     {
         // Generate unique name for the image
         $imageName = time() . '_' . $image->getClientOriginalName();
-        return $image->storeAs('uploads/projects_subcategories', $imageName, 'public');
+
+        // Define the path in public folder
+        $imagePath = ('uploads/projects_subcategories');
+
+        // Check if folder exists, if not, create it
+        if (!File::exists($imagePath)) {
+            File::makeDirectory($imagePath, 0775, true); // Create folder with appropriate permissions
+        }
+
+        // Move the image to the public folder
+        $image->move($imagePath, $imageName);
+
+        // Return the relative path to store in the database
+        return 'uploads/projects_subcategories/' . $imageName;
     }
 
     /**
@@ -150,8 +162,8 @@ class AdminProjectsSubcategoriesController extends Controller
      */
     private function deleteImage($projectsSubcategory)
     {
-        if ($projectsSubcategory->image && Storage::disk('public')->exists($projectsSubcategory->image)) {
-            Storage::disk('public')->delete($projectsSubcategory->image); // Delete old image
+        if ($projectsSubcategory->image && File::exists(($projectsSubcategory->image))) {
+            File::delete(($projectsSubcategory->image)); // Delete old image
         }
     }
 }

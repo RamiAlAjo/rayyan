@@ -174,10 +174,14 @@
 <div class="section-spacing" style="background-color: #f4f4f4; padding: 50px 20px; width: 100%; box-sizing: border-box;">
     <div class="container" style="max-width: 1200px; margin: 0 auto; text-align: left;">
         <h2 style="font-size: 36px; margin: 8.5px 0; color: #00704A;">
-            {{__('welcome_to_our_site')}}
+            {!! __('welcome_to_our_site') !!}
         </h2>
         <p class="mt-4" style="font-size: 20px; color: #333;">
-            {!! nl2br(e(app()->getLocale() == 'ar' ? ($aboutUs->about_us_description_ar ?? __('welcome_description')) : ($aboutUs->about_us_description_en ?? __('welcome_description')))) !!}
+            {!! nl2br(
+                app()->getLocale() == 'ar'
+                ? ($aboutUs->about_us_description_ar ?? __('welcome_description'))
+                : ($aboutUs->about_us_description_en ?? __('welcome_description'))
+            ) !!} <!-- Directly rendering the content without escaping -->
         </p>
 
         <!-- View All Button -->
@@ -193,11 +197,14 @@
                 max-width: 100%;
                 text-align: center;
             ">
-                {{ __('view_all') }}
+                {!! __('view_all') !!}
             </a>
         </div>
     </div>
 </div>
+
+
+
 
 <style>
      .welcome-section {
@@ -415,37 +422,27 @@
 <div class="container mt-5">
     <h2 class="mb-4 text-center fw-bold" style="color: #00704A;">{{ __('projects') }}</h2>
 
+    <!-- Project Cards -->
     <div class="d-flex flex-nowrap overflow-auto gap-3 pb-3" style="min-height: 250px;">
         @foreach ($projects as $project)
             <div class="card text-center border-0" style="width: 10rem; min-width: 10rem;">
-                <img src="{{ asset('/' . $project->image) }}"
+                <!-- Project Image -->
+                <img src="{{ asset($project->image ? $project->image : 'images/placeholder.png') }}"
                      class="card-img-top"
                      alt="{{ app()->getLocale() == 'ar' ? $project->name_ar : $project->name_en }}"
-                     loading="lazy">
+                     loading="lazy"
+                     style="object-fit: cover; height: 180px;">
                 <div class="card-body">
-                    <p class="card-text fw-semibold mb-0">{{ app()->getLocale() == 'ar' ? $project->name_ar : $project->name_en }}</p>
+                    <!-- Project Name -->
+                    <p class="card-text fw-semibold mb-0">
+                        {{ app()->getLocale() == 'ar' ? $project->name_ar : $project->name_en }}
+                    </p>
                 </div>
             </div>
         @endforeach
     </div>
 
-    <!-- View All Button -->
-    <div style="display: flex; justify-content: center; margin-top: 30px;">
-        {{-- <a href="{{ route('projects.index') }}" style="
-            padding: 12px 25px;
-            background-color: #00704A;
-            color: white;
-            font-weight: 600;
-            text-decoration: none;
-            border-radius: 5px;
-            width: 100%;
-            max-width: 100%;
-            text-align: center;
-        ">
-            {{ __('view_all') }}
-        </a> --}}
-    </div>
-</div>
+  <!-- View All Button --> <div style="display: flex; justify-content: center; margin-top: 30px;"> {{-- <a href="{{ route('projects.index') }}" style=" padding: 12px 25px; background-color: #00704A; color: white; font-weight: 600; text-decoration: none; border-radius: 5px; width: 100%; max-width: 100%; text-align: center; "> {{ __('view_all') }} </a> --}} </div> </div>
 
 <!-- ================== NEWS CAROUSEL ================== -->
 <div class="striped-background py-5">
@@ -474,6 +471,7 @@
                                             @endif
 
                                             @if (!empty($item->image))
+                                                <!-- Corrected image path to reference 'public/uploads/news/' -->
                                                 <img src="{{ asset('/' . $item->image) }}"
                                                      alt="{{ app()->getLocale() == 'ar' ? ($item->title_ar ?? $item->title_en) : $item->title_en }}"
                                                      class="img-fluid mt-3"
@@ -492,15 +490,15 @@
                     @endforeach
                 </div>
 
-               <!-- Controls BELOW carousel -->
-<div class="carousel-controls-below text-center mt-4">
-    <button class="carousel-arrow-btn me-2" type="button" data-bs-target="#newsCarousel" data-bs-slide="prev">
-        <span class="triangle-left"></span>
-    </button>
-    <button class="carousel-arrow-btn" type="button" data-bs-target="#newsCarousel" data-bs-slide="next">
-        <span class="triangle-right"></span>
-    </button>
-</div>
+                <!-- Controls BELOW carousel -->
+                <div class="carousel-controls-below text-center mt-4">
+                    <button class="carousel-arrow-btn me-2" type="button" data-bs-target="#newsCarousel" data-bs-slide="prev">
+                        <span class="triangle-left"></span>
+                    </button>
+                    <button class="carousel-arrow-btn" type="button" data-bs-target="#newsCarousel" data-bs-slide="next">
+                        <span class="triangle-right"></span>
+                    </button>
+                </div>
 
             </div>
         @else
@@ -508,6 +506,7 @@
         @endif
     </div>
 </div>
+
 
 
 <!-- News Section Styles -->

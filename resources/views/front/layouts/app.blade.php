@@ -50,4 +50,4 @@
     @yield('scripts')
 </body>
 </html>
-s
+

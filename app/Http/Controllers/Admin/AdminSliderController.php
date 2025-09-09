@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\PagesSlider;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class AdminSliderController extends Controller
@@ -33,27 +34,28 @@ class AdminSliderController extends Controller
     {
         // Validate the incoming data
         $validatedData = $request->validate([
-            'title_en' => 'required|string|max:255',
-            'title_ar' => 'nullable|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'title_en' => 'required|string|max:2055',
+            'title_ar' => 'nullable|string|max:2055',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:20048',
             'url' => 'nullable|url',
         ]);
 
-        // Handle the image upload and storage
+        // Handle the image upload and storage in the public folder
         if ($request->hasFile('image')) {
-            $slidersImageUploadPath = 'uploads/sliders/image/';
-            $file = $request->file('image');
-            $ext = $file->getClientOriginalExtension();
-            $slidersImageFilename = time() . '.' . $ext;
-            $file->move($slidersImageUploadPath, $slidersImageFilename);
-            $imagePath = $slidersImageUploadPath . $slidersImageFilename;
+            $image = $request->file('image');
+            $imageExtension = $image->getClientOriginalExtension();
+            $imageName = time() . '.' . $imageExtension;
+            $imagePath = ('uploads/sliders/images'); // The public directory
+            $image->move($imagePath, $imageName); // Move the file to the directory
+
+            $imageUrl = 'uploads/sliders/images/' . $imageName; // Store the relative path for public access
         }
 
         // Create the new slider
         PagesSlider::create([
             'title_en' => $validatedData['title_en'],
-            'title_ar' => $validatedData['title_ar'] ?? null,  // If the Arabic title is empty, it can be null
-            'image' => $imagePath,  // Store the image path
+            'title_ar' => $validatedData['title_ar'] ?? null,  // If the Arabic title is empty, make it null
+            'image' => $imageUrl,  // Store the image path relative to public folder
             'url' => $validatedData['url'] ?? null,  // If no URL is provided, make it null
         ]);
 
@@ -80,33 +82,38 @@ class AdminSliderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        \Log::info('Update method called for slider ID: ' . $id);
-
         $slider = PagesSlider::find($id);
 
         if (!$slider) {
             return redirect()->route('admin.slider.index')->with('status-error', 'Slider not found.');
         }
 
+        // Validate the incoming data
         $request->validate([
-            'title_en' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'title_en' => 'required|string|max:2055',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:20048',
         ]);
 
+        // Handle the image upload if a new image is provided
         if ($request->hasFile('image')) {
-            $slidersImageUploadPath = 'uploads/sliders/image/';
-            $file = $request->file('image');
-            $ext = $file->getClientOriginalExtension();
-            $slidersImageFilename = time() . '.' . $ext;
-            $file->move($slidersImageUploadPath, $slidersImageFilename);
-            $slider->image = $slidersImageUploadPath . $slidersImageFilename;
-            \Log::info('Image uploaded: ' . $slider->image);
+            // Delete the old image if it exists
+            if (File::exists(($slider->image))) {
+                File::delete(($slider->image));
+            }
+
+            $image = $request->file('image');
+            $imageExtension = $image->getClientOriginalExtension();
+            $imageName = time() . '.' . $imageExtension;
+            $imagePath = ('uploads/sliders/images');
+            $image->move($imagePath, $imageName);
+
+            // Update the image path
+            $slider->image = 'uploads/sliders/images/' . $imageName;
         }
 
+        // Update slider title
         $slider->title_en = $request->title_en;
         $slider->save();
-
-        \Log::info('Slider updated successfully!');
 
         return redirect()->route('admin.slider.index')->with('status-success', 'Slider updated successfully!');
     }
@@ -120,6 +127,11 @@ class AdminSliderController extends Controller
 
         if (!$slider) {
             return redirect()->route('admin.slider.index')->with('status-error', 'Slider not found.');
+        }
+
+        // Delete the image file if it exists
+        if (File::exists(($slider->image))) {
+            File::delete(($slider->image));
         }
 
         $slider->delete();

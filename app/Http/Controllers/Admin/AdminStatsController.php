@@ -22,9 +22,9 @@ class AdminStatsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title_en' => 'required|string|max:255',
-            'title_ar' => 'required|string|max:255',
-            'value' => 'required|string|max:255',
+            'title_en' => 'required|string|max:2055',
+            'title_ar' => 'required|string|max:2055',
+            'value' => 'required|string|max:2055',
         ]);
 
         Stat::create($request->only('title_en', 'title_ar', 'value'));
@@ -40,9 +40,9 @@ class AdminStatsController extends Controller
     public function update(Request $request, Stat $stat)
     {
         $request->validate([
-            'title_en' => 'required|string|max:255',
-            'title_ar' => 'required|string|max:255',
-            'value' => 'required|string|max:255',
+            'title_en' => 'required|string|max:2055',
+            'title_ar' => 'required|string|max:2055',
+            'value' => 'required|string|max:2055',
         ]);
 
         $stat->update($request->only('title_en', 'title_ar', 'value'));
